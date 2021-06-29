@@ -16,6 +16,265 @@ module PagarmeCoreApi
       self.class.instance
     end
 
+    # Gets a transfer
+    # @param [String] recipient_id Required parameter: Recipient id
+    # @param [String] transfer_id Required parameter: Transfer id
+    # @return GetTransferResponse response from the API call
+    def get_transfer(recipient_id,
+                     transfer_id)
+      # Prepare query url.
+      _path_url = '/recipients/{recipient_id}/transfers/{transfer_id}'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'recipient_id' => recipient_id,
+        'transfer_id' => transfer_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json'
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.get(
+        _query_url,
+        headers: _headers
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetTransferResponse.from_hash(decoded)
+    end
+
+    # Updates a recipient
+    # @param [String] recipient_id Required parameter: Recipient id
+    # @param [UpdateRecipientRequest] request Required parameter: Recipient
+    # data
+    # @param [String] idempotency_key Optional parameter: Example:
+    # @return GetRecipientResponse response from the API call
+    def update_recipient(recipient_id,
+                         request,
+                         idempotency_key = nil)
+      # Prepare query url.
+      _path_url = '/recipients/{recipient_id}'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'recipient_id' => recipient_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'content-type' => 'application/json; charset=utf-8',
+        'idempotency-key' => idempotency_key
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.put(
+        _query_url,
+        headers: _headers,
+        parameters: request.to_json
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetRecipientResponse.from_hash(decoded)
+    end
+
+    # Creates an anticipation
+    # @param [String] recipient_id Required parameter: Recipient id
+    # @param [CreateAnticipationRequest] request Required parameter:
+    # Anticipation data
+    # @param [String] idempotency_key Optional parameter: Example:
+    # @return GetAnticipationResponse response from the API call
+    def create_anticipation(recipient_id,
+                            request,
+                            idempotency_key = nil)
+      # Prepare query url.
+      _path_url = '/recipients/{recipient_id}/anticipations'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'recipient_id' => recipient_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'content-type' => 'application/json; charset=utf-8',
+        'idempotency-key' => idempotency_key
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.post(
+        _query_url,
+        headers: _headers,
+        parameters: request.to_json
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetAnticipationResponse.from_hash(decoded)
+    end
+
+    # Gets the anticipation limits for a recipient
+    # @param [String] recipient_id Required parameter: Recipient id
+    # @param [String] timeframe Required parameter: Timeframe
+    # @param [DateTime] payment_date Required parameter: Anticipation payment
+    # date
+    # @return GetAnticipationLimitResponse response from the API call
+    def get_anticipation_limits(recipient_id,
+                                timeframe,
+                                payment_date)
+      # Prepare query url.
+      _path_url = '/recipients/{recipient_id}/anticipation_limits'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'recipient_id' => recipient_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_builder = APIHelper.append_url_with_query_parameters(
+        _query_builder,
+        {
+          'timeframe' => timeframe,
+          'payment_date' => payment_date
+        },
+        array_serialization: Configuration.array_serialization
+      )
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json'
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.get(
+        _query_url,
+        headers: _headers
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetAnticipationLimitResponse.from_hash(decoded)
+    end
+
+    # Retrieves paginated recipients information
+    # @param [Integer] page Optional parameter: Page number
+    # @param [Integer] size Optional parameter: Page size
+    # @return ListRecipientResponse response from the API call
+    def get_recipients(page = nil,
+                       size = nil)
+      # Prepare query url.
+      _path_url = '/recipients'
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_builder = APIHelper.append_url_with_query_parameters(
+        _query_builder,
+        {
+          'page' => page,
+          'size' => size
+        },
+        array_serialization: Configuration.array_serialization
+      )
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json'
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.get(
+        _query_url,
+        headers: _headers
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      ListRecipientResponse.from_hash(decoded)
+    end
+
+    # TODO: type endpoint description here
+    # @param [String] recipient_id Required parameter: Example:
+    # @param [String] withdrawal_id Required parameter: Example:
+    # @return GetWithdrawResponse response from the API call
+    def get_withdraw_by_id(recipient_id,
+                           withdrawal_id)
+      # Prepare query url.
+      _path_url = '/recipients/{recipient_id}/withdrawals/{withdrawal_id}'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'recipient_id' => recipient_id,
+        'withdrawal_id' => withdrawal_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json'
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.get(
+        _query_url,
+        headers: _headers
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetWithdrawResponse.from_hash(decoded)
+    end
+
+    # Updates the default bank account from a recipient
+    # @param [String] recipient_id Required parameter: Recipient id
+    # @param [UpdateRecipientBankAccountRequest] request Required parameter:
+    # Bank account data
+    # @param [String] idempotency_key Optional parameter: Example:
+    # @return GetRecipientResponse response from the API call
+    def update_recipient_default_bank_account(recipient_id,
+                                              request,
+                                              idempotency_key = nil)
+      # Prepare query url.
+      _path_url = '/recipients/{recipient_id}/default-bank-account'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'recipient_id' => recipient_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'content-type' => 'application/json; charset=utf-8',
+        'idempotency-key' => idempotency_key
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.patch(
+        _query_url,
+        headers: _headers,
+        parameters: request.to_json
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetRecipientResponse.from_hash(decoded)
+    end
+
     # Updates recipient metadata
     # @param [String] recipient_id Required parameter: Recipient id
     # @param [UpdateMetadataRequest] request Required parameter: Metadata
@@ -51,39 +310,6 @@ module PagarmeCoreApi
       # Return appropriate response type.
       decoded = APIHelper.json_deserialize(_context.response.raw_body)
       GetRecipientResponse.from_hash(decoded)
-    end
-
-    # Gets a transfer
-    # @param [String] recipient_id Required parameter: Recipient id
-    # @param [String] transfer_id Required parameter: Transfer id
-    # @return GetTransferResponse response from the API call
-    def get_transfer(recipient_id,
-                     transfer_id)
-      # Prepare query url.
-      _path_url = '/recipients/{recipient_id}/transfers/{transfer_id}'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'recipient_id' => recipient_id,
-        'transfer_id' => transfer_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json'
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.get(
-        _query_url,
-        headers: _headers
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetTransferResponse.from_hash(decoded)
     end
 
     # Gets a paginated list of transfers for the recipient
@@ -139,17 +365,51 @@ module PagarmeCoreApi
       ListTransferResponse.from_hash(decoded)
     end
 
-    # Creates an anticipation
-    # @param [String] recipient_id Required parameter: Recipient id
-    # @param [CreateAnticipationRequest] request Required parameter:
-    # Anticipation data
-    # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetAnticipationResponse response from the API call
-    def create_anticipation(recipient_id,
-                            request,
-                            idempotency_key = nil)
+    # TODO: type endpoint description here
+    # @param [String] recipient_id Required parameter: Example:
+    # @param [CreateWithdrawRequest] request Required parameter: Example:
+    # @return GetWithdrawResponse response from the API call
+    def create_withdraw(recipient_id,
+                        request)
       # Prepare query url.
-      _path_url = '/recipients/{recipient_id}/anticipations'
+      _path_url = '/recipients/{recipient_id}/withdrawals'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'recipient_id' => recipient_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'content-type' => 'application/json; charset=utf-8'
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.post(
+        _query_url,
+        headers: _headers,
+        parameters: request.to_json
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetWithdrawResponse.from_hash(decoded)
+    end
+
+    # Updates recipient metadata
+    # @param [String] recipient_id Required parameter: Recipient id
+    # @param [UpdateAutomaticAnticipationSettingsRequest] request Required
+    # parameter: Metadata
+    # @param [String] idempotency_key Optional parameter: Example:
+    # @return GetRecipientResponse response from the API call
+    def update_automatic_anticipation_settings(recipient_id,
+                                               request,
+                                               idempotency_key = nil)
+      # Prepare query url.
+      _path_url = '/recipients/{recipient_id}/automatic-anticipation-settings'
       _path_url = APIHelper.append_url_with_template_parameters(
         _path_url,
         'recipient_id' => recipient_id
@@ -164,7 +424,7 @@ module PagarmeCoreApi
         'idempotency-key' => idempotency_key
       }
       # Prepare and execute HttpRequest.
-      _request = @http_client.post(
+      _request = @http_client.patch(
         _query_url,
         headers: _headers,
         parameters: request.to_json
@@ -174,7 +434,7 @@ module PagarmeCoreApi
       validate_response(_context)
       # Return appropriate response type.
       decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetAnticipationResponse.from_hash(decoded)
+      GetRecipientResponse.from_hash(decoded)
     end
 
     # Gets an anticipation
@@ -210,47 +470,42 @@ module PagarmeCoreApi
       GetAnticipationResponse.from_hash(decoded)
     end
 
-    # Gets the anticipation limits for a recipient
-    # @param [String] recipient_id Required parameter: Recipient id
-    # @param [String] timeframe Required parameter: Timeframe
-    # @param [DateTime] payment_date Required parameter: Anticipation payment
-    # date
-    # @return GetAnticipationLimitResponse response from the API call
-    def get_anticipation_limits(recipient_id,
-                                timeframe,
-                                payment_date)
+    # TODO: type endpoint description here
+    # @param [String] recipient_id Required parameter: Recipient Identificator
+    # @param [UpdateTransferSettingsRequest] request Required parameter:
+    # Example:
+    # @param [String] idempotency_key Optional parameter: Example:
+    # @return GetRecipientResponse response from the API call
+    def update_recipient_transfer_settings(recipient_id,
+                                           request,
+                                           idempotency_key = nil)
       # Prepare query url.
-      _path_url = '/recipients/{recipient_id}/anticipation_limits'
+      _path_url = '/recipients/{recipient_id}/transfer-settings'
       _path_url = APIHelper.append_url_with_template_parameters(
         _path_url,
         'recipient_id' => recipient_id
       )
       _query_builder = Configuration.base_uri.dup
       _query_builder << _path_url
-      _query_builder = APIHelper.append_url_with_query_parameters(
-        _query_builder,
-        {
-          'timeframe' => timeframe,
-          'payment_date' => payment_date
-        },
-        array_serialization: Configuration.array_serialization
-      )
       _query_url = APIHelper.clean_url _query_builder
       # Prepare headers.
       _headers = {
-        'accept' => 'application/json'
+        'accept' => 'application/json',
+        'content-type' => 'application/json; charset=utf-8',
+        'idempotency-key' => idempotency_key
       }
       # Prepare and execute HttpRequest.
-      _request = @http_client.get(
+      _request = @http_client.patch(
         _query_url,
-        headers: _headers
+        headers: _headers,
+        parameters: request.to_json
       )
       BasicAuth.apply(_request)
       _context = execute_request(_request)
       validate_response(_context)
       # Return appropriate response type.
       decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetAnticipationLimitResponse.from_hash(decoded)
+      GetRecipientResponse.from_hash(decoded)
     end
 
     # Retrieves a paginated list of anticipations from a recipient
@@ -319,82 +574,6 @@ module PagarmeCoreApi
       ListAnticipationResponse.from_hash(decoded)
     end
 
-    # Updates a recipient
-    # @param [String] recipient_id Required parameter: Recipient id
-    # @param [UpdateRecipientRequest] request Required parameter: Recipient
-    # data
-    # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetRecipientResponse response from the API call
-    def update_recipient(recipient_id,
-                         request,
-                         idempotency_key = nil)
-      # Prepare query url.
-      _path_url = '/recipients/{recipient_id}'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'recipient_id' => recipient_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json',
-        'content-type' => 'application/json; charset=utf-8',
-        'idempotency-key' => idempotency_key
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.put(
-        _query_url,
-        headers: _headers,
-        parameters: request.to_json
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetRecipientResponse.from_hash(decoded)
-    end
-
-    # Updates the default bank account from a recipient
-    # @param [String] recipient_id Required parameter: Recipient id
-    # @param [UpdateRecipientBankAccountRequest] request Required parameter:
-    # Bank account data
-    # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetRecipientResponse response from the API call
-    def update_recipient_default_bank_account(recipient_id,
-                                              request,
-                                              idempotency_key = nil)
-      # Prepare query url.
-      _path_url = '/recipients/{recipient_id}/default-bank-account'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'recipient_id' => recipient_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json',
-        'content-type' => 'application/json; charset=utf-8',
-        'idempotency-key' => idempotency_key
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.patch(
-        _query_url,
-        headers: _headers,
-        parameters: request.to_json
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetRecipientResponse.from_hash(decoded)
-    end
-
     # Retrieves recipient information
     # @param [String] recipient_id Required parameter: Recipiend id
     # @return GetRecipientResponse response from the API call
@@ -425,21 +604,36 @@ module PagarmeCoreApi
       GetRecipientResponse.from_hash(decoded)
     end
 
-    # Retrieves paginated recipients information
-    # @param [Integer] page Optional parameter: Page number
-    # @param [Integer] size Optional parameter: Page size
-    # @return ListRecipientResponse response from the API call
-    def get_recipients(page = nil,
-                       size = nil)
+    # Gets a paginated list of transfers for the recipient
+    # @param [String] recipient_id Required parameter: Example:
+    # @param [Integer] page Optional parameter: Example:
+    # @param [Integer] size Optional parameter: Example:
+    # @param [String] status Optional parameter: Example:
+    # @param [DateTime] created_since Optional parameter: Example:
+    # @param [DateTime] created_until Optional parameter: Example:
+    # @return ListWithdrawals response from the API call
+    def get_withdrawals(recipient_id,
+                        page = nil,
+                        size = nil,
+                        status = nil,
+                        created_since = nil,
+                        created_until = nil)
       # Prepare query url.
-      _path_url = '/recipients'
+      _path_url = '/recipients/{recipient_id}/withdrawals'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'recipient_id' => recipient_id
+      )
       _query_builder = Configuration.base_uri.dup
       _query_builder << _path_url
       _query_builder = APIHelper.append_url_with_query_parameters(
         _query_builder,
         {
           'page' => page,
-          'size' => size
+          'size' => size,
+          'status' => status,
+          'created_since' => created_since,
+          'created_until' => created_until
         },
         array_serialization: Configuration.array_serialization
       )
@@ -458,7 +652,7 @@ module PagarmeCoreApi
       validate_response(_context)
       # Return appropriate response type.
       decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      ListRecipientResponse.from_hash(decoded)
+      ListWithdrawals.from_hash(decoded)
     end
 
     # Get balance information for a recipient
@@ -560,90 +754,15 @@ module PagarmeCoreApi
       GetRecipientResponse.from_hash(decoded)
     end
 
-    # TODO: type endpoint description here
-    # @param [String] recipient_id Required parameter: Recipient Identificator
-    # @param [UpdateTransferSettingsRequest] request Required parameter:
-    # Example:
-    # @param [String] idempotency_key Optional parameter: Example:
+    # Retrieves recipient information
+    # @param [String] code Required parameter: Recipient code
     # @return GetRecipientResponse response from the API call
-    def update_recipient_transfer_settings(recipient_id,
-                                           request,
-                                           idempotency_key = nil)
+    def get_recipient_by_code(code)
       # Prepare query url.
-      _path_url = '/recipients/{recipient_id}/transfer-settings'
+      _path_url = '/recipients/{code}'
       _path_url = APIHelper.append_url_with_template_parameters(
         _path_url,
-        'recipient_id' => recipient_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json',
-        'content-type' => 'application/json; charset=utf-8',
-        'idempotency-key' => idempotency_key
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.patch(
-        _query_url,
-        headers: _headers,
-        parameters: request.to_json
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetRecipientResponse.from_hash(decoded)
-    end
-
-    # TODO: type endpoint description here
-    # @param [String] recipient_id Required parameter: Example:
-    # @param [CreateWithdrawRequest] request Required parameter: Example:
-    # @return GetWithdrawResponse response from the API call
-    def create_withdraw(recipient_id,
-                        request)
-      # Prepare query url.
-      _path_url = '/recipients/{recipient_id}/withdrawals'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'recipient_id' => recipient_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json',
-        'content-type' => 'application/json; charset=utf-8'
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.post(
-        _query_url,
-        headers: _headers,
-        parameters: request.to_json
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetWithdrawResponse.from_hash(decoded)
-    end
-
-    # TODO: type endpoint description here
-    # @param [String] recipient_id Required parameter: Example:
-    # @param [String] withdrawal_id Required parameter: Example:
-    # @return GetWithdrawResponse response from the API call
-    def get_withdraw_by_id(recipient_id,
-                           withdrawal_id)
-      # Prepare query url.
-      _path_url = '/recipients/{recipient_id}/withdrawals/{withdrawal_id}'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'recipient_id' => recipient_id,
-        'withdrawal_id' => withdrawal_id
+        'code' => code
       )
       _query_builder = Configuration.base_uri.dup
       _query_builder << _path_url
@@ -656,95 +775,6 @@ module PagarmeCoreApi
       _request = @http_client.get(
         _query_url,
         headers: _headers
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetWithdrawResponse.from_hash(decoded)
-    end
-
-    # Gets a paginated list of transfers for the recipient
-    # @param [String] recipient_id Required parameter: Example:
-    # @param [Integer] page Optional parameter: Example:
-    # @param [Integer] size Optional parameter: Example:
-    # @param [String] status Optional parameter: Example:
-    # @param [DateTime] created_since Optional parameter: Example:
-    # @param [DateTime] created_until Optional parameter: Example:
-    # @return ListWithdrawals response from the API call
-    def get_withdrawals(recipient_id,
-                        page = nil,
-                        size = nil,
-                        status = nil,
-                        created_since = nil,
-                        created_until = nil)
-      # Prepare query url.
-      _path_url = '/recipients/{recipient_id}/withdrawals'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'recipient_id' => recipient_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_builder = APIHelper.append_url_with_query_parameters(
-        _query_builder,
-        {
-          'page' => page,
-          'size' => size,
-          'status' => status,
-          'created_since' => created_since,
-          'created_until' => created_until
-        },
-        array_serialization: Configuration.array_serialization
-      )
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json'
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.get(
-        _query_url,
-        headers: _headers
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      ListWithdrawals.from_hash(decoded)
-    end
-
-    # Updates recipient metadata
-    # @param [String] recipient_id Required parameter: Recipient id
-    # @param [UpdateAutomaticAnticipationSettingsRequest] request Required
-    # parameter: Metadata
-    # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetRecipientResponse response from the API call
-    def update_automatic_anticipation_settings(recipient_id,
-                                               request,
-                                               idempotency_key = nil)
-      # Prepare query url.
-      _path_url = '/recipients/{recipient_id}/automatic-anticipation-settings'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'recipient_id' => recipient_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json',
-        'content-type' => 'application/json; charset=utf-8',
-        'idempotency-key' => idempotency_key
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.patch(
-        _query_url,
-        headers: _headers,
-        parameters: request.to_json
       )
       BasicAuth.apply(_request)
       _context = execute_request(_request)

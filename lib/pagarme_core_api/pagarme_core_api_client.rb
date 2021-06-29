@@ -6,6 +6,12 @@
 module PagarmeCoreApi
   #  pagarme_core_api client class.
   class PagarmeCoreApiClient
+    # Singleton access to plans controller.
+    # @return [PlansController] Returns the controller instance.
+    def plans
+      PlansController.instance
+    end
+
     # Singleton access to subscriptions controller.
     # @return [SubscriptionsController] Returns the controller instance.
     def subscriptions
@@ -16,12 +22,6 @@ module PagarmeCoreApi
     # @return [OrdersController] Returns the controller instance.
     def orders
       OrdersController.instance
-    end
-
-    # Singleton access to plans controller.
-    # @return [PlansController] Returns the controller instance.
-    def plans
-      PlansController.instance
     end
 
     # Singleton access to invoices controller.
@@ -40,6 +40,12 @@ module PagarmeCoreApi
     # @return [ChargesController] Returns the controller instance.
     def charges
       ChargesController.instance
+    end
+
+    # Singleton access to transfers controller.
+    # @return [TransfersController] Returns the controller instance.
+    def transfers
+      TransfersController.instance
     end
 
     # Singleton access to recipients controller.
@@ -64,12 +70,6 @@ module PagarmeCoreApi
     # @return [TransactionsController] Returns the controller instance.
     def transactions
       TransactionsController.instance
-    end
-
-    # Singleton access to transfers controller.
-    # @return [TransfersController] Returns the controller instance.
-    def transfers
-      TransfersController.instance
     end
 
     # Returns the configuration class for easy access.

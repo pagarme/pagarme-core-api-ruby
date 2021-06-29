@@ -17,34 +17,6 @@ module PagarmeCoreApi
     end
 
     # TODO: type endpoint description here
-    # @param [CreateTransfer] request Required parameter: Example:
-    # @return GetTransfer response from the API call
-    def create_transfer(request)
-      # Prepare query url.
-      _path_url = '/transfers/recipients'
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json',
-        'content-type' => 'application/json; charset=utf-8'
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.post(
-        _query_url,
-        headers: _headers,
-        parameters: request.to_json
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetTransfer.from_hash(decoded)
-    end
-
-    # TODO: type endpoint description here
     # @param [String] transfer_id Required parameter: Example:
     # @return GetTransfer response from the API call
     def get_transfer_by_id(transfer_id)
@@ -65,6 +37,34 @@ module PagarmeCoreApi
       _request = @http_client.get(
         _query_url,
         headers: _headers
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetTransfer.from_hash(decoded)
+    end
+
+    # TODO: type endpoint description here
+    # @param [CreateTransfer] request Required parameter: Example:
+    # @return GetTransfer response from the API call
+    def create_transfer(request)
+      # Prepare query url.
+      _path_url = '/transfers/recipients'
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'content-type' => 'application/json; charset=utf-8'
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.post(
+        _query_url,
+        headers: _headers,
+        parameters: request.to_json
       )
       BasicAuth.apply(_request)
       _context = execute_request(_request)

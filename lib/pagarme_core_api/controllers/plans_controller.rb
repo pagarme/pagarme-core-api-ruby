@@ -16,17 +16,47 @@ module PagarmeCoreApi
       self.class.instance
     end
 
-    # Adds a new item to a plan
+    # Gets a plan
     # @param [String] plan_id Required parameter: Plan id
-    # @param [CreatePlanItemRequest] request Required parameter: Request for
-    # creating a plan item
-    # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetPlanItemResponse response from the API call
-    def create_plan_item(plan_id,
-                         request,
-                         idempotency_key = nil)
+    # @return GetPlanResponse response from the API call
+    def get_plan(plan_id)
       # Prepare query url.
-      _path_url = '/plans/{plan_id}/items'
+      _path_url = '/plans/{plan_id}'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'plan_id' => plan_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json'
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.get(
+        _query_url,
+        headers: _headers
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetPlanResponse.from_hash(decoded)
+    end
+
+    # Updates the metadata from a plan
+    # @param [String] plan_id Required parameter: The plan id
+    # @param [UpdateMetadataRequest] request Required parameter: Request for
+    # updating the plan metadata
+    # @param [String] idempotency_key Optional parameter: Example:
+    # @return GetPlanResponse response from the API call
+    def update_plan_metadata(plan_id,
+                             request,
+                             idempotency_key = nil)
+      # Prepare query url.
+      _path_url = '/Plans/{plan_id}/metadata'
       _path_url = APIHelper.append_url_with_template_parameters(
         _path_url,
         'plan_id' => plan_id
@@ -41,7 +71,7 @@ module PagarmeCoreApi
         'idempotency-key' => idempotency_key
       }
       # Prepare and execute HttpRequest.
-      _request = @http_client.post(
+      _request = @http_client.patch(
         _query_url,
         headers: _headers,
         parameters: request.to_json
@@ -51,7 +81,7 @@ module PagarmeCoreApi
       validate_response(_context)
       # Return appropriate response type.
       decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetPlanItemResponse.from_hash(decoded)
+      GetPlanResponse.from_hash(decoded)
     end
 
     # Updates a plan item
@@ -95,15 +125,56 @@ module PagarmeCoreApi
       GetPlanItemResponse.from_hash(decoded)
     end
 
-    # Gets a plan
+    # Adds a new item to a plan
     # @param [String] plan_id Required parameter: Plan id
-    # @return GetPlanResponse response from the API call
-    def get_plan(plan_id)
+    # @param [CreatePlanItemRequest] request Required parameter: Request for
+    # creating a plan item
+    # @param [String] idempotency_key Optional parameter: Example:
+    # @return GetPlanItemResponse response from the API call
+    def create_plan_item(plan_id,
+                         request,
+                         idempotency_key = nil)
       # Prepare query url.
-      _path_url = '/plans/{plan_id}'
+      _path_url = '/plans/{plan_id}/items'
       _path_url = APIHelper.append_url_with_template_parameters(
         _path_url,
         'plan_id' => plan_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'content-type' => 'application/json; charset=utf-8',
+        'idempotency-key' => idempotency_key
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.post(
+        _query_url,
+        headers: _headers,
+        parameters: request.to_json
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetPlanItemResponse.from_hash(decoded)
+    end
+
+    # Gets a plan item
+    # @param [String] plan_id Required parameter: Plan id
+    # @param [String] plan_item_id Required parameter: Plan item id
+    # @return GetPlanItemResponse response from the API call
+    def get_plan_item(plan_id,
+                      plan_item_id)
+      # Prepare query url.
+      _path_url = '/plans/{plan_id}/items/{plan_item_id}'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'plan_id' => plan_id,
+        'plan_item_id' => plan_item_id
       )
       _query_builder = Configuration.base_uri.dup
       _query_builder << _path_url
@@ -122,78 +193,7 @@ module PagarmeCoreApi
       validate_response(_context)
       # Return appropriate response type.
       decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetPlanResponse.from_hash(decoded)
-    end
-
-    # Deletes a plan
-    # @param [String] plan_id Required parameter: Plan id
-    # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetPlanResponse response from the API call
-    def delete_plan(plan_id,
-                    idempotency_key = nil)
-      # Prepare query url.
-      _path_url = '/plans/{plan_id}'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'plan_id' => plan_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json',
-        'idempotency-key' => idempotency_key
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.delete(
-        _query_url,
-        headers: _headers
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetPlanResponse.from_hash(decoded)
-    end
-
-    # Updates a plan
-    # @param [String] plan_id Required parameter: Plan id
-    # @param [UpdatePlanRequest] request Required parameter: Request for
-    # updating a plan
-    # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetPlanResponse response from the API call
-    def update_plan(plan_id,
-                    request,
-                    idempotency_key = nil)
-      # Prepare query url.
-      _path_url = '/plans/{plan_id}'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'plan_id' => plan_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json',
-        'content-type' => 'application/json; charset=utf-8',
-        'idempotency-key' => idempotency_key
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.put(
-        _query_url,
-        headers: _headers,
-        parameters: request.to_json
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetPlanResponse.from_hash(decoded)
+      GetPlanItemResponse.from_hash(decoded)
     end
 
     # Creates a new plan
@@ -226,6 +226,42 @@ module PagarmeCoreApi
       # Return appropriate response type.
       decoded = APIHelper.json_deserialize(_context.response.raw_body)
       GetPlanResponse.from_hash(decoded)
+    end
+
+    # Removes an item from a plan
+    # @param [String] plan_id Required parameter: Plan id
+    # @param [String] plan_item_id Required parameter: Plan item id
+    # @param [String] idempotency_key Optional parameter: Example:
+    # @return GetPlanItemResponse response from the API call
+    def delete_plan_item(plan_id,
+                         plan_item_id,
+                         idempotency_key = nil)
+      # Prepare query url.
+      _path_url = '/plans/{plan_id}/items/{plan_item_id}'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'plan_id' => plan_id,
+        'plan_item_id' => plan_item_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'idempotency-key' => idempotency_key
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.delete(
+        _query_url,
+        headers: _headers
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetPlanItemResponse.from_hash(decoded)
     end
 
     # Gets all plans
@@ -282,17 +318,17 @@ module PagarmeCoreApi
       ListPlansResponse.from_hash(decoded)
     end
 
-    # Updates the metadata from a plan
-    # @param [String] plan_id Required parameter: The plan id
-    # @param [UpdateMetadataRequest] request Required parameter: Request for
-    # updating the plan metadata
+    # Updates a plan
+    # @param [String] plan_id Required parameter: Plan id
+    # @param [UpdatePlanRequest] request Required parameter: Request for
+    # updating a plan
     # @param [String] idempotency_key Optional parameter: Example:
     # @return GetPlanResponse response from the API call
-    def update_plan_metadata(plan_id,
-                             request,
-                             idempotency_key = nil)
+    def update_plan(plan_id,
+                    request,
+                    idempotency_key = nil)
       # Prepare query url.
-      _path_url = '/Plans/{plan_id}/metadata'
+      _path_url = '/plans/{plan_id}'
       _path_url = APIHelper.append_url_with_template_parameters(
         _path_url,
         'plan_id' => plan_id
@@ -307,7 +343,7 @@ module PagarmeCoreApi
         'idempotency-key' => idempotency_key
       }
       # Prepare and execute HttpRequest.
-      _request = @http_client.patch(
+      _request = @http_client.put(
         _query_url,
         headers: _headers,
         parameters: request.to_json
@@ -320,53 +356,17 @@ module PagarmeCoreApi
       GetPlanResponse.from_hash(decoded)
     end
 
-    # Gets a plan item
+    # Deletes a plan
     # @param [String] plan_id Required parameter: Plan id
-    # @param [String] plan_item_id Required parameter: Plan item id
-    # @return GetPlanItemResponse response from the API call
-    def get_plan_item(plan_id,
-                      plan_item_id)
-      # Prepare query url.
-      _path_url = '/plans/{plan_id}/items/{plan_item_id}'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'plan_id' => plan_id,
-        'plan_item_id' => plan_item_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json'
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.get(
-        _query_url,
-        headers: _headers
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetPlanItemResponse.from_hash(decoded)
-    end
-
-    # Removes an item from a plan
-    # @param [String] plan_id Required parameter: Plan id
-    # @param [String] plan_item_id Required parameter: Plan item id
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetPlanItemResponse response from the API call
-    def delete_plan_item(plan_id,
-                         plan_item_id,
-                         idempotency_key = nil)
+    # @return GetPlanResponse response from the API call
+    def delete_plan(plan_id,
+                    idempotency_key = nil)
       # Prepare query url.
-      _path_url = '/plans/{plan_id}/items/{plan_item_id}'
+      _path_url = '/plans/{plan_id}'
       _path_url = APIHelper.append_url_with_template_parameters(
         _path_url,
-        'plan_id' => plan_id,
-        'plan_item_id' => plan_item_id
+        'plan_id' => plan_id
       )
       _query_builder = Configuration.base_uri.dup
       _query_builder << _path_url
@@ -386,7 +386,7 @@ module PagarmeCoreApi
       validate_response(_context)
       # Return appropriate response type.
       decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetPlanItemResponse.from_hash(decoded)
+      GetPlanResponse.from_hash(decoded)
     end
   end
 end
