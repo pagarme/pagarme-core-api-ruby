@@ -9,7 +9,7 @@ module PagarmeCoreApi
   # are configured in this class.
   class Configuration
     # The base Uri for API calls
-    @base_uri = 'https://api.pagar.me/core/v1'
+    @base_uri = 'https://api.pagar.me/core/v5'
 
     # The username to use with basic authentication
     @basic_auth_user_name = 'TODO: Replace'
