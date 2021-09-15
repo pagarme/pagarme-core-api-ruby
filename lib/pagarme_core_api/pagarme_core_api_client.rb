@@ -18,28 +18,22 @@ module PagarmeCoreApi
       SubscriptionsController.instance
     end
 
-    # Singleton access to invoices controller.
-    # @return [InvoicesController] Returns the controller instance.
-    def invoices
-      InvoicesController.instance
-    end
-
     # Singleton access to orders controller.
     # @return [OrdersController] Returns the controller instance.
     def orders
       OrdersController.instance
     end
 
+    # Singleton access to invoices controller.
+    # @return [InvoicesController] Returns the controller instance.
+    def invoices
+      InvoicesController.instance
+    end
+
     # Singleton access to customers controller.
     # @return [CustomersController] Returns the controller instance.
     def customers
       CustomersController.instance
-    end
-
-    # Singleton access to recipients controller.
-    # @return [RecipientsController] Returns the controller instance.
-    def recipients
-      RecipientsController.instance
     end
 
     # Singleton access to charges controller.
@@ -52,6 +46,12 @@ module PagarmeCoreApi
     # @return [TransfersController] Returns the controller instance.
     def transfers
       TransfersController.instance
+    end
+
+    # Singleton access to recipients controller.
+    # @return [RecipientsController] Returns the controller instance.
+    def recipients
+      RecipientsController.instance
     end
 
     # Singleton access to tokens controller.
