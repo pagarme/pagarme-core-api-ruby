@@ -115,6 +115,10 @@ module PagarmeCoreApi
     # @return [Integer]
     attr_accessor :boleto_due_days
 
+    # Split
+    # @return [GetSubscriptionSplitResponse]
+    attr_accessor :split
+
     # A mapping from model property names to API property names.
     def self.names
       @_hash = {} if @_hash.nil?
@@ -145,6 +149,7 @@ module PagarmeCoreApi
       @_hash['discounts'] = 'discounts'
       @_hash['increments'] = 'increments'
       @_hash['boleto_due_days'] = 'boleto_due_days'
+      @_hash['split'] = 'split'
       @_hash
     end
 
@@ -174,7 +179,8 @@ module PagarmeCoreApi
                    minimum_price = nil,
                    canceled_at = nil,
                    discounts = nil,
-                   boleto_due_days = nil)
+                   boleto_due_days = nil,
+                   split = nil)
       @id = id
       @code = code
       @start_at = start_at
@@ -202,6 +208,7 @@ module PagarmeCoreApi
       @discounts = discounts
       @increments = increments
       @boleto_due_days = boleto_due_days
+      @split = split
     end
 
     # Creates an instance of the object from a hash.
@@ -261,6 +268,8 @@ module PagarmeCoreApi
         end
       end
       boleto_due_days = hash['boleto_due_days']
+      split = GetSubscriptionSplitResponse.from_hash(hash['split']) if
+        hash['split']
 
       # Create object from extracted values.
       GetSubscriptionResponse.new(id,
@@ -289,7 +298,8 @@ module PagarmeCoreApi
                                   minimum_price,
                                   canceled_at,
                                   discounts,
-                                  boleto_due_days)
+                                  boleto_due_days,
+                                  split)
     end
   end
 end

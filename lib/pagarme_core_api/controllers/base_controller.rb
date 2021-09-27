@@ -13,7 +13,7 @@ module PagarmeCoreApi
       @http_call_back = http_call_back
 
       @global_headers = {
-        'user-agent' => 'PagarmeCoreApi - Ruby 5.0.1'
+        'user-agent' => 'PagarmeCoreApi - Ruby 5.1.0'
       }
     end
 
