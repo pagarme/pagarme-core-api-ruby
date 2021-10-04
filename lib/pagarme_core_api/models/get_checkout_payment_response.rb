@@ -111,6 +111,10 @@ module PagarmeCoreApi
     # @return [List of String]
     attr_accessor :accepted_brands
 
+    # Pix payment response
+    # @return [GetCheckoutPixPaymentResponse]
+    attr_accessor :pix
+
     # A mapping from model property names to API property names.
     def self.names
       @_hash = {} if @_hash.nil?
@@ -140,6 +144,7 @@ module PagarmeCoreApi
       @_hash['debit_card'] = 'debit_card'
       @_hash['bank_transfer'] = 'bank_transfer'
       @_hash['accepted_brands'] = 'accepted_brands'
+      @_hash['pix'] = 'pix'
       @_hash
     end
 
@@ -168,7 +173,8 @@ module PagarmeCoreApi
                    closed_at = nil,
                    expires_at = nil,
                    debit_card = nil,
-                   bank_transfer = nil)
+                   bank_transfer = nil,
+                   pix = nil)
       @id = id
       @amount = amount
       @default_payment_method = default_payment_method
@@ -195,6 +201,7 @@ module PagarmeCoreApi
       @debit_card = debit_card
       @bank_transfer = bank_transfer
       @accepted_brands = accepted_brands
+      @pix = pix
     end
 
     # Creates an instance of the object from a hash.
@@ -239,6 +246,8 @@ module PagarmeCoreApi
       if hash['bank_transfer']
         bank_transfer = GetCheckoutBankTransferPaymentResponse.from_hash(hash['bank_transfer'])
       end
+      pix = GetCheckoutPixPaymentResponse.from_hash(hash['pix']) if
+        hash['pix']
 
       # Create object from extracted values.
       GetCheckoutPaymentResponse.new(id,
@@ -266,7 +275,8 @@ module PagarmeCoreApi
                                      closed_at,
                                      expires_at,
                                      debit_card,
-                                     bank_transfer)
+                                     bank_transfer,
+                                     pix)
     end
   end
 end

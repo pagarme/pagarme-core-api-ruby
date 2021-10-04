@@ -66,6 +66,10 @@ module PagarmeCoreApi
     # @return [List of String]
     attr_accessor :accepted_brands
 
+    # Pix payment request
+    # @return [CreateCheckoutPixPaymentRequest]
+    attr_accessor :pix
+
     # A mapping from model property names to API property names.
     def self.names
       @_hash = {} if @_hash.nil?
@@ -85,6 +89,7 @@ module PagarmeCoreApi
       @_hash['billing_address'] = 'billing_address'
       @_hash['bank_transfer'] = 'bank_transfer'
       @_hash['accepted_brands'] = 'accepted_brands'
+      @_hash['pix'] = 'pix'
       @_hash
     end
 
@@ -94,7 +99,6 @@ module PagarmeCoreApi
                    skip_checkout_success_page = nil,
                    billing_address_editable = nil,
                    billing_address = nil,
-                   bank_transfer = nil,
                    accepted_brands = nil,
                    default_payment_method = nil,
                    gateway_affiliation_id = nil,
@@ -102,7 +106,9 @@ module PagarmeCoreApi
                    debit_card = nil,
                    boleto = nil,
                    customer_editable = nil,
-                   expires_in = nil)
+                   expires_in = nil,
+                   bank_transfer = nil,
+                   pix = nil)
       @accepted_payment_methods = accepted_payment_methods
       @accepted_multi_payment_methods = accepted_multi_payment_methods
       @success_url = success_url
@@ -118,6 +124,7 @@ module PagarmeCoreApi
       @billing_address = billing_address
       @bank_transfer = bank_transfer
       @accepted_brands = accepted_brands
+      @pix = pix
     end
 
     # Creates an instance of the object from a hash.
@@ -133,9 +140,6 @@ module PagarmeCoreApi
       if hash['billing_address']
         billing_address = CreateAddressRequest.from_hash(hash['billing_address'])
       end
-      if hash['bank_transfer']
-        bank_transfer = CreateCheckoutBankTransferRequest.from_hash(hash['bank_transfer'])
-      end
       accepted_brands = hash['accepted_brands']
       default_payment_method = hash['default_payment_method']
       gateway_affiliation_id = hash['gateway_affiliation_id']
@@ -149,6 +153,11 @@ module PagarmeCoreApi
         hash['boleto']
       customer_editable = hash['customer_editable']
       expires_in = hash['expires_in']
+      if hash['bank_transfer']
+        bank_transfer = CreateCheckoutBankTransferRequest.from_hash(hash['bank_transfer'])
+      end
+      pix = CreateCheckoutPixPaymentRequest.from_hash(hash['pix']) if
+        hash['pix']
 
       # Create object from extracted values.
       CreateCheckoutPaymentRequest.new(accepted_payment_methods,
@@ -157,7 +166,6 @@ module PagarmeCoreApi
                                        skip_checkout_success_page,
                                        billing_address_editable,
                                        billing_address,
-                                       bank_transfer,
                                        accepted_brands,
                                        default_payment_method,
                                        gateway_affiliation_id,
@@ -165,7 +173,9 @@ module PagarmeCoreApi
                                        debit_card,
                                        boleto,
                                        customer_editable,
-                                       expires_in)
+                                       expires_in,
+                                       bank_transfer,
+                                       pix)
     end
   end
 end

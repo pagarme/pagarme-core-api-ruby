@@ -72,39 +72,6 @@ module PagarmeCoreApi
 
     # TODO: type endpoint description here
     # @param [String] order_id Required parameter: Order Id
-    # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetOrderResponse response from the API call
-    def delete_all_order_items(order_id,
-                               idempotency_key = nil)
-      # Prepare query url.
-      _path_url = '/orders/{orderId}/items'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'orderId' => order_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json',
-        'idempotency-key' => idempotency_key
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.delete(
-        _query_url,
-        headers: _headers
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetOrderResponse.from_hash(decoded)
-    end
-
-    # TODO: type endpoint description here
-    # @param [String] order_id Required parameter: Order Id
     # @param [String] item_id Required parameter: Item Id
     # @param [UpdateOrderItemRequest] request Required parameter: Item Model
     # @param [String] idempotency_key Optional parameter: Example:
@@ -141,6 +108,39 @@ module PagarmeCoreApi
       # Return appropriate response type.
       decoded = APIHelper.json_deserialize(_context.response.raw_body)
       GetOrderItemResponse.from_hash(decoded)
+    end
+
+    # TODO: type endpoint description here
+    # @param [String] order_id Required parameter: Order Id
+    # @param [String] idempotency_key Optional parameter: Example:
+    # @return GetOrderResponse response from the API call
+    def delete_all_order_items(order_id,
+                               idempotency_key = nil)
+      # Prepare query url.
+      _path_url = '/orders/{orderId}/items'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'orderId' => order_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'idempotency-key' => idempotency_key
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.delete(
+        _query_url,
+        headers: _headers
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetOrderResponse.from_hash(decoded)
     end
 
     # TODO: type endpoint description here
