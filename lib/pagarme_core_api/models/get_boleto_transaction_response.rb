@@ -73,6 +73,10 @@ module PagarmeCoreApi
     # @return [DateTime]
     attr_accessor :credit_at
 
+    # Soft Descriptor
+    # @return [String]
+    attr_accessor :statement_descriptor
+
     # A mapping from model property names to API property names.
     def self.names
       @_hash = {} if @_hash.nil?
@@ -92,6 +96,7 @@ module PagarmeCoreApi
       @_hash['paid_amount'] = 'paid_amount'
       @_hash['type'] = 'type'
       @_hash['credit_at'] = 'credit_at'
+      @_hash['statement_descriptor'] = 'statement_descriptor'
       @_hash = super().merge(@_hash)
       @_hash
     end
@@ -109,6 +114,7 @@ module PagarmeCoreApi
                    pdf = nil,
                    paid_amount = nil,
                    type = nil,
+                   statement_descriptor = nil,
                    gateway_id = nil,
                    amount = nil,
                    status = nil,
@@ -144,6 +150,7 @@ module PagarmeCoreApi
       @paid_amount = paid_amount
       @type = type
       @credit_at = credit_at
+      @statement_descriptor = statement_descriptor
 
       # Call the constructor of the base class
       super(gateway_id,
@@ -184,6 +191,7 @@ module PagarmeCoreApi
       pdf = hash['pdf']
       paid_amount = hash['paid_amount']
       type = hash['type']
+      statement_descriptor = hash['statement_descriptor']
       gateway_id = hash['gateway_id']
       amount = hash['amount']
       status = hash['status']
@@ -237,6 +245,7 @@ module PagarmeCoreApi
                                        pdf,
                                        paid_amount,
                                        type,
+                                       statement_descriptor,
                                        gateway_id,
                                        amount,
                                        status,

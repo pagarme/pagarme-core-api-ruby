@@ -40,6 +40,10 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :document_number
 
+    # Soft Descriptor
+    # @return [String]
+    attr_accessor :statement_descriptor
+
     # A mapping from model property names to API property names.
     def self.names
       @_hash = {} if @_hash.nil?
@@ -51,6 +55,7 @@ module PagarmeCoreApi
       @_hash['billing_address_id'] = 'billing_address_id'
       @_hash['nosso_numero'] = 'nosso_numero'
       @_hash['document_number'] = 'document_number'
+      @_hash['statement_descriptor'] = 'statement_descriptor'
       @_hash
     end
 
@@ -60,6 +65,7 @@ module PagarmeCoreApi
                    billing_address = nil,
                    billing_address_id = nil,
                    document_number = nil,
+                   statement_descriptor = nil,
                    due_at = nil,
                    nosso_numero = nil)
       @retries = retries
@@ -70,6 +76,7 @@ module PagarmeCoreApi
       @billing_address_id = billing_address_id
       @nosso_numero = nosso_numero
       @document_number = document_number
+      @statement_descriptor = statement_descriptor
     end
 
     # Creates an instance of the object from a hash.
@@ -85,6 +92,7 @@ module PagarmeCoreApi
       end
       billing_address_id = hash['billing_address_id']
       document_number = hash['document_number']
+      statement_descriptor = hash['statement_descriptor']
       due_at = APIHelper.rfc3339(hash['due_at']) if hash['due_at']
       nosso_numero = hash['nosso_numero']
 
@@ -95,6 +103,7 @@ module PagarmeCoreApi
                                      billing_address,
                                      billing_address_id,
                                      document_number,
+                                     statement_descriptor,
                                      due_at,
                                      nosso_numero)
     end

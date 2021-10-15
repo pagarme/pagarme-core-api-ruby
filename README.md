@@ -8,9 +8,9 @@ This client library is a Ruby gem which can be compiled and used in your Ruby an
 
 1. Open the command line interface or the terminal and navigate to the folder containing the source code.
 2. Run ``` gem build pagarme_core_api.gemspec ``` to build the gem.
-3. Once built, the gem can be installed on the current work environment using ``` gem install pagarme_core_api-5.0.2.gem ```
+3. Once built, the gem can be installed on the current work environment using ``` gem install pagarme_core_api-5.1.0.gem ```
 
-![Building Gem](https://apidocs.io/illustration/ruby?step=buildSDK&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi-Ruby&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.0.2)
+![Building Gem](https://apidocs.io/illustration/ruby?step=buildSDK&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi-Ruby&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.1.0)
 
 ## How to Use
 
@@ -20,41 +20,41 @@ The following section explains how to use the PagarmeCoreApi Ruby Gem in a new R
 
 Close any existing projects in RubyMine&trade; by selecting ``` File -> Close Project ```. Next, click on ``` Create New Project ``` to create a new project from scratch.
 
-![Create a new project in RubyMine](https://apidocs.io/illustration/ruby?step=createNewProject0&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.0.2)
+![Create a new project in RubyMine](https://apidocs.io/illustration/ruby?step=createNewProject0&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.1.0)
 
 Next, provide ``` TestApp ``` as the project name, choose ``` Rails Application ``` as the project type, and click ``` OK ```.
 
-![Create a new Rails Application in RubyMine - step 1](https://apidocs.io/illustration/ruby?step=createNewProject1&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.0.2)
+![Create a new Rails Application in RubyMine - step 1](https://apidocs.io/illustration/ruby?step=createNewProject1&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.1.0)
 
 In the next dialog make sure that correct *Ruby SDK* is being used (minimum 2.0.0) and click ``` OK ```.
 
-![Create a new Rails Application in RubyMine - step 2](https://apidocs.io/illustration/ruby?step=createNewProject2&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.0.2)
+![Create a new Rails Application in RubyMine - step 2](https://apidocs.io/illustration/ruby?step=createNewProject2&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.1.0)
 
 This will create a new Rails Application project with an existing set of files and folder.
 
 ### 2. Add reference of the gem
 
-In order to use the PagarmeCoreApi gem in the new project we must add a gem reference. Locate the ```Gemfile``` in the *Project Explorer* window under the ``` TestApp ``` project node. The file contains references to all gems being used in the project. Here, add the reference to the library gem by adding the following line: ``` gem 'pagarme_core_api', '~> 5.0.2' ```
+In order to use the PagarmeCoreApi gem in the new project we must add a gem reference. Locate the ```Gemfile``` in the *Project Explorer* window under the ``` TestApp ``` project node. The file contains references to all gems being used in the project. Here, add the reference to the library gem by adding the following line: ``` gem 'pagarme_core_api', '~> 5.1.0' ```
 
-![Add references of the Gemfile](https://apidocs.io/illustration/ruby?step=addReference&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.0.2)
+![Add references of the Gemfile](https://apidocs.io/illustration/ruby?step=addReference&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.1.0)
 
 ### 3. Adding a new Rails Controller
 
 Once the ``` TestApp ``` project is created, a folder named ``` controllers ``` will be visible in the *Project Explorer* under the following path: ``` TestApp > app > controllers ```. Right click on this folder and select ``` New -> Run Rails Generator... ```.
 
-![Run Rails Generator on Controllers Folder](https://apidocs.io/illustration/ruby?step=addCode0&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.0.2)
+![Run Rails Generator on Controllers Folder](https://apidocs.io/illustration/ruby?step=addCode0&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.1.0)
 
 Selecting the said option will popup a small window where the generator names are displayed. Here, select the ``` controller ``` template.
 
-![Create a new Controller](https://apidocs.io/illustration/ruby?step=addCode1&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.0.2)
+![Create a new Controller](https://apidocs.io/illustration/ruby?step=addCode1&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.1.0)
 
 Next, a popup window will ask you for a Controller name and included Actions. For controller name provide ``` Hello ``` and include an action named ``` Index ``` and click ``` OK ```.
 
-![Add a new Controller](https://apidocs.io/illustration/ruby?step=addCode2&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.0.2)
+![Add a new Controller](https://apidocs.io/illustration/ruby?step=addCode2&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.1.0)
 
 A new controller class anmed ``` HelloController ``` will be created in a file named ``` hello_controller.rb ``` containing a method named ``` Index ```. In this method, add code for initialization and a sample for its usage.
 
-![Initialize the library](https://apidocs.io/illustration/ruby?step=addCode3&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.0.2)
+![Initialize the library](https://apidocs.io/illustration/ruby?step=addCode3&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.1.0)
 
 ## How to Test
 
@@ -91,7 +91,7 @@ client = PagarmeCoreApi::PagarmeCoreApiClient.new(
 
 The added initlization code can be debugged by putting a breakpoint in the ``` Index ``` method and running the project in debug mode by selecting ``` Run -> Debug 'Development: TestApp' ```.
 
-![Debug the TestApp](https://apidocs.io/illustration/ruby?step=addCode4&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.0.2&initLine=client%2520%253D%2520PagarmeCoreApiClient.new%2528%2527basic_auth_user_name%2527%252C%2520%2527basic_auth_password%2527%2529)
+![Debug the TestApp](https://apidocs.io/illustration/ruby?step=addCode4&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.1.0&initLine=client%2520%253D%2520PagarmeCoreApiClient.new%2528%2527basic_auth_user_name%2527%252C%2520%2527basic_auth_password%2527%2529)
 
 
 
@@ -396,8 +396,8 @@ def get_plans(page = nil,
 #### Example Usage
 
 ```ruby
-page = 243
-size = 243
+page = 82
+size = 82
 name = 'name'
 status = 'status'
 billing_type = 'billing_type'
@@ -713,8 +713,8 @@ def get_subscription_items(subscription_id,
 
 ```ruby
 subscription_id = 'subscription_id'
-page = 80
-size = 80
+page = 82
+size = 82
 name = 'name'
 code = 'code'
 status = 'status'
@@ -829,8 +829,8 @@ def get_subscriptions(page = nil,
 #### Example Usage
 
 ```ruby
-page = 80
-size = 80
+page = 82
+size = 82
 code = 'code'
 billing_type = 'billing_type'
 customer_id = 'customer_id'
@@ -1185,8 +1185,8 @@ def get_discounts(subscription_id,
 
 ```ruby
 subscription_id = 'subscription_id'
-page = 80
-size = 80
+page = 82
+size = 82
 
 result = subscriptions_controller.get_discounts(subscription_id, page, size)
 
@@ -1281,8 +1281,8 @@ def get_increments(subscription_id,
 
 ```ruby
 subscription_id = 'subscription_id'
-page = 80
-size = 80
+page = 82
+size = 82
 
 result = subscriptions_controller.get_increments(subscription_id, page, size)
 
@@ -1481,8 +1481,8 @@ def get_usages(subscription_id,
 ```ruby
 subscription_id = 'subscription_id'
 item_id = 'item_id'
-page = 80
-size = 80
+page = 82
+size = 82
 code = 'code'
 group = 'group'
 used_since = DateTime.now
@@ -1788,8 +1788,8 @@ def get_invoices(page = nil,
 #### Example Usage
 
 ```ruby
-page = 80
-size = 80
+page = 40
+size = 40
 code = 'code'
 customer_id = 'customer_id'
 subscription_id = 'subscription_id'
@@ -1906,8 +1906,8 @@ def get_orders(page = nil,
 #### Example Usage
 
 ```ruby
-page = 80
-size = 80
+page = 40
+size = 40
 code = 'code'
 status = 'status'
 created_since = DateTime.now
@@ -2618,8 +2618,8 @@ def get_access_tokens(customer_id,
 
 ```ruby
 customer_id = 'customer_id'
-page = 38
-size = 38
+page = 40
+size = 40
 
 result = customers_controller.get_access_tokens(customer_id, page, size)
 
@@ -2650,8 +2650,8 @@ def get_cards(customer_id,
 
 ```ruby
 customer_id = 'customer_id'
-page = 38
-size = 38
+page = 40
+size = 40
 
 result = customers_controller.get_cards(customer_id, page, size)
 
@@ -2807,8 +2807,8 @@ def get_addresses(customer_id,
 
 ```ruby
 customer_id = 'customer_id'
-page = 38
-size = 38
+page = 40
+size = 40
 
 result = customers_controller.get_addresses(customer_id, page, size)
 
@@ -2999,8 +2999,8 @@ def get_recipients(page = nil,
 #### Example Usage
 
 ```ruby
-page = 38
-size = 38
+page = 40
+size = 40
 
 result = recipients_controller.get_recipients(page, size)
 
@@ -3130,8 +3130,8 @@ def get_transfers(recipient_id,
 
 ```ruby
 recipient_id = 'recipient_id'
-page = 38
-size = 38
+page = 40
+size = 40
 status = 'status'
 created_since = DateTime.now
 created_until = DateTime.now
@@ -3328,8 +3328,8 @@ def get_anticipations(recipient_id,
 
 ```ruby
 recipient_id = 'recipient_id'
-page = 38
-size = 38
+page = 40
+size = 40
 status = 'status'
 timeframe = 'timeframe'
 payment_date_since = DateTime.now
@@ -3424,8 +3424,8 @@ def get_withdrawals(recipient_id,
 
 ```ruby
 recipient_id = 'recipient_id'
-page = 38
-size = 38
+page = 40
+size = 40
 status = 'status'
 created_since = DateTime.now
 created_until = DateTime.now
@@ -3640,8 +3640,8 @@ def get_charge_transactions(charge_id,
 
 ```ruby
 charge_id = 'charge_id'
-page = 38
-size = 38
+page = 132
+size = 132
 
 result = charges_controller.get_charge_transactions(charge_id, page, size)
 
@@ -3715,8 +3715,8 @@ def get_charges(page = nil,
 #### Example Usage
 
 ```ruby
-page = 38
-size = 38
+page = 132
+size = 132
 code = 'code'
 status = 'status'
 payment_method = 'payment_method'
@@ -4328,8 +4328,8 @@ def get_sellers(page = nil,
 #### Example Usage
 
 ```ruby
-page = 129
-size = 129
+page = 132
+size = 132
 name = 'name'
 document = 'document'
 code = 'code'
