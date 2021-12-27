@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Request for updating the payment method of a charge
   class UpdateChargePaymentMethodRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Indicates if the payment method from the subscription must also be updated
     # @return [Boolean]
     attr_accessor :update_subscription
@@ -57,6 +60,16 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(update_subscription = nil,
                    payment_method = nil,
                    credit_card = nil,
@@ -66,15 +79,15 @@ module PagarmeCoreApi
                    cash = nil,
                    bank_transfer = nil,
                    private_label = nil)
-      @update_subscription = update_subscription
-      @payment_method = payment_method
-      @credit_card = credit_card
-      @debit_card = debit_card
-      @boleto = boleto
-      @voucher = voucher
-      @cash = cash
-      @bank_transfer = bank_transfer
-      @private_label = private_label
+      @update_subscription = update_subscription unless update_subscription == SKIP
+      @payment_method = payment_method unless payment_method == SKIP
+      @credit_card = credit_card unless credit_card == SKIP
+      @debit_card = debit_card unless debit_card == SKIP
+      @boleto = boleto unless boleto == SKIP
+      @voucher = voucher unless voucher == SKIP
+      @cash = cash unless cash == SKIP
+      @bank_transfer = bank_transfer unless bank_transfer == SKIP
+      @private_label = private_label unless private_label == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -82,25 +95,21 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      update_subscription = hash['update_subscription']
-      payment_method = hash['payment_method']
-      if hash['credit_card']
-        credit_card = CreateCreditCardPaymentRequest.from_hash(hash['credit_card'])
-      end
-      if hash['debit_card']
-        debit_card = CreateDebitCardPaymentRequest.from_hash(hash['debit_card'])
-      end
-      boleto = CreateBoletoPaymentRequest.from_hash(hash['boleto']) if
-        hash['boleto']
-      voucher = CreateVoucherPaymentRequest.from_hash(hash['voucher']) if
-        hash['voucher']
+      update_subscription =
+        hash.key?('update_subscription') ? hash['update_subscription'] : SKIP
+      payment_method =
+        hash.key?('payment_method') ? hash['payment_method'] : SKIP
+      credit_card = CreateCreditCardPaymentRequest.from_hash(hash['credit_card']) if
+        hash['credit_card']
+      debit_card = CreateDebitCardPaymentRequest.from_hash(hash['debit_card']) if
+        hash['debit_card']
+      boleto = CreateBoletoPaymentRequest.from_hash(hash['boleto']) if hash['boleto']
+      voucher = CreateVoucherPaymentRequest.from_hash(hash['voucher']) if hash['voucher']
       cash = CreateCashPaymentRequest.from_hash(hash['cash']) if hash['cash']
-      if hash['bank_transfer']
-        bank_transfer = CreateBankTransferPaymentRequest.from_hash(hash['bank_transfer'])
-      end
-      if hash['private_label']
-        private_label = CreatePrivateLabelPaymentRequest.from_hash(hash['private_label'])
-      end
+      bank_transfer = CreateBankTransferPaymentRequest.from_hash(hash['bank_transfer']) if
+        hash['bank_transfer']
+      private_label = CreatePrivateLabelPaymentRequest.from_hash(hash['private_label']) if
+        hash['private_label']
 
       # Create object from extracted values.
       UpdateChargePaymentMethodRequest.new(update_subscription,

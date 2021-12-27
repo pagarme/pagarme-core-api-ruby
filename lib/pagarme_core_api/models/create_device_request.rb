@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Request for creating a device
   class CreateDeviceRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Device's platform
     # @return [String]
     attr_accessor :platform
@@ -17,8 +20,20 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        platform
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(platform = nil)
-      @platform = platform
+      @platform = platform unless platform == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -26,7 +41,7 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      platform = hash['platform']
+      platform = hash.key?('platform') ? hash['platform'] : SKIP
 
       # Create object from extracted values.
       CreateDeviceRequest.new(platform)

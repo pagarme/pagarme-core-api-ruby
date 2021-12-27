@@ -7,6 +7,9 @@ require 'date'
 module PagarmeCoreApi
   # Response object for getting a access token
   class GetAccessTokenResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # TODO: Write general description for this method
     # @return [String]
     attr_accessor :id
@@ -38,16 +41,28 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        customer
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(id = nil,
                    code = nil,
                    status = nil,
                    created_at = nil,
                    customer = nil)
-      @id = id
-      @code = code
-      @status = status
-      @created_at = created_at
-      @customer = customer
+      @id = id unless id == SKIP
+      @code = code unless code == SKIP
+      @status = status unless status == SKIP
+      @created_at = created_at unless created_at == SKIP
+      @customer = customer unless customer == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -55,12 +70,15 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      id = hash['id']
-      code = hash['code']
-      status = hash['status']
-      created_at = APIHelper.rfc3339(hash['created_at']) if hash['created_at']
-      customer = GetCustomerResponse.from_hash(hash['customer']) if
-        hash['customer']
+      id = hash.key?('id') ? hash['id'] : SKIP
+      code = hash.key?('code') ? hash['code'] : SKIP
+      status = hash.key?('status') ? hash['status'] : SKIP
+      created_at = if hash.key?('created_at')
+                     (DateTimeHelper.from_rfc3339(hash['created_at']) if hash['created_at'])
+                   else
+                     SKIP
+                   end
+      customer = GetCustomerResponse.from_hash(hash['customer']) if hash['customer']
 
       # Create object from extracted values.
       GetAccessTokenResponse.new(id,
@@ -68,6 +86,10 @@ module PagarmeCoreApi
                                  status,
                                  created_at,
                                  customer)
+    end
+
+    def to_created_at
+      DateTimeHelper.to_rfc3339(created_at)
     end
   end
 end

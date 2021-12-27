@@ -7,6 +7,9 @@ require 'date'
 module PagarmeCoreApi
   # Response object for getting a usage
   class GetUsageResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Id
     # @return [String]
     attr_accessor :id
@@ -68,6 +71,21 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        deleted_at
+        code
+        group
+        amount
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(id = nil,
                    quantity = nil,
                    description = nil,
@@ -79,17 +97,17 @@ module PagarmeCoreApi
                    code = nil,
                    group = nil,
                    amount = nil)
-      @id = id
-      @quantity = quantity
-      @description = description
-      @used_at = used_at
-      @created_at = created_at
-      @status = status
-      @deleted_at = deleted_at
-      @subscription_item = subscription_item
-      @code = code
-      @group = group
-      @amount = amount
+      @id = id unless id == SKIP
+      @quantity = quantity unless quantity == SKIP
+      @description = description unless description == SKIP
+      @used_at = used_at unless used_at == SKIP
+      @created_at = created_at unless created_at == SKIP
+      @status = status unless status == SKIP
+      @deleted_at = deleted_at unless deleted_at == SKIP
+      @subscription_item = subscription_item unless subscription_item == SKIP
+      @code = code unless code == SKIP
+      @group = group unless group == SKIP
+      @amount = amount unless amount == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -97,19 +115,30 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      id = hash['id']
-      quantity = hash['quantity']
-      description = hash['description']
-      used_at = APIHelper.rfc3339(hash['used_at']) if hash['used_at']
-      created_at = APIHelper.rfc3339(hash['created_at']) if hash['created_at']
-      status = hash['status']
-      if hash['subscription_item']
-        subscription_item = GetSubscriptionItemResponse.from_hash(hash['subscription_item'])
-      end
-      deleted_at = APIHelper.rfc3339(hash['deleted_at']) if hash['deleted_at']
-      code = hash['code']
-      group = hash['group']
-      amount = hash['amount']
+      id = hash.key?('id') ? hash['id'] : SKIP
+      quantity = hash.key?('quantity') ? hash['quantity'] : SKIP
+      description = hash.key?('description') ? hash['description'] : SKIP
+      used_at = if hash.key?('used_at')
+                  (DateTimeHelper.from_rfc3339(hash['used_at']) if hash['used_at'])
+                else
+                  SKIP
+                end
+      created_at = if hash.key?('created_at')
+                     (DateTimeHelper.from_rfc3339(hash['created_at']) if hash['created_at'])
+                   else
+                     SKIP
+                   end
+      status = hash.key?('status') ? hash['status'] : SKIP
+      subscription_item = GetSubscriptionItemResponse.from_hash(hash['subscription_item']) if
+        hash['subscription_item']
+      deleted_at = if hash.key?('deleted_at')
+                     (DateTimeHelper.from_rfc3339(hash['deleted_at']) if hash['deleted_at'])
+                   else
+                     SKIP
+                   end
+      code = hash.key?('code') ? hash['code'] : SKIP
+      group = hash.key?('group') ? hash['group'] : SKIP
+      amount = hash.key?('amount') ? hash['amount'] : SKIP
 
       # Create object from extracted values.
       GetUsageResponse.new(id,
@@ -123,6 +152,18 @@ module PagarmeCoreApi
                            code,
                            group,
                            amount)
+    end
+
+    def to_used_at
+      DateTimeHelper.to_rfc3339(used_at)
+    end
+
+    def to_created_at
+      DateTimeHelper.to_rfc3339(created_at)
+    end
+
+    def to_deleted_at
+      DateTimeHelper.to_rfc3339(deleted_at)
     end
   end
 end

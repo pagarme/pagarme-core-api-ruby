@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Split response
   class GetSplitResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Type
     # @return [String]
     attr_accessor :type
@@ -42,18 +45,31 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        recipient
+        options
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(type = nil,
                    amount = nil,
                    gateway_id = nil,
                    id = nil,
                    recipient = nil,
                    options = nil)
-      @type = type
-      @amount = amount
-      @recipient = recipient
-      @gateway_id = gateway_id
-      @options = options
-      @id = id
+      @type = type unless type == SKIP
+      @amount = amount unless amount == SKIP
+      @recipient = recipient unless recipient == SKIP
+      @gateway_id = gateway_id unless gateway_id == SKIP
+      @options = options unless options == SKIP
+      @id = id unless id == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -61,14 +77,12 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      type = hash['type']
-      amount = hash['amount']
-      gateway_id = hash['gateway_id']
-      id = hash['id']
-      recipient = GetRecipientResponse.from_hash(hash['recipient']) if
-        hash['recipient']
-      options = GetSplitOptionsResponse.from_hash(hash['options']) if
-        hash['options']
+      type = hash.key?('type') ? hash['type'] : SKIP
+      amount = hash.key?('amount') ? hash['amount'] : SKIP
+      gateway_id = hash.key?('gateway_id') ? hash['gateway_id'] : SKIP
+      id = hash.key?('id') ? hash['id'] : SKIP
+      recipient = GetRecipientResponse.from_hash(hash['recipient']) if hash['recipient']
+      options = GetSplitOptionsResponse.from_hash(hash['options']) if hash['options']
 
       # Create object from extracted values.
       GetSplitResponse.new(type,

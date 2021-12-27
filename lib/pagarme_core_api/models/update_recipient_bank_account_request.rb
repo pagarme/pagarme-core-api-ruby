@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Updates the default bank account for a recipient
   class UpdateRecipientBankAccountRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Bank account
     # @return [CreateBankAccountRequest]
     attr_accessor :bank_account
@@ -22,10 +25,20 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(bank_account = nil,
                    payment_mode = 'bank_transfer')
-      @bank_account = bank_account
-      @payment_mode = payment_mode
+      @bank_account = bank_account unless bank_account == SKIP
+      @payment_mode = payment_mode unless payment_mode == SKIP
     end
 
     # Creates an instance of the object from a hash.

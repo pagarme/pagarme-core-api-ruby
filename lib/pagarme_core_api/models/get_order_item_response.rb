@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Response object for getting an order item
   class GetOrderItemResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Id
     # @return [String]
     attr_accessor :id
@@ -47,6 +50,18 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        get_seller_response
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(id = nil,
                    amount = nil,
                    description = nil,
@@ -54,13 +69,13 @@ module PagarmeCoreApi
                    category = nil,
                    code = nil,
                    get_seller_response = nil)
-      @id = id
-      @amount = amount
-      @description = description
-      @quantity = quantity
-      @get_seller_response = get_seller_response
-      @category = category
-      @code = code
+      @id = id unless id == SKIP
+      @amount = amount unless amount == SKIP
+      @description = description unless description == SKIP
+      @quantity = quantity unless quantity == SKIP
+      @get_seller_response = get_seller_response unless get_seller_response == SKIP
+      @category = category unless category == SKIP
+      @code = code unless code == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -68,15 +83,14 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      id = hash['id']
-      amount = hash['amount']
-      description = hash['description']
-      quantity = hash['quantity']
-      category = hash['category']
-      code = hash['code']
-      if hash['GetSellerResponse']
-        get_seller_response = GetSellerResponse.from_hash(hash['GetSellerResponse'])
-      end
+      id = hash.key?('id') ? hash['id'] : SKIP
+      amount = hash.key?('amount') ? hash['amount'] : SKIP
+      description = hash.key?('description') ? hash['description'] : SKIP
+      quantity = hash.key?('quantity') ? hash['quantity'] : SKIP
+      category = hash.key?('category') ? hash['category'] : SKIP
+      code = hash.key?('code') ? hash['code'] : SKIP
+      get_seller_response = GetSellerResponse.from_hash(hash['GetSellerResponse']) if
+        hash['GetSellerResponse']
 
       # Create object from extracted values.
       GetOrderItemResponse.new(id,

@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # UpdateSellerRequest Model.
   class UpdateSellerRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Seller name
     # @return [String]
     attr_accessor :name
@@ -35,7 +38,7 @@ module PagarmeCoreApi
     attr_accessor :address
 
     # Seller document CPF or CNPJ
-    # @return [Array<String, String>]
+    # @return [Hash]
     attr_accessor :metadata
 
     # A mapping from model property names to API property names.
@@ -52,6 +55,16 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(name = nil,
                    code = nil,
                    description = nil,
@@ -60,14 +73,14 @@ module PagarmeCoreApi
                    type = nil,
                    address = nil,
                    metadata = nil)
-      @name = name
-      @code = code
-      @description = description
-      @document = document
-      @status = status
-      @type = type
-      @address = address
-      @metadata = metadata
+      @name = name unless name == SKIP
+      @code = code unless code == SKIP
+      @description = description unless description == SKIP
+      @document = document unless document == SKIP
+      @status = status unless status == SKIP
+      @type = type unless type == SKIP
+      @address = address unless address == SKIP
+      @metadata = metadata unless metadata == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -75,15 +88,14 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      name = hash['name']
-      code = hash['code']
-      description = hash['description']
-      document = hash['document']
-      status = hash['status']
-      type = hash['type']
-      address = CreateAddressRequest.from_hash(hash['address']) if
-        hash['address']
-      metadata = hash['metadata']
+      name = hash.key?('name') ? hash['name'] : SKIP
+      code = hash.key?('code') ? hash['code'] : SKIP
+      description = hash.key?('description') ? hash['description'] : SKIP
+      document = hash.key?('document') ? hash['document'] : SKIP
+      status = hash.key?('status') ? hash['status'] : SKIP
+      type = hash.key?('type') ? hash['type'] : SKIP
+      address = CreateAddressRequest.from_hash(hash['address']) if hash['address']
+      metadata = hash.key?('metadata') ? hash['metadata'] : SKIP
 
       # Create object from extracted values.
       UpdateSellerRequest.new(name,

@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Object used for returning lists of objects with pagination
   class PagingResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Total number of pages
     # @return [Integer]
     attr_accessor :total
@@ -27,12 +30,22 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(total = nil,
                    previous = nil,
                    mnext = nil)
-      @total = total
-      @previous = previous
-      @mnext = mnext
+      @total = total unless total == SKIP
+      @previous = previous unless previous == SKIP
+      @mnext = mnext unless mnext == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -40,9 +53,9 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      total = hash['total']
-      previous = hash['previous']
-      mnext = hash['next']
+      total = hash.key?('total') ? hash['total'] : SKIP
+      previous = hash.key?('previous') ? hash['previous'] : SKIP
+      mnext = hash.key?('next') ? hash['next'] : SKIP
 
       # Create object from extracted values.
       PagingResponse.new(total,

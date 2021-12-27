@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Response object for getting a pricing scheme
   class GetPricingSchemeResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # TODO: Write general description for this method
     # @return [Integer]
     attr_accessor :price
@@ -37,16 +40,29 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        minimum_price
+        percentage
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(price = nil,
                    scheme_type = nil,
                    price_brackets = nil,
                    minimum_price = nil,
                    percentage = nil)
-      @price = price
-      @scheme_type = scheme_type
-      @price_brackets = price_brackets
-      @minimum_price = minimum_price
-      @percentage = percentage
+      @price = price unless price == SKIP
+      @scheme_type = scheme_type unless scheme_type == SKIP
+      @price_brackets = price_brackets unless price_brackets == SKIP
+      @minimum_price = minimum_price unless minimum_price == SKIP
+      @percentage = percentage unless percentage == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -54,8 +70,8 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      price = hash['price']
-      scheme_type = hash['scheme_type']
+      price = hash.key?('price') ? hash['price'] : SKIP
+      scheme_type = hash.key?('scheme_type') ? hash['scheme_type'] : SKIP
       # Parameter is an array, so we need to iterate through it
       price_brackets = nil
       unless hash['price_brackets'].nil?
@@ -64,8 +80,10 @@ module PagarmeCoreApi
           price_brackets << (GetPriceBracketResponse.from_hash(structure) if structure)
         end
       end
-      minimum_price = hash['minimum_price']
-      percentage = hash['percentage']
+
+      price_brackets = SKIP unless hash.key?('price_brackets')
+      minimum_price = hash.key?('minimum_price') ? hash['minimum_price'] : SKIP
+      percentage = hash.key?('percentage') ? hash['percentage'] : SKIP
 
       # Create object from extracted values.
       GetPricingSchemeResponse.new(price,

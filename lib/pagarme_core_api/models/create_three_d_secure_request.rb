@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Creates a 3D-S authentication payment
   class CreateThreeDSecureRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # The MPI Vendor (MerchantPlugin)
     # @return [String]
     attr_accessor :mpi
@@ -47,6 +50,23 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        cavv
+        eci
+        transaction_id
+        success_url
+        ds_transaction_id
+        version
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(mpi = nil,
                    cavv = nil,
                    eci = nil,
@@ -54,13 +74,13 @@ module PagarmeCoreApi
                    success_url = nil,
                    ds_transaction_id = nil,
                    version = nil)
-      @mpi = mpi
-      @cavv = cavv
-      @eci = eci
-      @transaction_id = transaction_id
-      @success_url = success_url
-      @ds_transaction_id = ds_transaction_id
-      @version = version
+      @mpi = mpi unless mpi == SKIP
+      @cavv = cavv unless cavv == SKIP
+      @eci = eci unless eci == SKIP
+      @transaction_id = transaction_id unless transaction_id == SKIP
+      @success_url = success_url unless success_url == SKIP
+      @ds_transaction_id = ds_transaction_id unless ds_transaction_id == SKIP
+      @version = version unless version == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -68,13 +88,15 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      mpi = hash['mpi']
-      cavv = hash['cavv']
-      eci = hash['eci']
-      transaction_id = hash['transaction_id']
-      success_url = hash['success_url']
-      ds_transaction_id = hash['ds_transaction_id']
-      version = hash['version']
+      mpi = hash.key?('mpi') ? hash['mpi'] : SKIP
+      cavv = hash.key?('cavv') ? hash['cavv'] : SKIP
+      eci = hash.key?('eci') ? hash['eci'] : SKIP
+      transaction_id =
+        hash.key?('transaction_id') ? hash['transaction_id'] : SKIP
+      success_url = hash.key?('success_url') ? hash['success_url'] : SKIP
+      ds_transaction_id =
+        hash.key?('ds_transaction_id') ? hash['ds_transaction_id'] : SKIP
+      version = hash.key?('version') ? hash['version'] : SKIP
 
       # Create object from extracted values.
       CreateThreeDSecureRequest.new(mpi,

@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # GetSplitOptionsResponse Model.
   class GetSplitOptionsResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # TODO: Write general description for this method
     # @return [Boolean]
     attr_accessor :liable
@@ -27,12 +30,22 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(liable = nil,
                    charge_processing_fee = nil,
                    charge_remainder_fee = nil)
-      @liable = liable
-      @charge_processing_fee = charge_processing_fee
-      @charge_remainder_fee = charge_remainder_fee
+      @liable = liable unless liable == SKIP
+      @charge_processing_fee = charge_processing_fee unless charge_processing_fee == SKIP
+      @charge_remainder_fee = charge_remainder_fee unless charge_remainder_fee == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -40,9 +53,11 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      liable = hash['liable']
-      charge_processing_fee = hash['charge_processing_fee']
-      charge_remainder_fee = hash['charge_remainder_fee']
+      liable = hash.key?('liable') ? hash['liable'] : SKIP
+      charge_processing_fee =
+        hash.key?('charge_processing_fee') ? hash['charge_processing_fee'] : SKIP
+      charge_remainder_fee =
+        hash.key?('charge_remainder_fee') ? hash['charge_remainder_fee'] : SKIP
 
       # Create object from extracted values.
       GetSplitOptionsResponse.new(liable,

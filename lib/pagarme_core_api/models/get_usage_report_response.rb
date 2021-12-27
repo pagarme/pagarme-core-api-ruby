@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # GetUsageReportResponse Model.
   class GetUsageReportResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # TODO: Write general description for this method
     # @return [String]
     attr_accessor :url
@@ -27,12 +30,22 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(url = nil,
                    usage_report_url = nil,
                    grouped_report_url = nil)
-      @url = url
-      @usage_report_url = usage_report_url
-      @grouped_report_url = grouped_report_url
+      @url = url unless url == SKIP
+      @usage_report_url = usage_report_url unless usage_report_url == SKIP
+      @grouped_report_url = grouped_report_url unless grouped_report_url == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -40,9 +53,11 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      url = hash['url']
-      usage_report_url = hash['usage_report_url']
-      grouped_report_url = hash['grouped_report_url']
+      url = hash.key?('url') ? hash['url'] : SKIP
+      usage_report_url =
+        hash.key?('usage_report_url') ? hash['usage_report_url'] : SKIP
+      grouped_report_url =
+        hash.key?('grouped_report_url') ? hash['grouped_report_url'] : SKIP
 
       # Create object from extracted values.
       GetUsageReportResponse.new(url,

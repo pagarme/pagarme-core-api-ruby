@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # The ApplePay Token Payment Request
   class CreateApplePayRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # The token version
     # @return [String]
     attr_accessor :version
@@ -37,16 +40,26 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(version = nil,
                    data = nil,
                    header = nil,
                    signature = nil,
                    merchant_identifier = nil)
-      @version = version
-      @data = data
-      @header = header
-      @signature = signature
-      @merchant_identifier = merchant_identifier
+      @version = version unless version == SKIP
+      @data = data unless data == SKIP
+      @header = header unless header == SKIP
+      @signature = signature unless signature == SKIP
+      @merchant_identifier = merchant_identifier unless merchant_identifier == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -54,12 +67,12 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      version = hash['version']
-      data = hash['data']
-      header = CreateApplePayHeaderRequest.from_hash(hash['header']) if
-        hash['header']
-      signature = hash['signature']
-      merchant_identifier = hash['merchant_identifier']
+      version = hash.key?('version') ? hash['version'] : SKIP
+      data = hash.key?('data') ? hash['data'] : SKIP
+      header = CreateApplePayHeaderRequest.from_hash(hash['header']) if hash['header']
+      signature = hash.key?('signature') ? hash['signature'] : SKIP
+      merchant_identifier =
+        hash.key?('merchant_identifier') ? hash['merchant_identifier'] : SKIP
 
       # Create object from extracted values.
       CreateApplePayRequest.new(version,

@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Request for updating a subscription item
   class UpdateSubscriptionItemRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Description
     # @return [String]
     attr_accessor :description
@@ -47,6 +50,20 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        cycles
+        quantity
+        minimum_price
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(description = nil,
                    status = nil,
                    pricing_scheme = nil,
@@ -54,13 +71,13 @@ module PagarmeCoreApi
                    cycles = nil,
                    quantity = nil,
                    minimum_price = nil)
-      @description = description
-      @status = status
-      @pricing_scheme = pricing_scheme
-      @name = name
-      @cycles = cycles
-      @quantity = quantity
-      @minimum_price = minimum_price
+      @description = description unless description == SKIP
+      @status = status unless status == SKIP
+      @pricing_scheme = pricing_scheme unless pricing_scheme == SKIP
+      @name = name unless name == SKIP
+      @cycles = cycles unless cycles == SKIP
+      @quantity = quantity unless quantity == SKIP
+      @minimum_price = minimum_price unless minimum_price == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -68,15 +85,14 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      description = hash['description']
-      status = hash['status']
-      if hash['pricing_scheme']
-        pricing_scheme = UpdatePricingSchemeRequest.from_hash(hash['pricing_scheme'])
-      end
-      name = hash['name']
-      cycles = hash['cycles']
-      quantity = hash['quantity']
-      minimum_price = hash['minimum_price']
+      description = hash.key?('description') ? hash['description'] : SKIP
+      status = hash.key?('status') ? hash['status'] : SKIP
+      pricing_scheme = UpdatePricingSchemeRequest.from_hash(hash['pricing_scheme']) if
+        hash['pricing_scheme']
+      name = hash.key?('name') ? hash['name'] : SKIP
+      cycles = hash.key?('cycles') ? hash['cycles'] : SKIP
+      quantity = hash.key?('quantity') ? hash['quantity'] : SKIP
+      minimum_price = hash.key?('minimum_price') ? hash['minimum_price'] : SKIP
 
       # Create object from extracted values.
       UpdateSubscriptionItemRequest.new(description,

@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # GetCheckoutCreditCardPaymentResponse Model.
   class GetCheckoutCreditCardPaymentResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Descrição na fatura
     # @return [String]
     attr_accessor :statement_descriptor
@@ -27,12 +30,22 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(statement_descriptor = nil,
                    installments = nil,
                    authentication = nil)
-      @statement_descriptor = statement_descriptor
-      @installments = installments
-      @authentication = authentication
+      @statement_descriptor = statement_descriptor unless statement_descriptor == SKIP
+      @installments = installments unless installments == SKIP
+      @authentication = authentication unless authentication == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -40,7 +53,8 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      statement_descriptor = hash['statementDescriptor']
+      statement_descriptor =
+        hash.key?('statementDescriptor') ? hash['statementDescriptor'] : SKIP
       # Parameter is an array, so we need to iterate through it
       installments = nil
       unless hash['installments'].nil?
@@ -49,9 +63,10 @@ module PagarmeCoreApi
           installments << (GetCheckoutCardInstallmentOptionsResponse.from_hash(structure) if structure)
         end
       end
-      if hash['authentication']
-        authentication = GetPaymentAuthenticationResponse.from_hash(hash['authentication'])
-      end
+
+      installments = SKIP unless hash.key?('installments')
+      authentication = GetPaymentAuthenticationResponse.from_hash(hash['authentication']) if
+        hash['authentication']
 
       # Create object from extracted values.
       GetCheckoutCreditCardPaymentResponse.new(statement_descriptor,

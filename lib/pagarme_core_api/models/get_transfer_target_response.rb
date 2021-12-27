@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # GetTransferTargetResponse Model.
   class GetTransferTargetResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # TODO: Write general description for this method
     # @return [String]
     attr_accessor :target_id
@@ -22,10 +25,20 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(target_id = nil,
                    type = nil)
-      @target_id = target_id
-      @type = type
+      @target_id = target_id unless target_id == SKIP
+      @type = type unless type == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -33,8 +46,8 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      target_id = hash['target_id']
-      type = hash['type']
+      target_id = hash.key?('target_id') ? hash['target_id'] : SKIP
+      type = hash.key?('type') ? hash['type'] : SKIP
 
       # Create object from extracted values.
       GetTransferTargetResponse.new(target_id,

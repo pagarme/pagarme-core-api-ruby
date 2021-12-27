@@ -15,8 +15,8 @@ module PagarmeCoreApi
     end
 
     # A controller will call this method after making an HTTP Request.
-    # @param [HttpContext] The HttpContext of the API call.
-    def on_after_response(_http_context)
+    # @param [HttpResponse] The HttpReponse of the API call.
+    def on_after_response(_http_response)
       raise NotImplementedError, 'This method needs
         to be implemented in a child class.'
     end

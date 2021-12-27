@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Request for creating a bank transfer payment
   class CreateBankTransferPaymentRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Bank
     # @return [String]
     attr_accessor :bank
@@ -22,10 +25,20 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(bank = nil,
                    retries = nil)
-      @bank = bank
-      @retries = retries
+      @bank = bank unless bank == SKIP
+      @retries = retries unless retries == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -33,8 +46,8 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      bank = hash['bank']
-      retries = hash['retries']
+      bank = hash.key?('bank') ? hash['bank'] : SKIP
+      retries = hash.key?('retries') ? hash['retries'] : SKIP
 
       # Create object from extracted values.
       CreateBankTransferPaymentRequest.new(bank,

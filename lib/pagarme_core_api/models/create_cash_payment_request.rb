@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # CreateCashPaymentRequest Model.
   class CreateCashPaymentRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Description
     # @return [String]
     attr_accessor :description
@@ -22,10 +25,20 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(description = nil,
                    confirm = nil)
-      @description = description
-      @confirm = confirm
+      @description = description unless description == SKIP
+      @confirm = confirm unless confirm == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -33,8 +46,8 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      description = hash['description']
-      confirm = hash['confirm']
+      description = hash.key?('description') ? hash['description'] : SKIP
+      confirm = hash.key?('confirm') ? hash['confirm'] : SKIP
 
       # Create object from extracted values.
       CreateCashPaymentRequest.new(description,

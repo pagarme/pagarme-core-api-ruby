@@ -7,6 +7,9 @@ require 'date'
 module PagarmeCoreApi
   # GetTransactionReportFileResponse Model.
   class GetTransactionReportFileResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # TODO: Write general description for this method
     # @return [String]
     attr_accessor :name
@@ -23,10 +26,20 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(name = nil,
                    date = nil)
-      @name = name
-      @date = date
+      @name = name unless name == SKIP
+      @date = date unless date == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -34,12 +47,20 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      name = hash['name']
-      date = APIHelper.rfc3339(hash['date']) if hash['date']
+      name = hash.key?('name') ? hash['name'] : SKIP
+      date = if hash.key?('date')
+               (DateTimeHelper.from_rfc3339(hash['date']) if hash['date'])
+             else
+               SKIP
+             end
 
       # Create object from extracted values.
       GetTransactionReportFileResponse.new(name,
                                            date)
+    end
+
+    def to_date
+      DateTimeHelper.to_rfc3339(date)
     end
   end
 end

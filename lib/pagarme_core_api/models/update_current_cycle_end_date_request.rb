@@ -7,6 +7,9 @@ require 'date'
 module PagarmeCoreApi
   # Request to update the end date of the current subscription cycle
   class UpdateCurrentCycleEndDateRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Current cycle end date
     # @return [DateTime]
     attr_accessor :end_at
@@ -18,8 +21,20 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        end_at
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(end_at = nil)
-      @end_at = end_at
+      @end_at = end_at unless end_at == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -27,10 +42,18 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      end_at = APIHelper.rfc3339(hash['end_at']) if hash['end_at']
+      end_at = if hash.key?('end_at')
+                 (DateTimeHelper.from_rfc3339(hash['end_at']) if hash['end_at'])
+               else
+                 SKIP
+               end
 
       # Create object from extracted values.
       UpdateCurrentCycleEndDateRequest.new(end_at)
+    end
+
+    def to_end_at
+      DateTimeHelper.to_rfc3339(end_at)
     end
   end
 end

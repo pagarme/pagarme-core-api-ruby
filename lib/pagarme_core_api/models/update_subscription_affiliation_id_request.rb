@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Request for updating a Subscription Affiliation Id
   class UpdateSubscriptionAffiliationIdRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # TODO: Write general description for this method
     # @return [String]
     attr_accessor :gateway_affiliation_id
@@ -17,8 +20,18 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(gateway_affiliation_id = nil)
-      @gateway_affiliation_id = gateway_affiliation_id
+      @gateway_affiliation_id = gateway_affiliation_id unless gateway_affiliation_id == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -26,7 +39,8 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      gateway_affiliation_id = hash['gateway_affiliation_id']
+      gateway_affiliation_id =
+        hash.key?('gateway_affiliation_id') ? hash['gateway_affiliation_id'] : SKIP
 
       # Create object from extracted values.
       UpdateSubscriptionAffiliationIdRequest.new(gateway_affiliation_id)

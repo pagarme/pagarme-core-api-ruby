@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Information about the recipient on the gateway
   class GetGatewayRecipientResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Gateway name
     # @return [String]
     attr_accessor :gateway
@@ -37,16 +40,26 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(gateway = nil,
                    status = nil,
                    pgid = nil,
                    created_at = nil,
                    updated_at = nil)
-      @gateway = gateway
-      @status = status
-      @pgid = pgid
-      @created_at = created_at
-      @updated_at = updated_at
+      @gateway = gateway unless gateway == SKIP
+      @status = status unless status == SKIP
+      @pgid = pgid unless pgid == SKIP
+      @created_at = created_at unless created_at == SKIP
+      @updated_at = updated_at unless updated_at == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -54,11 +67,11 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      gateway = hash['gateway']
-      status = hash['status']
-      pgid = hash['pgid']
-      created_at = hash['created_at']
-      updated_at = hash['updated_at']
+      gateway = hash.key?('gateway') ? hash['gateway'] : SKIP
+      status = hash.key?('status') ? hash['status'] : SKIP
+      pgid = hash.key?('pgid') ? hash['pgid'] : SKIP
+      created_at = hash.key?('created_at') ? hash['created_at'] : SKIP
+      updated_at = hash.key?('updated_at') ? hash['updated_at'] : SKIP
 
       # Create object from extracted values.
       GetGatewayRecipientResponse.new(gateway,

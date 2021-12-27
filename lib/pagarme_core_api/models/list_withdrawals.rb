@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # ListWithdrawals Model.
   class ListWithdrawals < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # The Increments response
     # @return [List of GetWithdrawResponse]
     attr_accessor :data
@@ -22,10 +25,20 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(data = nil,
                    paging = nil)
-      @data = data
-      @paging = paging
+      @data = data unless data == SKIP
+      @paging = paging unless paging == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -41,6 +54,8 @@ module PagarmeCoreApi
           data << (GetWithdrawResponse.from_hash(structure) if structure)
         end
       end
+
+      data = SKIP unless hash.key?('data')
       paging = PagingResponse.from_hash(hash['paging']) if hash['paging']
 
       # Create object from extracted values.

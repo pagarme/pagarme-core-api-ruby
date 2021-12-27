@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Checkout card payment request
   class CreateCheckoutCreditCardPaymentRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Card invoice text descriptor
     # @return [String]
     attr_accessor :statement_descriptor
@@ -32,14 +35,29 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        statement_descriptor
+        installments
+        authentication
+        capture
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(statement_descriptor = nil,
                    installments = nil,
                    authentication = nil,
                    capture = nil)
-      @statement_descriptor = statement_descriptor
-      @installments = installments
-      @authentication = authentication
-      @capture = capture
+      @statement_descriptor = statement_descriptor unless statement_descriptor == SKIP
+      @installments = installments unless installments == SKIP
+      @authentication = authentication unless authentication == SKIP
+      @capture = capture unless capture == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -47,7 +65,8 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      statement_descriptor = hash['statement_descriptor']
+      statement_descriptor =
+        hash.key?('statement_descriptor') ? hash['statement_descriptor'] : SKIP
       # Parameter is an array, so we need to iterate through it
       installments = nil
       unless hash['installments'].nil?
@@ -56,10 +75,11 @@ module PagarmeCoreApi
           installments << (CreateCheckoutCardInstallmentOptionRequest.from_hash(structure) if structure)
         end
       end
-      if hash['authentication']
-        authentication = CreatePaymentAuthenticationRequest.from_hash(hash['authentication'])
-      end
-      capture = hash['capture']
+
+      installments = SKIP unless hash.key?('installments')
+      authentication = CreatePaymentAuthenticationRequest.from_hash(hash['authentication']) if
+        hash['authentication']
+      capture = hash.key?('capture') ? hash['capture'] : SKIP
 
       # Create object from extracted values.
       CreateCheckoutCreditCardPaymentRequest.new(statement_descriptor,

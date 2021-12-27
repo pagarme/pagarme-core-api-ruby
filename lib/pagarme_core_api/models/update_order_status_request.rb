@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # UpdateOrderStatusRequest Model.
   class UpdateOrderStatusRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Order status
     # @return [String]
     attr_accessor :status
@@ -17,8 +20,18 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(status = nil)
-      @status = status
+      @status = status unless status == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -26,7 +39,7 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      status = hash['status']
+      status = hash.key?('status') ? hash['status'] : SKIP
 
       # Create object from extracted values.
       UpdateOrderStatusRequest.new(status)

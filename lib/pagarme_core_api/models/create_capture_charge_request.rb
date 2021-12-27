@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Request for capturing a charge
   class CreateCaptureChargeRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Code for the charge. Sending this field will update the code send on the
     # charge and order creation.
     # @return [String]
@@ -33,14 +36,27 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        amount
+        split
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(code = nil,
                    operation_reference = nil,
                    amount = nil,
                    split = nil)
-      @code = code
-      @amount = amount
-      @split = split
-      @operation_reference = operation_reference
+      @code = code unless code == SKIP
+      @amount = amount unless amount == SKIP
+      @split = split unless split == SKIP
+      @operation_reference = operation_reference unless operation_reference == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -48,9 +64,10 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      code = hash['code']
-      operation_reference = hash['operation_reference']
-      amount = hash['amount']
+      code = hash.key?('code') ? hash['code'] : SKIP
+      operation_reference =
+        hash.key?('operation_reference') ? hash['operation_reference'] : SKIP
+      amount = hash.key?('amount') ? hash['amount'] : SKIP
       # Parameter is an array, so we need to iterate through it
       split = nil
       unless hash['split'].nil?
@@ -59,6 +76,8 @@ module PagarmeCoreApi
           split << (CreateSplitRequest.from_hash(structure) if structure)
         end
       end
+
+      split = SKIP unless hash.key?('split')
 
       # Create object from extracted values.
       CreateCaptureChargeRequest.new(code,

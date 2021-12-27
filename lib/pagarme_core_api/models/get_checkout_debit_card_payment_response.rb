@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # GetCheckoutDebitCardPaymentResponse Model.
   class GetCheckoutDebitCardPaymentResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Descrição na fatura
     # @return [String]
     attr_accessor :statement_descriptor
@@ -22,10 +25,20 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(statement_descriptor = nil,
                    authentication = nil)
-      @statement_descriptor = statement_descriptor
-      @authentication = authentication
+      @statement_descriptor = statement_descriptor unless statement_descriptor == SKIP
+      @authentication = authentication unless authentication == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -33,10 +46,10 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      statement_descriptor = hash['statement_descriptor']
-      if hash['authentication']
-        authentication = GetPaymentAuthenticationResponse.from_hash(hash['authentication'])
-      end
+      statement_descriptor =
+        hash.key?('statement_descriptor') ? hash['statement_descriptor'] : SKIP
+      authentication = GetPaymentAuthenticationResponse.from_hash(hash['authentication']) if
+        hash['authentication']
 
       # Create object from extracted values.
       GetCheckoutDebitCardPaymentResponse.new(statement_descriptor,

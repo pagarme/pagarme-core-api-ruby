@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # The settings for creating a credit card payment
   class CreateCreditCardPaymentRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Number of installments
     # @return [Integer]
     attr_accessor :installments
@@ -83,6 +86,31 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        installments
+        statement_descriptor
+        card
+        card_id
+        card_token
+        recurrence
+        capture
+        extended_limit_enabled
+        extended_limit_code
+        merchant_category_code
+        authentication
+        contactless
+        auto_recovery
+        operation_type
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(installments = 1,
                    statement_descriptor = nil,
                    card = nil,
@@ -97,20 +125,20 @@ module PagarmeCoreApi
                    contactless = nil,
                    auto_recovery = nil,
                    operation_type = nil)
-      @installments = installments
-      @statement_descriptor = statement_descriptor
-      @card = card
-      @card_id = card_id
-      @card_token = card_token
-      @recurrence = recurrence
-      @capture = capture
-      @extended_limit_enabled = extended_limit_enabled
-      @extended_limit_code = extended_limit_code
-      @merchant_category_code = merchant_category_code
-      @authentication = authentication
-      @contactless = contactless
-      @auto_recovery = auto_recovery
-      @operation_type = operation_type
+      @installments = installments unless installments == SKIP
+      @statement_descriptor = statement_descriptor unless statement_descriptor == SKIP
+      @card = card unless card == SKIP
+      @card_id = card_id unless card_id == SKIP
+      @card_token = card_token unless card_token == SKIP
+      @recurrence = recurrence unless recurrence == SKIP
+      @capture = capture unless capture == SKIP
+      @extended_limit_enabled = extended_limit_enabled unless extended_limit_enabled == SKIP
+      @extended_limit_code = extended_limit_code unless extended_limit_code == SKIP
+      @merchant_category_code = merchant_category_code unless merchant_category_code == SKIP
+      @authentication = authentication unless authentication == SKIP
+      @contactless = contactless unless contactless == SKIP
+      @auto_recovery = auto_recovery unless auto_recovery == SKIP
+      @operation_type = operation_type unless operation_type == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -119,23 +147,26 @@ module PagarmeCoreApi
 
       # Extract variables from the hash.
       installments = hash['installments'] ||= 1
-      statement_descriptor = hash['statement_descriptor']
+      statement_descriptor =
+        hash.key?('statement_descriptor') ? hash['statement_descriptor'] : SKIP
       card = CreateCardRequest.from_hash(hash['card']) if hash['card']
-      card_id = hash['card_id']
-      card_token = hash['card_token']
-      recurrence = hash['recurrence']
+      card_id = hash.key?('card_id') ? hash['card_id'] : SKIP
+      card_token = hash.key?('card_token') ? hash['card_token'] : SKIP
+      recurrence = hash.key?('recurrence') ? hash['recurrence'] : SKIP
       capture = hash['capture'] ||= true
-      extended_limit_enabled = hash['extended_limit_enabled']
-      extended_limit_code = hash['extended_limit_code']
-      merchant_category_code = hash['merchant_category_code']
-      if hash['authentication']
-        authentication = CreatePaymentAuthenticationRequest.from_hash(hash['authentication'])
-      end
-      if hash['contactless']
-        contactless = CreateCardPaymentContactlessRequest.from_hash(hash['contactless'])
-      end
-      auto_recovery = hash['auto_recovery']
-      operation_type = hash['operation_type']
+      extended_limit_enabled =
+        hash.key?('extended_limit_enabled') ? hash['extended_limit_enabled'] : SKIP
+      extended_limit_code =
+        hash.key?('extended_limit_code') ? hash['extended_limit_code'] : SKIP
+      merchant_category_code =
+        hash.key?('merchant_category_code') ? hash['merchant_category_code'] : SKIP
+      authentication = CreatePaymentAuthenticationRequest.from_hash(hash['authentication']) if
+        hash['authentication']
+      contactless = CreateCardPaymentContactlessRequest.from_hash(hash['contactless']) if
+        hash['contactless']
+      auto_recovery = hash.key?('auto_recovery') ? hash['auto_recovery'] : SKIP
+      operation_type =
+        hash.key?('operation_type') ? hash['operation_type'] : SKIP
 
       # Create object from extracted values.
       CreateCreditCardPaymentRequest.new(installments,

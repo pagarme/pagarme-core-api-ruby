@@ -7,6 +7,9 @@ require 'date'
 module PagarmeCoreApi
   # Request for updating a charge due date
   class UpdateChargeDueDateRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # The charge's new due date
     # @return [DateTime]
     attr_accessor :due_at
@@ -18,8 +21,20 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        due_at
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(due_at = nil)
-      @due_at = due_at
+      @due_at = due_at unless due_at == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -27,10 +42,18 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      due_at = APIHelper.rfc3339(hash['due_at']) if hash['due_at']
+      due_at = if hash.key?('due_at')
+                 (DateTimeHelper.from_rfc3339(hash['due_at']) if hash['due_at'])
+               else
+                 SKIP
+               end
 
       # Create object from extracted values.
       UpdateChargeDueDateRequest.new(due_at)
+    end
+
+    def to_due_at
+      DateTimeHelper.to_rfc3339(due_at)
     end
   end
 end

@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Request for updating a price bracket
   class UpdatePriceBracketRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Start quantity of the bracket
     # @return [Integer]
     attr_accessor :start_quantity
@@ -32,14 +35,27 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        end_quantity
+        overage_price
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(start_quantity = nil,
                    price = nil,
                    end_quantity = nil,
                    overage_price = nil)
-      @start_quantity = start_quantity
-      @price = price
-      @end_quantity = end_quantity
-      @overage_price = overage_price
+      @start_quantity = start_quantity unless start_quantity == SKIP
+      @price = price unless price == SKIP
+      @end_quantity = end_quantity unless end_quantity == SKIP
+      @overage_price = overage_price unless overage_price == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -47,10 +63,11 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      start_quantity = hash['start_quantity']
-      price = hash['price']
-      end_quantity = hash['end_quantity']
-      overage_price = hash['overage_price']
+      start_quantity =
+        hash.key?('start_quantity') ? hash['start_quantity'] : SKIP
+      price = hash.key?('price') ? hash['price'] : SKIP
+      end_quantity = hash.key?('end_quantity') ? hash['end_quantity'] : SKIP
+      overage_price = hash.key?('overage_price') ? hash['overage_price'] : SKIP
 
       # Create object from extracted values.
       UpdatePriceBracketRequest.new(start_quantity,

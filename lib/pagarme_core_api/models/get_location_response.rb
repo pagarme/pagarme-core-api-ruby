@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Response object for geetting an order location request
   class GetLocationResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Latitude
     # @return [String]
     attr_accessor :latitude
@@ -22,10 +25,20 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(latitude = nil,
                    longitude = nil)
-      @latitude = latitude
-      @longitude = longitude
+      @latitude = latitude unless latitude == SKIP
+      @longitude = longitude unless longitude == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -33,8 +46,8 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      latitude = hash['latitude']
-      longitude = hash['longitude']
+      latitude = hash.key?('latitude') ? hash['latitude'] : SKIP
+      longitude = hash.key?('longitude') ? hash['longitude'] : SKIP
 
       # Create object from extracted values.
       GetLocationResponse.new(latitude,

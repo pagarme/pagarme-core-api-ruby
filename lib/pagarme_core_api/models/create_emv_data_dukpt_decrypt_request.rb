@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # CreateEmvDataDukptDecryptRequest Model.
   class CreateEmvDataDukptDecryptRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Key serial number
     # @return [String]
     attr_accessor :ksn
@@ -17,8 +20,18 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(ksn = nil)
-      @ksn = ksn
+      @ksn = ksn unless ksn == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -26,7 +39,7 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      ksn = hash['ksn']
+      ksn = hash.key?('ksn') ? hash['ksn'] : SKIP
 
       # Create object from extracted values.
       CreateEmvDataDukptDecryptRequest.new(ksn)

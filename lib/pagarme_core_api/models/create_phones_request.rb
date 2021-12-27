@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # CreatePhonesRequest Model.
   class CreatePhonesRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # TODO: Write general description for this method
     # @return [CreatePhoneRequest]
     attr_accessor :home_phone
@@ -22,10 +25,23 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        home_phone
+        mobile_phone
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(home_phone = nil,
                    mobile_phone = nil)
-      @home_phone = home_phone
-      @mobile_phone = mobile_phone
+      @home_phone = home_phone unless home_phone == SKIP
+      @mobile_phone = mobile_phone unless mobile_phone == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -33,10 +49,8 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      home_phone = CreatePhoneRequest.from_hash(hash['home_phone']) if
-        hash['home_phone']
-      mobile_phone = CreatePhoneRequest.from_hash(hash['mobile_phone']) if
-        hash['mobile_phone']
+      home_phone = CreatePhoneRequest.from_hash(hash['home_phone']) if hash['home_phone']
+      mobile_phone = CreatePhoneRequest.from_hash(hash['mobile_phone']) if hash['mobile_phone']
 
       # Create object from extracted values.
       CreatePhonesRequest.new(home_phone,

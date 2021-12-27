@@ -7,6 +7,9 @@ require 'date'
 module PagarmeCoreApi
   # Anticipation
   class GetAnticipationResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Id
     # @return [String]
     attr_accessor :id
@@ -63,6 +66,18 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        recipient
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(id = nil,
                    requested_amount = nil,
                    approved_amount = nil,
@@ -73,16 +88,16 @@ module PagarmeCoreApi
                    status = nil,
                    timeframe = nil,
                    recipient = nil)
-      @id = id
-      @requested_amount = requested_amount
-      @approved_amount = approved_amount
-      @recipient = recipient
-      @pgid = pgid
-      @created_at = created_at
-      @updated_at = updated_at
-      @payment_date = payment_date
-      @status = status
-      @timeframe = timeframe
+      @id = id unless id == SKIP
+      @requested_amount = requested_amount unless requested_amount == SKIP
+      @approved_amount = approved_amount unless approved_amount == SKIP
+      @recipient = recipient unless recipient == SKIP
+      @pgid = pgid unless pgid == SKIP
+      @created_at = created_at unless created_at == SKIP
+      @updated_at = updated_at unless updated_at == SKIP
+      @payment_date = payment_date unless payment_date == SKIP
+      @status = status unless status == SKIP
+      @timeframe = timeframe unless timeframe == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -90,18 +105,30 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      id = hash['id']
-      requested_amount = hash['requested_amount']
-      approved_amount = hash['approved_amount']
-      pgid = hash['pgid']
-      created_at = APIHelper.rfc3339(hash['created_at']) if hash['created_at']
-      updated_at = APIHelper.rfc3339(hash['updated_at']) if hash['updated_at']
-      payment_date = APIHelper.rfc3339(hash['payment_date']) if
-        hash['payment_date']
-      status = hash['status']
-      timeframe = hash['timeframe']
-      recipient = GetRecipientResponse.from_hash(hash['recipient']) if
-        hash['recipient']
+      id = hash.key?('id') ? hash['id'] : SKIP
+      requested_amount =
+        hash.key?('requested_amount') ? hash['requested_amount'] : SKIP
+      approved_amount =
+        hash.key?('approved_amount') ? hash['approved_amount'] : SKIP
+      pgid = hash.key?('pgid') ? hash['pgid'] : SKIP
+      created_at = if hash.key?('created_at')
+                     (DateTimeHelper.from_rfc3339(hash['created_at']) if hash['created_at'])
+                   else
+                     SKIP
+                   end
+      updated_at = if hash.key?('updated_at')
+                     (DateTimeHelper.from_rfc3339(hash['updated_at']) if hash['updated_at'])
+                   else
+                     SKIP
+                   end
+      payment_date = if hash.key?('payment_date')
+                       (DateTimeHelper.from_rfc3339(hash['payment_date']) if hash['payment_date'])
+                     else
+                       SKIP
+                     end
+      status = hash.key?('status') ? hash['status'] : SKIP
+      timeframe = hash.key?('timeframe') ? hash['timeframe'] : SKIP
+      recipient = GetRecipientResponse.from_hash(hash['recipient']) if hash['recipient']
 
       # Create object from extracted values.
       GetAnticipationResponse.new(id,
@@ -114,6 +141,18 @@ module PagarmeCoreApi
                                   status,
                                   timeframe,
                                   recipient)
+    end
+
+    def to_created_at
+      DateTimeHelper.to_rfc3339(created_at)
+    end
+
+    def to_updated_at
+      DateTimeHelper.to_rfc3339(updated_at)
+    end
+
+    def to_payment_date
+      DateTimeHelper.to_rfc3339(payment_date)
     end
   end
 end

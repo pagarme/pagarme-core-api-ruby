@@ -7,6 +7,9 @@ require 'date'
 module PagarmeCoreApi
   # Request for creating a new charge
   class CreateChargeRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Code
     # @return [String]
     attr_accessor :code
@@ -28,7 +31,7 @@ module PagarmeCoreApi
     attr_accessor :payment
 
     # Metadata
-    # @return [Array<String, String>]
+    # @return [Hash]
     attr_accessor :metadata
 
     # The charge due date
@@ -58,6 +61,18 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        due_at
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(code = nil,
                    amount = nil,
                    customer_id = nil,
@@ -67,15 +82,15 @@ module PagarmeCoreApi
                    antifraud = nil,
                    order_id = nil,
                    due_at = nil)
-      @code = code
-      @amount = amount
-      @customer_id = customer_id
-      @customer = customer
-      @payment = payment
-      @metadata = metadata
-      @due_at = due_at
-      @antifraud = antifraud
-      @order_id = order_id
+      @code = code unless code == SKIP
+      @amount = amount unless amount == SKIP
+      @customer_id = customer_id unless customer_id == SKIP
+      @customer = customer unless customer == SKIP
+      @payment = payment unless payment == SKIP
+      @metadata = metadata unless metadata == SKIP
+      @due_at = due_at unless due_at == SKIP
+      @antifraud = antifraud unless antifraud == SKIP
+      @order_id = order_id unless order_id == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -83,18 +98,19 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      code = hash['code']
-      amount = hash['amount']
-      customer_id = hash['customer_id']
-      customer = CreateCustomerRequest.from_hash(hash['customer']) if
-        hash['customer']
-      payment = CreatePaymentRequest.from_hash(hash['payment']) if
-        hash['payment']
-      metadata = hash['metadata']
-      antifraud = CreateAntifraudRequest.from_hash(hash['antifraud']) if
-        hash['antifraud']
-      order_id = hash['order_id']
-      due_at = APIHelper.rfc3339(hash['due_at']) if hash['due_at']
+      code = hash.key?('code') ? hash['code'] : SKIP
+      amount = hash.key?('amount') ? hash['amount'] : SKIP
+      customer_id = hash.key?('customer_id') ? hash['customer_id'] : SKIP
+      customer = CreateCustomerRequest.from_hash(hash['customer']) if hash['customer']
+      payment = CreatePaymentRequest.from_hash(hash['payment']) if hash['payment']
+      metadata = hash.key?('metadata') ? hash['metadata'] : SKIP
+      antifraud = CreateAntifraudRequest.from_hash(hash['antifraud']) if hash['antifraud']
+      order_id = hash.key?('order_id') ? hash['order_id'] : SKIP
+      due_at = if hash.key?('due_at')
+                 (DateTimeHelper.from_rfc3339(hash['due_at']) if hash['due_at'])
+               else
+                 SKIP
+               end
 
       # Create object from extracted values.
       CreateChargeRequest.new(code,
@@ -106,6 +122,10 @@ module PagarmeCoreApi
                               antifraud,
                               order_id,
                               due_at)
+    end
+
+    def to_due_at
+      DateTimeHelper.to_rfc3339(due_at)
     end
   end
 end

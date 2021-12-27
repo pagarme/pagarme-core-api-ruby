@@ -7,6 +7,9 @@ require 'date'
 module PagarmeCoreApi
   # Transfer response
   class GetTransferResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Id
     # @return [String]
     attr_accessor :id
@@ -32,7 +35,7 @@ module PagarmeCoreApi
     attr_accessor :bank_account
 
     # Metadata
-    # @return [Array<String, String>]
+    # @return [Hash]
     attr_accessor :metadata
 
     # A mapping from model property names to API property names.
@@ -48,6 +51,16 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(id = nil,
                    amount = nil,
                    status = nil,
@@ -55,13 +68,13 @@ module PagarmeCoreApi
                    updated_at = nil,
                    bank_account = nil,
                    metadata = nil)
-      @id = id
-      @amount = amount
-      @status = status
-      @created_at = created_at
-      @updated_at = updated_at
-      @bank_account = bank_account
-      @metadata = metadata
+      @id = id unless id == SKIP
+      @amount = amount unless amount == SKIP
+      @status = status unless status == SKIP
+      @created_at = created_at unless created_at == SKIP
+      @updated_at = updated_at unless updated_at == SKIP
+      @bank_account = bank_account unless bank_account == SKIP
+      @metadata = metadata unless metadata == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -69,14 +82,22 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      id = hash['id']
-      amount = hash['amount']
-      status = hash['status']
-      created_at = APIHelper.rfc3339(hash['created_at']) if hash['created_at']
-      updated_at = APIHelper.rfc3339(hash['updated_at']) if hash['updated_at']
+      id = hash.key?('id') ? hash['id'] : SKIP
+      amount = hash.key?('amount') ? hash['amount'] : SKIP
+      status = hash.key?('status') ? hash['status'] : SKIP
+      created_at = if hash.key?('created_at')
+                     (DateTimeHelper.from_rfc3339(hash['created_at']) if hash['created_at'])
+                   else
+                     SKIP
+                   end
+      updated_at = if hash.key?('updated_at')
+                     (DateTimeHelper.from_rfc3339(hash['updated_at']) if hash['updated_at'])
+                   else
+                     SKIP
+                   end
       bank_account = GetBankAccountResponse.from_hash(hash['bank_account']) if
         hash['bank_account']
-      metadata = hash['metadata']
+      metadata = hash.key?('metadata') ? hash['metadata'] : SKIP
 
       # Create object from extracted values.
       GetTransferResponse.new(id,
@@ -86,6 +107,14 @@ module PagarmeCoreApi
                               updated_at,
                               bank_account,
                               metadata)
+    end
+
+    def to_created_at
+      DateTimeHelper.to_rfc3339(created_at)
+    end
+
+    def to_updated_at
+      DateTimeHelper.to_rfc3339(updated_at)
     end
   end
 end

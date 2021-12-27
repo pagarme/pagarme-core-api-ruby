@@ -7,6 +7,9 @@ require 'date'
 module PagarmeCoreApi
   # Response object for getting an Order
   class GetOrderResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # TODO: Write general description for this method
     # @return [String]
     attr_accessor :id
@@ -52,7 +55,7 @@ module PagarmeCoreApi
     attr_accessor :shipping
 
     # TODO: Write general description for this method
-    # @return [Array<String, String>]
+    # @return [Hash]
     attr_accessor :metadata
 
     # Checkout Payment Settings Response
@@ -103,6 +106,23 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        customer
+        checkouts
+        ip
+        session_id
+        location
+        device
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(id = nil,
                    code = nil,
                    currency = nil,
@@ -121,24 +141,24 @@ module PagarmeCoreApi
                    session_id = nil,
                    location = nil,
                    device = nil)
-      @id = id
-      @code = code
-      @currency = currency
-      @items = items
-      @customer = customer
-      @status = status
-      @created_at = created_at
-      @updated_at = updated_at
-      @charges = charges
-      @invoice_url = invoice_url
-      @shipping = shipping
-      @metadata = metadata
-      @checkouts = checkouts
-      @ip = ip
-      @session_id = session_id
-      @location = location
-      @device = device
-      @closed = closed
+      @id = id unless id == SKIP
+      @code = code unless code == SKIP
+      @currency = currency unless currency == SKIP
+      @items = items unless items == SKIP
+      @customer = customer unless customer == SKIP
+      @status = status unless status == SKIP
+      @created_at = created_at unless created_at == SKIP
+      @updated_at = updated_at unless updated_at == SKIP
+      @charges = charges unless charges == SKIP
+      @invoice_url = invoice_url unless invoice_url == SKIP
+      @shipping = shipping unless shipping == SKIP
+      @metadata = metadata unless metadata == SKIP
+      @checkouts = checkouts unless checkouts == SKIP
+      @ip = ip unless ip == SKIP
+      @session_id = session_id unless session_id == SKIP
+      @location = location unless location == SKIP
+      @device = device unless device == SKIP
+      @closed = closed unless closed == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -146,9 +166,9 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      id = hash['id']
-      code = hash['code']
-      currency = hash['currency']
+      id = hash.key?('id') ? hash['id'] : SKIP
+      code = hash.key?('code') ? hash['code'] : SKIP
+      currency = hash.key?('currency') ? hash['currency'] : SKIP
       # Parameter is an array, so we need to iterate through it
       items = nil
       unless hash['items'].nil?
@@ -157,9 +177,19 @@ module PagarmeCoreApi
           items << (GetOrderItemResponse.from_hash(structure) if structure)
         end
       end
-      status = hash['status']
-      created_at = APIHelper.rfc3339(hash['created_at']) if hash['created_at']
-      updated_at = APIHelper.rfc3339(hash['updated_at']) if hash['updated_at']
+
+      items = SKIP unless hash.key?('items')
+      status = hash.key?('status') ? hash['status'] : SKIP
+      created_at = if hash.key?('created_at')
+                     (DateTimeHelper.from_rfc3339(hash['created_at']) if hash['created_at'])
+                   else
+                     SKIP
+                   end
+      updated_at = if hash.key?('updated_at')
+                     (DateTimeHelper.from_rfc3339(hash['updated_at']) if hash['updated_at'])
+                   else
+                     SKIP
+                   end
       # Parameter is an array, so we need to iterate through it
       charges = nil
       unless hash['charges'].nil?
@@ -168,13 +198,13 @@ module PagarmeCoreApi
           charges << (GetChargeResponse.from_hash(structure) if structure)
         end
       end
-      invoice_url = hash['invoice_url']
-      shipping = GetShippingResponse.from_hash(hash['shipping']) if
-        hash['shipping']
-      metadata = hash['metadata']
-      closed = hash['closed']
-      customer = GetCustomerResponse.from_hash(hash['customer']) if
-        hash['customer']
+
+      charges = SKIP unless hash.key?('charges')
+      invoice_url = hash.key?('invoice_url') ? hash['invoice_url'] : SKIP
+      shipping = GetShippingResponse.from_hash(hash['shipping']) if hash['shipping']
+      metadata = hash.key?('metadata') ? hash['metadata'] : SKIP
+      closed = hash.key?('closed') ? hash['closed'] : SKIP
+      customer = GetCustomerResponse.from_hash(hash['customer']) if hash['customer']
       # Parameter is an array, so we need to iterate through it
       checkouts = nil
       unless hash['checkouts'].nil?
@@ -183,10 +213,11 @@ module PagarmeCoreApi
           checkouts << (GetCheckoutPaymentResponse.from_hash(structure) if structure)
         end
       end
-      ip = hash['ip']
-      session_id = hash['session_id']
-      location = GetLocationResponse.from_hash(hash['location']) if
-        hash['location']
+
+      checkouts = SKIP unless hash.key?('checkouts')
+      ip = hash.key?('ip') ? hash['ip'] : SKIP
+      session_id = hash.key?('session_id') ? hash['session_id'] : SKIP
+      location = GetLocationResponse.from_hash(hash['location']) if hash['location']
       device = GetDeviceResponse.from_hash(hash['device']) if hash['device']
 
       # Create object from extracted values.
@@ -208,6 +239,14 @@ module PagarmeCoreApi
                            session_id,
                            location,
                            device)
+    end
+
+    def to_created_at
+      DateTimeHelper.to_rfc3339(created_at)
+    end
+
+    def to_updated_at
+      DateTimeHelper.to_rfc3339(updated_at)
     end
   end
 end

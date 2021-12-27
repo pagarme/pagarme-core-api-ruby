@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Request for updating an address
   class UpdateAddressRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Number
     # @return [String]
     attr_accessor :number
@@ -15,7 +18,7 @@ module PagarmeCoreApi
     attr_accessor :complement
 
     # Metadata
-    # @return [Array<String, String>]
+    # @return [Hash]
     attr_accessor :metadata
 
     # Line 2 for address
@@ -32,14 +35,24 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(number = nil,
                    complement = nil,
                    metadata = nil,
                    line_2 = nil)
-      @number = number
-      @complement = complement
-      @metadata = metadata
-      @line_2 = line_2
+      @number = number unless number == SKIP
+      @complement = complement unless complement == SKIP
+      @metadata = metadata unless metadata == SKIP
+      @line_2 = line_2 unless line_2 == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -47,10 +60,10 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      number = hash['number']
-      complement = hash['complement']
-      metadata = hash['metadata']
-      line_2 = hash['line_2']
+      number = hash.key?('number') ? hash['number'] : SKIP
+      complement = hash.key?('complement') ? hash['complement'] : SKIP
+      metadata = hash.key?('metadata') ? hash['metadata'] : SKIP
+      line_2 = hash.key?('line_2') ? hash['line_2'] : SKIP
 
       # Create object from extracted values.
       UpdateAddressRequest.new(number,

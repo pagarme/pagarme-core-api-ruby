@@ -6,14 +6,43 @@
 module PagarmeCoreApi
   # SubscriptionsController
   class SubscriptionsController < BaseController
-    @instance = SubscriptionsController.new
-
-    class << self
-      attr_accessor :instance
+    def initialize(config, http_call_back: nil)
+      super(config, http_call_back: http_call_back)
     end
 
-    def instance
-      self.class.instance
+    # TODO: type endpoint description here
+    # @param [String] subscription_id Required parameter: Example:
+    # @param [String] idempotency_key Optional parameter: Example:
+    # @return [GetPeriodResponse] response from the API call
+    def renew_subscription(subscription_id,
+                           idempotency_key: nil)
+      # Prepare query url.
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}/cycles'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true }
+      )
+      _query_url = APIHelper.clean_url _query_builder
+
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'idempotency-key' => idempotency_key
+      }
+
+      # Prepare and execute HttpRequest.
+      _request = config.http_client.post(
+        _query_url,
+        headers: _headers
+      )
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_response.raw_body)
+      GetPeriodResponse.from_hash(decoded)
     end
 
     # Updates the credit card from a subscription
@@ -21,36 +50,38 @@ module PagarmeCoreApi
     # @param [UpdateSubscriptionCardRequest] request Required parameter: Request
     # for updating a card
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetSubscriptionResponse response from the API call
+    # @return [GetSubscriptionResponse] response from the API call
     def update_subscription_card(subscription_id,
                                  request,
-                                 idempotency_key = nil)
+                                 idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/card'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}/card'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'content-type' => 'application/json; charset=utf-8',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.patch(
+      _request = config.http_client.patch(
         _query_url,
         headers: _headers,
         parameters: request.to_json
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetSubscriptionResponse.from_hash(decoded)
     end
 
@@ -59,37 +90,39 @@ module PagarmeCoreApi
     # @param [String] item_id Required parameter: The subscription item id
     # @param [String] usage_id Required parameter: The usage id
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetUsageResponse response from the API call
+    # @return [GetUsageResponse] response from the API call
     def delete_usage(subscription_id,
                      item_id,
                      usage_id,
-                     idempotency_key = nil)
+                     idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/items/{item_id}/usages/{usage_id}'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id,
-        'item_id' => item_id,
-        'usage_id' => usage_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}/items/{item_id}/usages/{usage_id}'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true },
+        'item_id' => { 'value' => item_id, 'encode' => true },
+        'usage_id' => { 'value' => usage_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.delete(
+      _request = config.http_client.delete(
         _query_url,
         headers: _headers
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetUsageResponse.from_hash(decoded)
     end
 
@@ -98,36 +131,38 @@ module PagarmeCoreApi
     # @param [CreateDiscountRequest] request Required parameter: Request for
     # creating a discount
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetDiscountResponse response from the API call
+    # @return [GetDiscountResponse] response from the API call
     def create_discount(subscription_id,
                         request,
-                        idempotency_key = nil)
+                        idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/discounts'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}/discounts'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'content-type' => 'application/json; charset=utf-8',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.post(
+      _request = config.http_client.post(
         _query_url,
         headers: _headers,
         parameters: request.to_json
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetDiscountResponse.from_hash(decoded)
     end
 
@@ -135,35 +170,37 @@ module PagarmeCoreApi
     # @param [String] subscription_id Required parameter: Subscription id
     # @param [String] item_id Required parameter: Item id
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetUsageResponse response from the API call
+    # @return [GetUsageResponse] response from the API call
     def create_an_usage(subscription_id,
                         item_id,
-                        idempotency_key = nil)
+                        idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/items/{item_id}/usages'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id,
-        'item_id' => item_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}/items/{item_id}/usages'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true },
+        'item_id' => { 'value' => item_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.post(
+      _request = config.http_client.post(
         _query_url,
         headers: _headers
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetUsageResponse.from_hash(decoded)
     end
 
@@ -172,106 +209,71 @@ module PagarmeCoreApi
     # @param [UpdateCurrentCycleStatusRequest] request Required parameter:
     # Request for updating the end date of the subscription current status
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return void response from the API call
+    # @return [void] response from the API call
     def update_current_cycle_status(subscription_id,
                                     request,
-                                    idempotency_key = nil)
+                                    idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/cycle-status'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}/cycle-status'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'content-type' => 'application/json; charset=utf-8',
-        'idempotency-key' => idempotency_key
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.patch(
-        _query_url,
-        headers: _headers,
-        parameters: request.to_json
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
-    end
 
-    # Updates the payment method from a subscription
-    # @param [String] subscription_id Required parameter: Subscription id
-    # @param [UpdateSubscriptionPaymentMethodRequest] request Required
-    # parameter: Request for updating the paymentmethod from a subscription
-    # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetSubscriptionResponse response from the API call
-    def update_subscription_payment_method(subscription_id,
-                                           request,
-                                           idempotency_key = nil)
-      # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/payment-method'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
       # Prepare headers.
       _headers = {
-        'accept' => 'application/json',
         'content-type' => 'application/json; charset=utf-8',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.patch(
+      _request = config.http_client.patch(
         _query_url,
         headers: _headers,
         parameters: request.to_json
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetSubscriptionResponse.from_hash(decoded)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
     end
 
     # Deletes a discount
     # @param [String] subscription_id Required parameter: Subscription id
     # @param [String] discount_id Required parameter: Discount Id
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetDiscountResponse response from the API call
+    # @return [GetDiscountResponse] response from the API call
     def delete_discount(subscription_id,
                         discount_id,
-                        idempotency_key = nil)
+                        idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/discounts/{discount_id}'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id,
-        'discount_id' => discount_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}/discounts/{discount_id}'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true },
+        'discount_id' => { 'value' => discount_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.delete(
+      _request = config.http_client.delete(
         _query_url,
         headers: _headers
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetDiscountResponse.from_hash(decoded)
     end
 
@@ -288,86 +290,127 @@ module PagarmeCoreApi
     # creation date start range
     # @param [String] created_until Optional parameter: Filter for item's
     # creation date end range
-    # @return ListSubscriptionItemsResponse response from the API call
+    # @return [ListSubscriptionItemsResponse] response from the API call
     def get_subscription_items(subscription_id,
-                               page = nil,
-                               size = nil,
-                               name = nil,
-                               code = nil,
-                               status = nil,
-                               description = nil,
-                               created_since = nil,
-                               created_until = nil)
+                               page: nil,
+                               size: nil,
+                               name: nil,
+                               code: nil,
+                               status: nil,
+                               description: nil,
+                               created_since: nil,
+                               created_until: nil)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/items'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}/items'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_builder = APIHelper.append_url_with_query_parameters(
         _query_builder,
-        {
-          'page' => page,
-          'size' => size,
-          'name' => name,
-          'code' => code,
-          'status' => status,
-          'description' => description,
-          'created_since' => created_since,
-          'created_until' => created_until
-        },
-        array_serialization: Configuration.array_serialization
+        'page' => page,
+        'size' => size,
+        'name' => name,
+        'code' => code,
+        'status' => status,
+        'description' => description,
+        'created_since' => created_since,
+        'created_until' => created_until
       )
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json'
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.get(
+      _request = config.http_client.get(
         _query_url,
         headers: _headers
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       ListSubscriptionItemsResponse.from_hash(decoded)
+    end
+
+    # Updates the payment method from a subscription
+    # @param [String] subscription_id Required parameter: Subscription id
+    # @param [UpdateSubscriptionPaymentMethodRequest] request Required
+    # parameter: Request for updating the paymentmethod from a subscription
+    # @param [String] idempotency_key Optional parameter: Example:
+    # @return [GetSubscriptionResponse] response from the API call
+    def update_subscription_payment_method(subscription_id,
+                                           request,
+                                           idempotency_key: nil)
+      # Prepare query url.
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}/payment-method'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true }
+      )
+      _query_url = APIHelper.clean_url _query_builder
+
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'content-type' => 'application/json; charset=utf-8',
+        'idempotency-key' => idempotency_key
+      }
+
+      # Prepare and execute HttpRequest.
+      _request = config.http_client.patch(
+        _query_url,
+        headers: _headers,
+        parameters: request.to_json
+      )
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_response.raw_body)
+      GetSubscriptionResponse.from_hash(decoded)
     end
 
     # Get Subscription Item
     # @param [String] subscription_id Required parameter: Subscription Id
     # @param [String] item_id Required parameter: Item id
-    # @return GetSubscriptionItemResponse response from the API call
+    # @return [GetSubscriptionItemResponse] response from the API call
     def get_subscription_item(subscription_id,
                               item_id)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/items/{item_id}'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id,
-        'item_id' => item_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}/items/{item_id}'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true },
+        'item_id' => { 'value' => item_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json'
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.get(
+      _request = config.http_client.get(
         _query_url,
         headers: _headers
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetSubscriptionItemResponse.from_hash(decoded)
     end
 
@@ -393,56 +436,55 @@ module PagarmeCoreApi
     # subscription's creation date start range
     # @param [DateTime] created_until Optional parameter: Filter for
     # subscriptions creation date end range
-    # @return ListSubscriptionsResponse response from the API call
-    def get_subscriptions(page = nil,
-                          size = nil,
-                          code = nil,
-                          billing_type = nil,
-                          customer_id = nil,
-                          plan_id = nil,
-                          card_id = nil,
-                          status = nil,
-                          next_billing_since = nil,
-                          next_billing_until = nil,
-                          created_since = nil,
-                          created_until = nil)
+    # @return [ListSubscriptionsResponse] response from the API call
+    def get_subscriptions(page: nil,
+                          size: nil,
+                          code: nil,
+                          billing_type: nil,
+                          customer_id: nil,
+                          plan_id: nil,
+                          card_id: nil,
+                          status: nil,
+                          next_billing_since: nil,
+                          next_billing_until: nil,
+                          created_since: nil,
+                          created_until: nil)
       # Prepare query url.
-      _path_url = '/subscriptions'
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions'
       _query_builder = APIHelper.append_url_with_query_parameters(
         _query_builder,
-        {
-          'page' => page,
-          'size' => size,
-          'code' => code,
-          'billing_type' => billing_type,
-          'customer_id' => customer_id,
-          'plan_id' => plan_id,
-          'card_id' => card_id,
-          'status' => status,
-          'next_billing_since' => next_billing_since,
-          'next_billing_until' => next_billing_until,
-          'created_since' => created_since,
-          'created_until' => created_until
-        },
-        array_serialization: Configuration.array_serialization
+        'page' => page,
+        'size' => size,
+        'code' => code,
+        'billing_type' => billing_type,
+        'customer_id' => customer_id,
+        'plan_id' => plan_id,
+        'card_id' => card_id,
+        'status' => status,
+        'next_billing_since' => next_billing_since,
+        'next_billing_until' => next_billing_until,
+        'created_since' => created_since,
+        'created_until' => created_until
       )
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json'
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.get(
+      _request = config.http_client.get(
         _query_url,
         headers: _headers
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       ListSubscriptionsResponse.from_hash(decoded)
     end
 
@@ -451,36 +493,38 @@ module PagarmeCoreApi
     # @param [CreateCancelSubscriptionRequest] request Optional parameter:
     # Request for cancelling a subscription
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetSubscriptionResponse response from the API call
+    # @return [GetSubscriptionResponse] response from the API call
     def cancel_subscription(subscription_id,
-                            request = nil,
-                            idempotency_key = nil)
+                            request: nil,
+                            idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'content-type' => 'application/json; charset=utf-8',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.delete(
+      _request = config.http_client.delete(
         _query_url,
         headers: _headers,
         parameters: request.to_json
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetSubscriptionResponse.from_hash(decoded)
     end
 
@@ -489,36 +533,38 @@ module PagarmeCoreApi
     # @param [CreateIncrementRequest] request Required parameter: Request for
     # creating a increment
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetIncrementResponse response from the API call
+    # @return [GetIncrementResponse] response from the API call
     def create_increment(subscription_id,
                          request,
-                         idempotency_key = nil)
+                         idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/increments'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}/increments'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'content-type' => 'application/json; charset=utf-8',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.post(
+      _request = config.http_client.post(
         _query_url,
         headers: _headers,
         parameters: request.to_json
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetIncrementResponse.from_hash(decoded)
     end
 
@@ -528,104 +574,145 @@ module PagarmeCoreApi
     # @param [CreateUsageRequest] body Required parameter: Request for creating
     # a usage
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetUsageResponse response from the API call
+    # @return [GetUsageResponse] response from the API call
     def create_usage(subscription_id,
                      item_id,
                      body,
-                     idempotency_key = nil)
+                     idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/items/{item_id}/usages'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id,
-        'item_id' => item_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}/items/{item_id}/usages'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true },
+        'item_id' => { 'value' => item_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'content-type' => 'application/json; charset=utf-8',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.post(
+      _request = config.http_client.post(
         _query_url,
         headers: _headers,
         parameters: body.to_json
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetUsageResponse.from_hash(decoded)
+    end
+
+    # TODO: type endpoint description here
+    # @param [String] subscription_id Required parameter: The subscription id
+    # @param [String] discount_id Required parameter: Example:
+    # @return [GetDiscountResponse] response from the API call
+    def get_discount_by_id(subscription_id,
+                           discount_id)
+      # Prepare query url.
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}/discounts/{discountId}'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true },
+        'discountId' => { 'value' => discount_id, 'encode' => true }
+      )
+      _query_url = APIHelper.clean_url _query_builder
+
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json'
+      }
+
+      # Prepare and execute HttpRequest.
+      _request = config.http_client.get(
+        _query_url,
+        headers: _headers
+      )
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_response.raw_body)
+      GetDiscountResponse.from_hash(decoded)
     end
 
     # Creates a new subscription
     # @param [CreateSubscriptionRequest] body Required parameter: Request for
     # creating a subscription
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetSubscriptionResponse response from the API call
+    # @return [GetSubscriptionResponse] response from the API call
     def create_subscription(body,
-                            idempotency_key = nil)
+                            idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/subscriptions'
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions'
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'content-type' => 'application/json; charset=utf-8',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.post(
+      _request = config.http_client.post(
         _query_url,
         headers: _headers,
         parameters: body.to_json
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetSubscriptionResponse.from_hash(decoded)
     end
 
     # TODO: type endpoint description here
-    # @param [String] subscription_id Required parameter: The subscription id
-    # @param [String] discount_id Required parameter: Example:
-    # @return GetDiscountResponse response from the API call
-    def get_discount_by_id(subscription_id,
-                           discount_id)
+    # @param [String] subscription_id Required parameter: The subscription Id
+    # @param [String] increment_id Required parameter: The increment Id
+    # @return [GetIncrementResponse] response from the API call
+    def get_increment_by_id(subscription_id,
+                            increment_id)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/discounts/{discountId}'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id,
-        'discountId' => discount_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}/increments/{increment_id}'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true },
+        'increment_id' => { 'value' => increment_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json'
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.get(
+      _request = config.http_client.get(
         _query_url,
         headers: _headers
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetDiscountResponse.from_hash(decoded)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
+      GetIncrementResponse.from_hash(decoded)
     end
 
     # TODO: type endpoint description here
@@ -633,36 +720,38 @@ module PagarmeCoreApi
     # @param [UpdateSubscriptionAffiliationIdRequest] request Required
     # parameter: Request for updating a subscription affiliation id
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetSubscriptionResponse response from the API call
+    # @return [GetSubscriptionResponse] response from the API call
     def update_subscription_affiliation_id(subscription_id,
                                            request,
-                                           idempotency_key = nil)
+                                           idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/gateway-affiliation-id'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}/gateway-affiliation-id'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'content-type' => 'application/json; charset=utf-8',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.patch(
+      _request = config.http_client.patch(
         _query_url,
         headers: _headers,
         parameters: request.to_json
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetSubscriptionResponse.from_hash(decoded)
     end
 
@@ -671,36 +760,38 @@ module PagarmeCoreApi
     # @param [UpdateMetadataRequest] request Required parameter: Request for
     # updating the subscrption metadata
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetSubscriptionResponse response from the API call
+    # @return [GetSubscriptionResponse] response from the API call
     def update_subscription_metadata(subscription_id,
                                      request,
-                                     idempotency_key = nil)
+                                     idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/Subscriptions/{subscription_id}/metadata'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/Subscriptions/{subscription_id}/metadata'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'content-type' => 'application/json; charset=utf-8',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.patch(
+      _request = config.http_client.patch(
         _query_url,
         headers: _headers,
         parameters: request.to_json
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetSubscriptionResponse.from_hash(decoded)
     end
 
@@ -708,35 +799,37 @@ module PagarmeCoreApi
     # @param [String] subscription_id Required parameter: Subscription id
     # @param [String] increment_id Required parameter: Increment id
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetIncrementResponse response from the API call
+    # @return [GetIncrementResponse] response from the API call
     def delete_increment(subscription_id,
                          increment_id,
-                         idempotency_key = nil)
+                         idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/increments/{increment_id}'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id,
-        'increment_id' => increment_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}/increments/{increment_id}'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true },
+        'increment_id' => { 'value' => increment_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.delete(
+      _request = config.http_client.delete(
         _query_url,
         headers: _headers
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetIncrementResponse.from_hash(decoded)
     end
 
@@ -744,116 +837,81 @@ module PagarmeCoreApi
     # @param [String] subscription_id Required parameter: Subscription Id
     # @param [String] page Required parameter: Page number
     # @param [String] size Required parameter: Page size
-    # @return ListCyclesResponse response from the API call
+    # @return [ListCyclesResponse] response from the API call
     def get_subscription_cycles(subscription_id,
                                 page,
                                 size)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/cycles'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}/cycles'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_builder = APIHelper.append_url_with_query_parameters(
         _query_builder,
-        {
-          'page' => page,
-          'size' => size
-        },
-        array_serialization: Configuration.array_serialization
+        'page' => page,
+        'size' => size
       )
       _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json'
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.get(
-        _query_url,
-        headers: _headers
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      ListCyclesResponse.from_hash(decoded)
-    end
 
-    # TODO: type endpoint description here
-    # @param [String] subscription_id Required parameter: The subscription Id
-    # @param [String] increment_id Required parameter: The increment Id
-    # @return GetIncrementResponse response from the API call
-    def get_increment_by_id(subscription_id,
-                            increment_id)
-      # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/increments/{increment_id}'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id,
-        'increment_id' => increment_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
       # Prepare headers.
       _headers = {
         'accept' => 'application/json'
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.get(
+      _request = config.http_client.get(
         _query_url,
         headers: _headers
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetIncrementResponse.from_hash(decoded)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
+      ListCyclesResponse.from_hash(decoded)
     end
 
     # TODO: type endpoint description here
     # @param [String] subscription_id Required parameter: The subscription id
     # @param [Integer] page Required parameter: Page number
     # @param [Integer] size Required parameter: Page size
-    # @return ListDiscountsResponse response from the API call
+    # @return [ListDiscountsResponse] response from the API call
     def get_discounts(subscription_id,
                       page,
                       size)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/discounts/'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}/discounts/'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_builder = APIHelper.append_url_with_query_parameters(
         _query_builder,
-        {
-          'page' => page,
-          'size' => size
-        },
-        array_serialization: Configuration.array_serialization
+        'page' => page,
+        'size' => size
       )
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json'
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.get(
+      _request = config.http_client.get(
         _query_url,
         headers: _headers
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       ListDiscountsResponse.from_hash(decoded)
     end
 
@@ -862,36 +920,38 @@ module PagarmeCoreApi
     # @param [UpdateSubscriptionBillingDateRequest] request Required parameter:
     # Request for updating the subscription billing date
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetSubscriptionResponse response from the API call
+    # @return [GetSubscriptionResponse] response from the API call
     def update_subscription_billing_date(subscription_id,
                                          request,
-                                         idempotency_key = nil)
+                                         idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/billing-date'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}/billing-date'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'content-type' => 'application/json; charset=utf-8',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.patch(
+      _request = config.http_client.patch(
         _query_url,
         headers: _headers,
         parameters: request.to_json
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetSubscriptionResponse.from_hash(decoded)
     end
 
@@ -900,35 +960,37 @@ module PagarmeCoreApi
     # @param [String] subscription_item_id Required parameter: Subscription item
     # id
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetSubscriptionItemResponse response from the API call
+    # @return [GetSubscriptionItemResponse] response from the API call
     def delete_subscription_item(subscription_id,
                                  subscription_item_id,
-                                 idempotency_key = nil)
+                                 idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/items/{subscription_item_id}'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id,
-        'subscription_item_id' => subscription_item_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}/items/{subscription_item_id}'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true },
+        'subscription_item_id' => { 'value' => subscription_item_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.delete(
+      _request = config.http_client.delete(
         _query_url,
         headers: _headers
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetSubscriptionItemResponse.from_hash(decoded)
     end
 
@@ -936,41 +998,40 @@ module PagarmeCoreApi
     # @param [String] subscription_id Required parameter: The subscription id
     # @param [Integer] page Optional parameter: Page number
     # @param [Integer] size Optional parameter: Page size
-    # @return ListIncrementsResponse response from the API call
+    # @return [ListIncrementsResponse] response from the API call
     def get_increments(subscription_id,
-                       page = nil,
-                       size = nil)
+                       page: nil,
+                       size: nil)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/increments/'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}/increments/'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_builder = APIHelper.append_url_with_query_parameters(
         _query_builder,
-        {
-          'page' => page,
-          'size' => size
-        },
-        array_serialization: Configuration.array_serialization
+        'page' => page,
+        'size' => size
       )
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json'
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.get(
+      _request = config.http_client.get(
         _query_url,
         headers: _headers
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       ListIncrementsResponse.from_hash(decoded)
     end
 
@@ -979,36 +1040,38 @@ module PagarmeCoreApi
     # @param [UpdateSubscriptionDueDaysRequest] request Required parameter:
     # Example:
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetSubscriptionResponse response from the API call
+    # @return [GetSubscriptionResponse] response from the API call
     def update_subscription_due_days(subscription_id,
                                      request,
-                                     idempotency_key = nil)
+                                     idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/boleto-due-days'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}/boleto-due-days'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'content-type' => 'application/json; charset=utf-8',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.patch(
+      _request = config.http_client.patch(
         _query_url,
         headers: _headers,
         parameters: request.to_json
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetSubscriptionResponse.from_hash(decoded)
     end
 
@@ -1017,36 +1080,38 @@ module PagarmeCoreApi
     # @param [UpdateSubscriptionStartAtRequest] request Required parameter:
     # Request for updating the subscription start date
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetSubscriptionResponse response from the API call
+    # @return [GetSubscriptionResponse] response from the API call
     def update_subscription_start_at(subscription_id,
                                      request,
-                                     idempotency_key = nil)
+                                     idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/start-at'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}/start-at'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'content-type' => 'application/json; charset=utf-8',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.patch(
+      _request = config.http_client.patch(
         _query_url,
         headers: _headers,
         parameters: request.to_json
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetSubscriptionResponse.from_hash(decoded)
     end
 
@@ -1056,38 +1121,40 @@ module PagarmeCoreApi
     # @param [UpdateSubscriptionItemRequest] body Required parameter: Request
     # for updating a subscription item
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetSubscriptionItemResponse response from the API call
+    # @return [GetSubscriptionItemResponse] response from the API call
     def update_subscription_item(subscription_id,
                                  item_id,
                                  body,
-                                 idempotency_key = nil)
+                                 idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/items/{item_id}'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id,
-        'item_id' => item_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}/items/{item_id}'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true },
+        'item_id' => { 'value' => item_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'content-type' => 'application/json; charset=utf-8',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.put(
+      _request = config.http_client.put(
         _query_url,
         headers: _headers,
         parameters: body.to_json
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetSubscriptionItemResponse.from_hash(decoded)
     end
 
@@ -1096,66 +1163,70 @@ module PagarmeCoreApi
     # @param [CreateSubscriptionItemRequest] request Required parameter: Request
     # for creating a subscription item
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetSubscriptionItemResponse response from the API call
+    # @return [GetSubscriptionItemResponse] response from the API call
     def create_subscription_item(subscription_id,
                                  request,
-                                 idempotency_key = nil)
+                                 idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/items'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}/items'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'content-type' => 'application/json; charset=utf-8',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.post(
+      _request = config.http_client.post(
         _query_url,
         headers: _headers,
         parameters: request.to_json
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetSubscriptionItemResponse.from_hash(decoded)
     end
 
     # Gets a subscription
     # @param [String] subscription_id Required parameter: Subscription id
-    # @return GetSubscriptionResponse response from the API call
+    # @return [GetSubscriptionResponse] response from the API call
     def get_subscription(subscription_id)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json'
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.get(
+      _request = config.http_client.get(
         _query_url,
         headers: _headers
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetSubscriptionResponse.from_hash(decoded)
     end
 
@@ -1170,51 +1241,50 @@ module PagarmeCoreApi
     # client system
     # @param [DateTime] used_since Optional parameter: Example:
     # @param [DateTime] used_until Optional parameter: Example:
-    # @return ListUsagesResponse response from the API call
+    # @return [ListUsagesResponse] response from the API call
     def get_usages(subscription_id,
                    item_id,
-                   page = nil,
-                   size = nil,
-                   code = nil,
-                   group = nil,
-                   used_since = nil,
-                   used_until = nil)
+                   page: nil,
+                   size: nil,
+                   code: nil,
+                   group: nil,
+                   used_since: nil,
+                   used_until: nil)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/items/{item_id}/usages'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id,
-        'item_id' => item_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}/items/{item_id}/usages'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true },
+        'item_id' => { 'value' => item_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_builder = APIHelper.append_url_with_query_parameters(
         _query_builder,
-        {
-          'page' => page,
-          'size' => size,
-          'code' => code,
-          'group' => group,
-          'used_since' => used_since,
-          'used_until' => used_until
-        },
-        array_serialization: Configuration.array_serialization
+        'page' => page,
+        'size' => size,
+        'code' => code,
+        'group' => group,
+        'used_since' => used_since,
+        'used_until' => used_until
       )
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json'
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.get(
+      _request = config.http_client.get(
         _query_url,
         headers: _headers
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       ListUsagesResponse.from_hash(decoded)
     end
 
@@ -1223,36 +1293,38 @@ module PagarmeCoreApi
     # @param [UpdateCurrentCycleEndDateRequest] request Required parameter:
     # Request for updating the end date of the current signature cycle
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetSubscriptionResponse response from the API call
+    # @return [GetSubscriptionResponse] response from the API call
     def update_latest_period_end_at(subscription_id,
                                     request,
-                                    idempotency_key = nil)
+                                    idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/periods/latest/end-at'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}/periods/latest/end-at'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'content-type' => 'application/json; charset=utf-8',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.patch(
+      _request = config.http_client.patch(
         _query_url,
         headers: _headers,
         parameters: request.to_json
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetSubscriptionResponse.from_hash(decoded)
     end
 
@@ -1261,135 +1333,108 @@ module PagarmeCoreApi
     # @param [UpdateSubscriptionMinimumPriceRequest] request Required parameter:
     # Request da requisição com o valor mínimo que será configurado
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetSubscriptionResponse response from the API call
+    # @return [GetSubscriptionResponse] response from the API call
     def update_subscription_minium_price(subscription_id,
                                          request,
-                                         idempotency_key = nil)
+                                         idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/minimum_price'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}/minimum_price'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'content-type' => 'application/json; charset=utf-8',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.patch(
+      _request = config.http_client.patch(
         _query_url,
         headers: _headers,
         parameters: request.to_json
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetSubscriptionResponse.from_hash(decoded)
     end
 
     # TODO: type endpoint description here
     # @param [String] subscription_id Required parameter: The subscription id
     # @param [String] cycle_id Required parameter: Example:
-    # @return GetPeriodResponse response from the API call
+    # @return [GetPeriodResponse] response from the API call
     def get_subscription_cycle_by_id(subscription_id,
                                      cycle_id)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/cycles/{cycleId}'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id,
-        'cycleId' => cycle_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}/cycles/{cycleId}'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true },
+        'cycleId' => { 'value' => cycle_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json'
       }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.get(
-        _query_url,
-        headers: _headers
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetPeriodResponse.from_hash(decoded)
-    end
 
-    # TODO: type endpoint description here
-    # @param [String] subscription_id Required parameter: Example:
-    # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetPeriodResponse response from the API call
-    def renew_subscription(subscription_id,
-                           idempotency_key = nil)
-      # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/cycles'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json',
-        'idempotency-key' => idempotency_key
-      }
       # Prepare and execute HttpRequest.
-      _request = @http_client.post(
+      _request = config.http_client.get(
         _query_url,
         headers: _headers
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetPeriodResponse.from_hash(decoded)
     end
 
     # TODO: type endpoint description here
     # @param [String] subscription_id Required parameter: The subscription Id
     # @param [String] period_id Required parameter: The period Id
-    # @return GetUsageReportResponse response from the API call
+    # @return [GetUsageReportResponse] response from the API call
     def get_usage_report(subscription_id,
                          period_id)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/periods/{period_id}/usages/report'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id,
-        'period_id' => period_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/subscriptions/{subscription_id}/periods/{period_id}/usages/report'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'subscription_id' => { 'value' => subscription_id, 'encode' => true },
+        'period_id' => { 'value' => period_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json'
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.get(
+      _request = config.http_client.get(
         _query_url,
         headers: _headers
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetUsageReportResponse.from_hash(decoded)
     end
   end

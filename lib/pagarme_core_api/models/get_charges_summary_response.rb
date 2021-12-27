@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # GetChargesSummaryResponse Model.
   class GetChargesSummaryResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # TODO: Write general description for this method
     # @return [Integer]
     attr_accessor :total
@@ -17,8 +20,18 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(total = nil)
-      @total = total
+      @total = total unless total == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -26,7 +39,7 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      total = hash['total']
+      total = hash.key?('total') ? hash['total'] : SKIP
 
       # Create object from extracted values.
       GetChargesSummaryResponse.new(total)

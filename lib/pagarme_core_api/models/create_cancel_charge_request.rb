@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Request for canceling a charge.
   class CreateCancelChargeRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # The amount that will be canceled.
     # @return [Integer]
     attr_accessor :amount
@@ -32,14 +35,28 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        amount
+        split_rules
+        split
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(operation_reference = nil,
                    amount = nil,
                    split_rules = nil,
                    split = nil)
-      @amount = amount
-      @split_rules = split_rules
-      @split = split
-      @operation_reference = operation_reference
+      @amount = amount unless amount == SKIP
+      @split_rules = split_rules unless split_rules == SKIP
+      @split = split unless split == SKIP
+      @operation_reference = operation_reference unless operation_reference == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -47,8 +64,9 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      operation_reference = hash['operation_reference']
-      amount = hash['amount']
+      operation_reference =
+        hash.key?('operation_reference') ? hash['operation_reference'] : SKIP
+      amount = hash.key?('amount') ? hash['amount'] : SKIP
       # Parameter is an array, so we need to iterate through it
       split_rules = nil
       unless hash['split_rules'].nil?
@@ -57,6 +75,8 @@ module PagarmeCoreApi
           split_rules << (CreateCancelChargeSplitRulesRequest.from_hash(structure) if structure)
         end
       end
+
+      split_rules = SKIP unless hash.key?('split_rules')
       # Parameter is an array, so we need to iterate through it
       split = nil
       unless hash['split'].nil?
@@ -65,6 +85,8 @@ module PagarmeCoreApi
           split << (CreateSplitRequest.from_hash(structure) if structure)
         end
       end
+
+      split = SKIP unless hash.key?('split')
 
       # Create object from extracted values.
       CreateCancelChargeRequest.new(operation_reference,

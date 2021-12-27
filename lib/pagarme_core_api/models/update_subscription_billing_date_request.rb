@@ -7,6 +7,9 @@ require 'date'
 module PagarmeCoreApi
   # Request for updating the due date from a subscription
   class UpdateSubscriptionBillingDateRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # The date when the next subscription billing must occur
     # @return [DateTime]
     attr_accessor :next_billing_at
@@ -18,8 +21,18 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(next_billing_at = nil)
-      @next_billing_at = next_billing_at
+      @next_billing_at = next_billing_at unless next_billing_at == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -27,11 +40,18 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      next_billing_at = APIHelper.rfc3339(hash['next_billing_at']) if
-        hash['next_billing_at']
+      next_billing_at = if hash.key?('next_billing_at')
+                          (DateTimeHelper.from_rfc3339(hash['next_billing_at']) if hash['next_billing_at'])
+                        else
+                          SKIP
+                        end
 
       # Create object from extracted values.
       UpdateSubscriptionBillingDateRequest.new(next_billing_at)
+    end
+
+    def to_next_billing_at
+      DateTimeHelper.to_rfc3339(next_billing_at)
     end
   end
 end

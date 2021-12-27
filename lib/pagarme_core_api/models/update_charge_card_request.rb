@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Request for updating card data
   class UpdateChargeCardRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Indicates if the subscriptions using this card must also be updated
     # @return [Boolean]
     attr_accessor :update_subscription
@@ -32,14 +35,24 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(update_subscription = nil,
                    card_id = nil,
                    card = nil,
                    recurrence = nil)
-      @update_subscription = update_subscription
-      @card_id = card_id
-      @card = card
-      @recurrence = recurrence
+      @update_subscription = update_subscription unless update_subscription == SKIP
+      @card_id = card_id unless card_id == SKIP
+      @card = card unless card == SKIP
+      @recurrence = recurrence unless recurrence == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -47,10 +60,11 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      update_subscription = hash['update_subscription']
-      card_id = hash['card_id']
+      update_subscription =
+        hash.key?('update_subscription') ? hash['update_subscription'] : SKIP
+      card_id = hash.key?('card_id') ? hash['card_id'] : SKIP
       card = CreateCardRequest.from_hash(hash['card']) if hash['card']
-      recurrence = hash['recurrence']
+      recurrence = hash.key?('recurrence') ? hash['recurrence'] : SKIP
 
       # Create object from extracted values.
       UpdateChargeCardRequest.new(update_subscription,

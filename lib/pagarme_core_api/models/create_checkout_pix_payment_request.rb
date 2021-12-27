@@ -7,6 +7,9 @@ require 'date'
 module PagarmeCoreApi
   # Checkout pix payment request
   class CreateCheckoutPixPaymentRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Expires at
     # @return [DateTime]
     attr_accessor :expires_at
@@ -28,12 +31,26 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        expires_at
+        expires_in
+        additional_information
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(expires_at = nil,
                    expires_in = nil,
                    additional_information = nil)
-      @expires_at = expires_at
-      @expires_in = expires_in
-      @additional_information = additional_information
+      @expires_at = expires_at unless expires_at == SKIP
+      @expires_in = expires_in unless expires_in == SKIP
+      @additional_information = additional_information unless additional_information == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -41,8 +58,12 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      expires_at = APIHelper.rfc3339(hash['expires_at']) if hash['expires_at']
-      expires_in = hash['expires_in']
+      expires_at = if hash.key?('expires_at')
+                     (DateTimeHelper.from_rfc3339(hash['expires_at']) if hash['expires_at'])
+                   else
+                     SKIP
+                   end
+      expires_in = hash.key?('expires_in') ? hash['expires_in'] : SKIP
       # Parameter is an array, so we need to iterate through it
       additional_information = nil
       unless hash['additional_information'].nil?
@@ -52,10 +73,16 @@ module PagarmeCoreApi
         end
       end
 
+      additional_information = SKIP unless hash.key?('additional_information')
+
       # Create object from extracted values.
       CreateCheckoutPixPaymentRequest.new(expires_at,
                                           expires_in,
                                           additional_information)
+    end
+
+    def to_expires_at
+      DateTimeHelper.to_rfc3339(expires_at)
     end
   end
 end

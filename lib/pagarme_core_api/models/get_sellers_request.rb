@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # GetSellersRequest Model.
   class GetSellersRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # TODO: Write general description for this method
     # @return [String]
     attr_accessor :name
@@ -47,6 +50,19 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        created_since
+        created_until
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(name = nil,
                    document = nil,
                    code = nil,
@@ -54,13 +70,13 @@ module PagarmeCoreApi
                    type = nil,
                    created_since = nil,
                    created_until = nil)
-      @name = name
-      @document = document
-      @code = code
-      @status = status
-      @type = type
-      @created_since = created_since
-      @created_until = created_until
+      @name = name unless name == SKIP
+      @document = document unless document == SKIP
+      @code = code unless code == SKIP
+      @status = status unless status == SKIP
+      @type = type unless type == SKIP
+      @created_since = created_since unless created_since == SKIP
+      @created_until = created_until unless created_until == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -68,13 +84,13 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      name = hash['name']
-      document = hash['document']
-      code = hash['code']
-      status = hash['status']
-      type = hash['type']
-      created_since = hash['created_Since']
-      created_until = hash['created_Until']
+      name = hash.key?('name') ? hash['name'] : SKIP
+      document = hash.key?('document') ? hash['document'] : SKIP
+      code = hash.key?('code') ? hash['code'] : SKIP
+      status = hash.key?('status') ? hash['status'] : SKIP
+      type = hash.key?('type') ? hash['type'] : SKIP
+      created_since = hash.key?('created_Since') ? hash['created_Since'] : SKIP
+      created_until = hash.key?('created_Until') ? hash['created_Until'] : SKIP
 
       # Create object from extracted values.
       GetSellersRequest.new(name,

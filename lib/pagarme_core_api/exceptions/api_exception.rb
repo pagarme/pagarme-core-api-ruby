@@ -6,15 +6,15 @@
 module PagarmeCoreApi
   # Class for exceptions when there is a network error, status code error, etc.
   class APIException < StandardError
-    attr_reader :context, :response_code
+    attr_reader :response, :response_code
 
     # The constructor.
     # @param [String] The reason for raising an exception.
-    # @param [HttpContext] The HttpContext of the API call.
-    def initialize(reason, context)
+    # @param [HttpResponse] The HttpReponse of the API call.
+    def initialize(reason, response)
       super(reason)
-      @context = context
-      @response_code = context.response.status_code
+      @response = response
+      @response_code = response.status_code
     end
   end
 end

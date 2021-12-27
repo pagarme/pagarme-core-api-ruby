@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Card token data
   class CreateCardTokenRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Credit card number
     # @return [String]
     attr_accessor :number
@@ -47,6 +50,16 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(number = nil,
                    holder_name = nil,
                    exp_month = nil,
@@ -54,13 +67,13 @@ module PagarmeCoreApi
                    cvv = nil,
                    brand = nil,
                    label = nil)
-      @number = number
-      @holder_name = holder_name
-      @exp_month = exp_month
-      @exp_year = exp_year
-      @cvv = cvv
-      @brand = brand
-      @label = label
+      @number = number unless number == SKIP
+      @holder_name = holder_name unless holder_name == SKIP
+      @exp_month = exp_month unless exp_month == SKIP
+      @exp_year = exp_year unless exp_year == SKIP
+      @cvv = cvv unless cvv == SKIP
+      @brand = brand unless brand == SKIP
+      @label = label unless label == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -68,13 +81,13 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      number = hash['number']
-      holder_name = hash['holder_name']
-      exp_month = hash['exp_month']
-      exp_year = hash['exp_year']
-      cvv = hash['cvv']
-      brand = hash['brand']
-      label = hash['label']
+      number = hash.key?('number') ? hash['number'] : SKIP
+      holder_name = hash.key?('holder_name') ? hash['holder_name'] : SKIP
+      exp_month = hash.key?('exp_month') ? hash['exp_month'] : SKIP
+      exp_year = hash.key?('exp_year') ? hash['exp_year'] : SKIP
+      cvv = hash.key?('cvv') ? hash['cvv'] : SKIP
+      brand = hash.key?('brand') ? hash['brand'] : SKIP
+      label = hash.key?('label') ? hash['label'] : SKIP
 
       # Create object from extracted values.
       CreateCardTokenRequest.new(number,

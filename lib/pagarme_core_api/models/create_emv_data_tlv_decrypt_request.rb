@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # CreateEmvDataTlvDecryptRequest Model.
   class CreateEmvDataTlvDecryptRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Emv tag
     # @return [String]
     attr_accessor :tag
@@ -27,12 +30,22 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(tag = nil,
                    lenght = nil,
                    value = nil)
-      @tag = tag
-      @lenght = lenght
-      @value = value
+      @tag = tag unless tag == SKIP
+      @lenght = lenght unless lenght == SKIP
+      @value = value unless value == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -40,9 +53,9 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      tag = hash['tag']
-      lenght = hash['lenght']
-      value = hash['value']
+      tag = hash.key?('tag') ? hash['tag'] : SKIP
+      lenght = hash.key?('lenght') ? hash['lenght'] : SKIP
+      value = hash.key?('value') ? hash['value'] : SKIP
 
       # Create object from extracted values.
       CreateEmvDataTlvDecryptRequest.new(tag,

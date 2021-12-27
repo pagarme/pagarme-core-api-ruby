@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # CreateAntifraudRequest Model.
   class CreateAntifraudRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # TODO: Write general description for this method
     # @return [String]
     attr_accessor :type
@@ -22,10 +25,20 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(type = nil,
                    clearsale = nil)
-      @type = type
-      @clearsale = clearsale
+      @type = type unless type == SKIP
+      @clearsale = clearsale unless clearsale == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -33,9 +46,8 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      type = hash['type']
-      clearsale = CreateClearSaleRequest.from_hash(hash['clearsale']) if
-        hash['clearsale']
+      type = hash.key?('type') ? hash['type'] : SKIP
+      clearsale = CreateClearSaleRequest.from_hash(hash['clearsale']) if hash['clearsale']
 
       # Create object from extracted values.
       CreateAntifraudRequest.new(type,

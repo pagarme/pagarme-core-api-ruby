@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Request for creating a plan item
   class CreatePlanItemRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Item name
     # @return [String]
     attr_accessor :name
@@ -42,18 +45,31 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        cycles
+        quantity
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(name = nil,
                    pricing_scheme = nil,
                    id = nil,
                    description = nil,
                    cycles = nil,
                    quantity = nil)
-      @name = name
-      @pricing_scheme = pricing_scheme
-      @id = id
-      @description = description
-      @cycles = cycles
-      @quantity = quantity
+      @name = name unless name == SKIP
+      @pricing_scheme = pricing_scheme unless pricing_scheme == SKIP
+      @id = id unless id == SKIP
+      @description = description unless description == SKIP
+      @cycles = cycles unless cycles == SKIP
+      @quantity = quantity unless quantity == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -61,14 +77,13 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      name = hash['name']
-      if hash['pricing_scheme']
-        pricing_scheme = CreatePricingSchemeRequest.from_hash(hash['pricing_scheme'])
-      end
-      id = hash['id']
-      description = hash['description']
-      cycles = hash['cycles']
-      quantity = hash['quantity']
+      name = hash.key?('name') ? hash['name'] : SKIP
+      pricing_scheme = CreatePricingSchemeRequest.from_hash(hash['pricing_scheme']) if
+        hash['pricing_scheme']
+      id = hash.key?('id') ? hash['id'] : SKIP
+      description = hash.key?('description') ? hash['description'] : SKIP
+      cycles = hash.key?('cycles') ? hash['cycles'] : SKIP
+      quantity = hash.key?('quantity') ? hash['quantity'] : SKIP
 
       # Create object from extracted values.
       CreatePlanItemRequest.new(name,

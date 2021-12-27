@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Request for creating a plan
   class CreatePlanRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Plan's name
     # @return [String]
     attr_accessor :name
@@ -62,7 +65,7 @@ module PagarmeCoreApi
     attr_accessor :pricing_scheme
 
     # Metadata
-    # @return [Array<String, String>]
+    # @return [Hash]
     attr_accessor :metadata
 
     # Minimum price that will be charged
@@ -105,6 +108,21 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        minimum_price
+        cycles
+        quantity
+        trial_period_days
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(name = nil,
                    description = nil,
                    statement_descriptor = nil,
@@ -123,24 +141,24 @@ module PagarmeCoreApi
                    cycles = nil,
                    quantity = nil,
                    trial_period_days = nil)
-      @name = name
-      @description = description
-      @statement_descriptor = statement_descriptor
-      @items = items
-      @shippable = shippable
-      @payment_methods = payment_methods
-      @installments = installments
-      @currency = currency
-      @interval = interval
-      @interval_count = interval_count
-      @billing_days = billing_days
-      @billing_type = billing_type
-      @pricing_scheme = pricing_scheme
-      @metadata = metadata
-      @minimum_price = minimum_price
-      @cycles = cycles
-      @quantity = quantity
-      @trial_period_days = trial_period_days
+      @name = name unless name == SKIP
+      @description = description unless description == SKIP
+      @statement_descriptor = statement_descriptor unless statement_descriptor == SKIP
+      @items = items unless items == SKIP
+      @shippable = shippable unless shippable == SKIP
+      @payment_methods = payment_methods unless payment_methods == SKIP
+      @installments = installments unless installments == SKIP
+      @currency = currency unless currency == SKIP
+      @interval = interval unless interval == SKIP
+      @interval_count = interval_count unless interval_count == SKIP
+      @billing_days = billing_days unless billing_days == SKIP
+      @billing_type = billing_type unless billing_type == SKIP
+      @pricing_scheme = pricing_scheme unless pricing_scheme == SKIP
+      @metadata = metadata unless metadata == SKIP
+      @minimum_price = minimum_price unless minimum_price == SKIP
+      @cycles = cycles unless cycles == SKIP
+      @quantity = quantity unless quantity == SKIP
+      @trial_period_days = trial_period_days unless trial_period_days == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -148,9 +166,10 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      name = hash['name']
-      description = hash['description']
-      statement_descriptor = hash['statement_descriptor']
+      name = hash.key?('name') ? hash['name'] : SKIP
+      description = hash.key?('description') ? hash['description'] : SKIP
+      statement_descriptor =
+        hash.key?('statement_descriptor') ? hash['statement_descriptor'] : SKIP
       # Parameter is an array, so we need to iterate through it
       items = nil
       unless hash['items'].nil?
@@ -159,22 +178,26 @@ module PagarmeCoreApi
           items << (CreatePlanItemRequest.from_hash(structure) if structure)
         end
       end
-      shippable = hash['shippable']
-      payment_methods = hash['payment_methods']
-      installments = hash['installments']
-      currency = hash['currency']
-      interval = hash['interval']
-      interval_count = hash['interval_count']
-      billing_days = hash['billing_days']
-      billing_type = hash['billing_type']
-      if hash['pricing_scheme']
-        pricing_scheme = CreatePricingSchemeRequest.from_hash(hash['pricing_scheme'])
-      end
-      metadata = hash['metadata']
-      minimum_price = hash['minimum_price']
-      cycles = hash['cycles']
-      quantity = hash['quantity']
-      trial_period_days = hash['trial_period_days']
+
+      items = SKIP unless hash.key?('items')
+      shippable = hash.key?('shippable') ? hash['shippable'] : SKIP
+      payment_methods =
+        hash.key?('payment_methods') ? hash['payment_methods'] : SKIP
+      installments = hash.key?('installments') ? hash['installments'] : SKIP
+      currency = hash.key?('currency') ? hash['currency'] : SKIP
+      interval = hash.key?('interval') ? hash['interval'] : SKIP
+      interval_count =
+        hash.key?('interval_count') ? hash['interval_count'] : SKIP
+      billing_days = hash.key?('billing_days') ? hash['billing_days'] : SKIP
+      billing_type = hash.key?('billing_type') ? hash['billing_type'] : SKIP
+      pricing_scheme = CreatePricingSchemeRequest.from_hash(hash['pricing_scheme']) if
+        hash['pricing_scheme']
+      metadata = hash.key?('metadata') ? hash['metadata'] : SKIP
+      minimum_price = hash.key?('minimum_price') ? hash['minimum_price'] : SKIP
+      cycles = hash.key?('cycles') ? hash['cycles'] : SKIP
+      quantity = hash.key?('quantity') ? hash['quantity'] : SKIP
+      trial_period_days =
+        hash.key?('trial_period_days') ? hash['trial_period_days'] : SKIP
 
       # Create object from extracted values.
       CreatePlanRequest.new(name,

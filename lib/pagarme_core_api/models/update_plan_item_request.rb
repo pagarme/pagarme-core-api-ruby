@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Request for updating a plan item
   class UpdatePlanItemRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Item name
     # @return [String]
     attr_accessor :name
@@ -42,18 +45,31 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        quantity
+        cycles
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(name = nil,
                    description = nil,
                    status = nil,
                    pricing_scheme = nil,
                    quantity = nil,
                    cycles = nil)
-      @name = name
-      @description = description
-      @status = status
-      @pricing_scheme = pricing_scheme
-      @quantity = quantity
-      @cycles = cycles
+      @name = name unless name == SKIP
+      @description = description unless description == SKIP
+      @status = status unless status == SKIP
+      @pricing_scheme = pricing_scheme unless pricing_scheme == SKIP
+      @quantity = quantity unless quantity == SKIP
+      @cycles = cycles unless cycles == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -61,14 +77,13 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      name = hash['name']
-      description = hash['description']
-      status = hash['status']
-      if hash['pricing_scheme']
-        pricing_scheme = UpdatePricingSchemeRequest.from_hash(hash['pricing_scheme'])
-      end
-      quantity = hash['quantity']
-      cycles = hash['cycles']
+      name = hash.key?('name') ? hash['name'] : SKIP
+      description = hash.key?('description') ? hash['description'] : SKIP
+      status = hash.key?('status') ? hash['status'] : SKIP
+      pricing_scheme = UpdatePricingSchemeRequest.from_hash(hash['pricing_scheme']) if
+        hash['pricing_scheme']
+      quantity = hash.key?('quantity') ? hash['quantity'] : SKIP
+      cycles = hash.key?('cycles') ? hash['cycles'] : SKIP
 
       # Create object from extracted values.
       UpdatePlanItemRequest.new(name,

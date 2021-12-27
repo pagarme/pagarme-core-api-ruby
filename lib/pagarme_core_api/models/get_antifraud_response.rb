@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # GetAntifraudResponse Model.
   class GetAntifraudResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # TODO: Write general description for this method
     # @return [String]
     attr_accessor :status
@@ -37,16 +40,26 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(status = nil,
                    return_code = nil,
                    return_message = nil,
                    provider_name = nil,
                    score = nil)
-      @status = status
-      @return_code = return_code
-      @return_message = return_message
-      @provider_name = provider_name
-      @score = score
+      @status = status unless status == SKIP
+      @return_code = return_code unless return_code == SKIP
+      @return_message = return_message unless return_message == SKIP
+      @provider_name = provider_name unless provider_name == SKIP
+      @score = score unless score == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -54,11 +67,12 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      status = hash['status']
-      return_code = hash['return_code']
-      return_message = hash['return_message']
-      provider_name = hash['provider_name']
-      score = hash['score']
+      status = hash.key?('status') ? hash['status'] : SKIP
+      return_code = hash.key?('return_code') ? hash['return_code'] : SKIP
+      return_message =
+        hash.key?('return_message') ? hash['return_message'] : SKIP
+      provider_name = hash.key?('provider_name') ? hash['provider_name'] : SKIP
+      score = hash.key?('score') ? hash['score'] : SKIP
 
       # Create object from extracted values.
       GetAntifraudResponse.new(status,

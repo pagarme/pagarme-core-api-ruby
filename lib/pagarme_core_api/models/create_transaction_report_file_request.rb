@@ -7,6 +7,9 @@ require 'date'
 module PagarmeCoreApi
   # CreateTransactionReportFileRequest Model.
   class CreateTransactionReportFileRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # TODO: Write general description for this method
     # @return [String]
     attr_accessor :name
@@ -28,12 +31,25 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        start_at
+        end_at
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(name = nil,
                    start_at = nil,
                    end_at = nil)
-      @name = name
-      @start_at = start_at
-      @end_at = end_at
+      @name = name unless name == SKIP
+      @start_at = start_at unless start_at == SKIP
+      @end_at = end_at unless end_at == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -41,14 +57,22 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      name = hash['name']
-      start_at = APIHelper.rfc3339(hash['start_at']) if hash['start_at']
-      end_at = hash['end_at']
+      name = hash.key?('name') ? hash['name'] : SKIP
+      start_at = if hash.key?('start_at')
+                   (DateTimeHelper.from_rfc3339(hash['start_at']) if hash['start_at'])
+                 else
+                   SKIP
+                 end
+      end_at = hash.key?('end_at') ? hash['end_at'] : SKIP
 
       # Create object from extracted values.
       CreateTransactionReportFileRequest.new(name,
                                              start_at,
                                              end_at)
+    end
+
+    def to_start_at
+      DateTimeHelper.to_rfc3339(start_at)
     end
   end
 end

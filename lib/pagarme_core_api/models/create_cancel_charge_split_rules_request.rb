@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Creates a refund with split rules
   class CreateCancelChargeSplitRulesRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # The split rule gateway id
     # @return [String]
     attr_accessor :id
@@ -27,12 +30,22 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(id = nil,
                    amount = nil,
                    type = nil)
-      @id = id
-      @amount = amount
-      @type = type
+      @id = id unless id == SKIP
+      @amount = amount unless amount == SKIP
+      @type = type unless type == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -40,9 +53,9 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      id = hash['id']
-      amount = hash['Amount']
-      type = hash['type']
+      id = hash.key?('id') ? hash['id'] : SKIP
+      amount = hash.key?('Amount') ? hash['Amount'] : SKIP
+      type = hash.key?('type') ? hash['type'] : SKIP
 
       # Create object from extracted values.
       CreateCancelChargeSplitRulesRequest.new(id,

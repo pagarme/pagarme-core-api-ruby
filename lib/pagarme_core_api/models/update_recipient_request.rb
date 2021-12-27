@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Request for updating a Recipient
   class UpdateRecipientRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Name
     # @return [String]
     attr_accessor :name
@@ -27,7 +30,7 @@ module PagarmeCoreApi
     attr_accessor :status
 
     # Metadata
-    # @return [Array<String, String>]
+    # @return [Hash]
     attr_accessor :metadata
 
     # A mapping from model property names to API property names.
@@ -42,18 +45,28 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(name = nil,
                    email = nil,
                    description = nil,
                    type = nil,
                    status = nil,
                    metadata = nil)
-      @name = name
-      @email = email
-      @description = description
-      @type = type
-      @status = status
-      @metadata = metadata
+      @name = name unless name == SKIP
+      @email = email unless email == SKIP
+      @description = description unless description == SKIP
+      @type = type unless type == SKIP
+      @status = status unless status == SKIP
+      @metadata = metadata unless metadata == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -61,12 +74,12 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      name = hash['name']
-      email = hash['email']
-      description = hash['description']
-      type = hash['type']
-      status = hash['status']
-      metadata = hash['metadata']
+      name = hash.key?('name') ? hash['name'] : SKIP
+      email = hash.key?('email') ? hash['email'] : SKIP
+      description = hash.key?('description') ? hash['description'] : SKIP
+      type = hash.key?('type') ? hash['type'] : SKIP
+      status = hash.key?('status') ? hash['status'] : SKIP
+      metadata = hash.key?('metadata') ? hash['metadata'] : SKIP
 
       # Create object from extracted values.
       UpdateRecipientRequest.new(name,

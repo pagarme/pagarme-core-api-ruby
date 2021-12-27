@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Token data
   class CreateTokenRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Token type
     # @return [String]
     attr_accessor :type
@@ -22,10 +25,20 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(type = 'card',
                    card = nil)
-      @type = type
-      @card = card
+      @type = type unless type == SKIP
+      @card = card unless card == SKIP
     end
 
     # Creates an instance of the object from a hash.

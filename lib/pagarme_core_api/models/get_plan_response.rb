@@ -7,6 +7,9 @@ require 'date'
 module PagarmeCoreApi
   # Response object for getting a plan
   class GetPlanResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # TODO: Write general description for this method
     # @return [String]
     attr_accessor :id
@@ -76,7 +79,7 @@ module PagarmeCoreApi
     attr_accessor :shippable
 
     # TODO: Write general description for this method
-    # @return [Array<String, String>]
+    # @return [Hash]
     attr_accessor :metadata
 
     # TODO: Write general description for this method
@@ -118,6 +121,20 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        trial_period_days
+        minimum_price
+        deleted_at
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(id = nil,
                    name = nil,
                    description = nil,
@@ -139,27 +156,27 @@ module PagarmeCoreApi
                    trial_period_days = nil,
                    minimum_price = nil,
                    deleted_at = nil)
-      @id = id
-      @name = name
-      @description = description
-      @url = url
-      @statement_descriptor = statement_descriptor
-      @interval = interval
-      @interval_count = interval_count
-      @billing_type = billing_type
-      @payment_methods = payment_methods
-      @installments = installments
-      @status = status
-      @currency = currency
-      @created_at = created_at
-      @updated_at = updated_at
-      @items = items
-      @billing_days = billing_days
-      @shippable = shippable
-      @metadata = metadata
-      @trial_period_days = trial_period_days
-      @minimum_price = minimum_price
-      @deleted_at = deleted_at
+      @id = id unless id == SKIP
+      @name = name unless name == SKIP
+      @description = description unless description == SKIP
+      @url = url unless url == SKIP
+      @statement_descriptor = statement_descriptor unless statement_descriptor == SKIP
+      @interval = interval unless interval == SKIP
+      @interval_count = interval_count unless interval_count == SKIP
+      @billing_type = billing_type unless billing_type == SKIP
+      @payment_methods = payment_methods unless payment_methods == SKIP
+      @installments = installments unless installments == SKIP
+      @status = status unless status == SKIP
+      @currency = currency unless currency == SKIP
+      @created_at = created_at unless created_at == SKIP
+      @updated_at = updated_at unless updated_at == SKIP
+      @items = items unless items == SKIP
+      @billing_days = billing_days unless billing_days == SKIP
+      @shippable = shippable unless shippable == SKIP
+      @metadata = metadata unless metadata == SKIP
+      @trial_period_days = trial_period_days unless trial_period_days == SKIP
+      @minimum_price = minimum_price unless minimum_price == SKIP
+      @deleted_at = deleted_at unless deleted_at == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -167,20 +184,31 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      id = hash['id']
-      name = hash['name']
-      description = hash['description']
-      url = hash['url']
-      statement_descriptor = hash['statement_descriptor']
-      interval = hash['interval']
-      interval_count = hash['interval_count']
-      billing_type = hash['billing_type']
-      payment_methods = hash['payment_methods']
-      installments = hash['installments']
-      status = hash['status']
-      currency = hash['currency']
-      created_at = APIHelper.rfc3339(hash['created_at']) if hash['created_at']
-      updated_at = APIHelper.rfc3339(hash['updated_at']) if hash['updated_at']
+      id = hash.key?('id') ? hash['id'] : SKIP
+      name = hash.key?('name') ? hash['name'] : SKIP
+      description = hash.key?('description') ? hash['description'] : SKIP
+      url = hash.key?('url') ? hash['url'] : SKIP
+      statement_descriptor =
+        hash.key?('statement_descriptor') ? hash['statement_descriptor'] : SKIP
+      interval = hash.key?('interval') ? hash['interval'] : SKIP
+      interval_count =
+        hash.key?('interval_count') ? hash['interval_count'] : SKIP
+      billing_type = hash.key?('billing_type') ? hash['billing_type'] : SKIP
+      payment_methods =
+        hash.key?('payment_methods') ? hash['payment_methods'] : SKIP
+      installments = hash.key?('installments') ? hash['installments'] : SKIP
+      status = hash.key?('status') ? hash['status'] : SKIP
+      currency = hash.key?('currency') ? hash['currency'] : SKIP
+      created_at = if hash.key?('created_at')
+                     (DateTimeHelper.from_rfc3339(hash['created_at']) if hash['created_at'])
+                   else
+                     SKIP
+                   end
+      updated_at = if hash.key?('updated_at')
+                     (DateTimeHelper.from_rfc3339(hash['updated_at']) if hash['updated_at'])
+                   else
+                     SKIP
+                   end
       # Parameter is an array, so we need to iterate through it
       items = nil
       unless hash['items'].nil?
@@ -189,12 +217,19 @@ module PagarmeCoreApi
           items << (GetPlanItemResponse.from_hash(structure) if structure)
         end
       end
-      billing_days = hash['billing_days']
-      shippable = hash['shippable']
-      metadata = hash['metadata']
-      trial_period_days = hash['trial_period_days']
-      minimum_price = hash['minimum_price']
-      deleted_at = APIHelper.rfc3339(hash['deleted_at']) if hash['deleted_at']
+
+      items = SKIP unless hash.key?('items')
+      billing_days = hash.key?('billing_days') ? hash['billing_days'] : SKIP
+      shippable = hash.key?('shippable') ? hash['shippable'] : SKIP
+      metadata = hash.key?('metadata') ? hash['metadata'] : SKIP
+      trial_period_days =
+        hash.key?('trial_period_days') ? hash['trial_period_days'] : SKIP
+      minimum_price = hash.key?('minimum_price') ? hash['minimum_price'] : SKIP
+      deleted_at = if hash.key?('deleted_at')
+                     (DateTimeHelper.from_rfc3339(hash['deleted_at']) if hash['deleted_at'])
+                   else
+                     SKIP
+                   end
 
       # Create object from extracted values.
       GetPlanResponse.new(id,
@@ -218,6 +253,18 @@ module PagarmeCoreApi
                           trial_period_days,
                           minimum_price,
                           deleted_at)
+    end
+
+    def to_created_at
+      DateTimeHelper.to_rfc3339(created_at)
+    end
+
+    def to_updated_at
+      DateTimeHelper.to_rfc3339(updated_at)
+    end
+
+    def to_deleted_at
+      DateTimeHelper.to_rfc3339(deleted_at)
     end
   end
 end

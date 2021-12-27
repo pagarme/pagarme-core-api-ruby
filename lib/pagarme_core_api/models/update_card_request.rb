@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Request for updating a card
   class UpdateCardRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Holder name
     # @return [String]
     attr_accessor :holder_name
@@ -27,7 +30,7 @@ module PagarmeCoreApi
     attr_accessor :billing_address
 
     # Metadata
-    # @return [Array<String, String>]
+    # @return [Hash]
     attr_accessor :metadata
 
     # Metadata
@@ -47,6 +50,16 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(holder_name = nil,
                    exp_month = nil,
                    exp_year = nil,
@@ -54,13 +67,13 @@ module PagarmeCoreApi
                    billing_address = nil,
                    metadata = nil,
                    label = nil)
-      @holder_name = holder_name
-      @exp_month = exp_month
-      @exp_year = exp_year
-      @billing_address_id = billing_address_id
-      @billing_address = billing_address
-      @metadata = metadata
-      @label = label
+      @holder_name = holder_name unless holder_name == SKIP
+      @exp_month = exp_month unless exp_month == SKIP
+      @exp_year = exp_year unless exp_year == SKIP
+      @billing_address_id = billing_address_id unless billing_address_id == SKIP
+      @billing_address = billing_address unless billing_address == SKIP
+      @metadata = metadata unless metadata == SKIP
+      @label = label unless label == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -68,15 +81,15 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      holder_name = hash['holder_name']
-      exp_month = hash['exp_month']
-      exp_year = hash['exp_year']
-      billing_address_id = hash['billing_address_id']
-      if hash['billing_address']
-        billing_address = CreateAddressRequest.from_hash(hash['billing_address'])
-      end
-      metadata = hash['metadata']
-      label = hash['label']
+      holder_name = hash.key?('holder_name') ? hash['holder_name'] : SKIP
+      exp_month = hash.key?('exp_month') ? hash['exp_month'] : SKIP
+      exp_year = hash.key?('exp_year') ? hash['exp_year'] : SKIP
+      billing_address_id =
+        hash.key?('billing_address_id') ? hash['billing_address_id'] : SKIP
+      billing_address = CreateAddressRequest.from_hash(hash['billing_address']) if
+        hash['billing_address']
+      metadata = hash.key?('metadata') ? hash['metadata'] : SKIP
+      label = hash.key?('label') ? hash['label'] : SKIP
 
       # Create object from extracted values.
       UpdateCardRequest.new(holder_name,

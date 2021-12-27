@@ -7,6 +7,9 @@ require 'date'
 module PagarmeCoreApi
   # Response object for getting an invoice
   class GetInvoiceResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # TODO: Write general description for this method
     # @return [String]
     attr_accessor :id
@@ -68,7 +71,7 @@ module PagarmeCoreApi
     attr_accessor :shipping
 
     # TODO: Write general description for this method
-    # @return [Array<String, String>]
+    # @return [Hash]
     attr_accessor :metadata
 
     # TODO: Write general description for this method
@@ -128,6 +131,25 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        customer
+        cycle
+        due_at
+        canceled_at
+        billing_at
+        seen_at
+        total_discount
+        total_increment
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(id = nil,
                    code = nil,
                    url = nil,
@@ -151,29 +173,29 @@ module PagarmeCoreApi
                    seen_at = nil,
                    total_discount = nil,
                    total_increment = nil)
-      @id = id
-      @code = code
-      @url = url
-      @amount = amount
-      @status = status
-      @payment_method = payment_method
-      @created_at = created_at
-      @items = items
-      @customer = customer
-      @charge = charge
-      @installments = installments
-      @billing_address = billing_address
-      @subscription = subscription
-      @cycle = cycle
-      @shipping = shipping
-      @metadata = metadata
-      @due_at = due_at
-      @canceled_at = canceled_at
-      @billing_at = billing_at
-      @seen_at = seen_at
-      @total_discount = total_discount
-      @total_increment = total_increment
-      @subscription_id = subscription_id
+      @id = id unless id == SKIP
+      @code = code unless code == SKIP
+      @url = url unless url == SKIP
+      @amount = amount unless amount == SKIP
+      @status = status unless status == SKIP
+      @payment_method = payment_method unless payment_method == SKIP
+      @created_at = created_at unless created_at == SKIP
+      @items = items unless items == SKIP
+      @customer = customer unless customer == SKIP
+      @charge = charge unless charge == SKIP
+      @installments = installments unless installments == SKIP
+      @billing_address = billing_address unless billing_address == SKIP
+      @subscription = subscription unless subscription == SKIP
+      @cycle = cycle unless cycle == SKIP
+      @shipping = shipping unless shipping == SKIP
+      @metadata = metadata unless metadata == SKIP
+      @due_at = due_at unless due_at == SKIP
+      @canceled_at = canceled_at unless canceled_at == SKIP
+      @billing_at = billing_at unless billing_at == SKIP
+      @seen_at = seen_at unless seen_at == SKIP
+      @total_discount = total_discount unless total_discount == SKIP
+      @total_increment = total_increment unless total_increment == SKIP
+      @subscription_id = subscription_id unless subscription_id == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -181,13 +203,18 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      id = hash['id']
-      code = hash['code']
-      url = hash['url']
-      amount = hash['amount']
-      status = hash['status']
-      payment_method = hash['payment_method']
-      created_at = APIHelper.rfc3339(hash['created_at']) if hash['created_at']
+      id = hash.key?('id') ? hash['id'] : SKIP
+      code = hash.key?('code') ? hash['code'] : SKIP
+      url = hash.key?('url') ? hash['url'] : SKIP
+      amount = hash.key?('amount') ? hash['amount'] : SKIP
+      status = hash.key?('status') ? hash['status'] : SKIP
+      payment_method =
+        hash.key?('payment_method') ? hash['payment_method'] : SKIP
+      created_at = if hash.key?('created_at')
+                     (DateTimeHelper.from_rfc3339(hash['created_at']) if hash['created_at'])
+                   else
+                     SKIP
+                   end
       # Parameter is an array, so we need to iterate through it
       items = nil
       unless hash['items'].nil?
@@ -196,27 +223,44 @@ module PagarmeCoreApi
           items << (GetInvoiceItemResponse.from_hash(structure) if structure)
         end
       end
+
+      items = SKIP unless hash.key?('items')
       charge = GetChargeResponse.from_hash(hash['charge']) if hash['charge']
-      installments = hash['installments']
-      if hash['billing_address']
-        billing_address = GetBillingAddressResponse.from_hash(hash['billing_address'])
-      end
+      installments = hash.key?('installments') ? hash['installments'] : SKIP
+      billing_address = GetBillingAddressResponse.from_hash(hash['billing_address']) if
+        hash['billing_address']
       subscription = GetSubscriptionResponse.from_hash(hash['subscription']) if
         hash['subscription']
-      shipping = GetShippingResponse.from_hash(hash['shipping']) if
-        hash['shipping']
-      metadata = hash['metadata']
-      subscription_id = hash['subscription_id']
-      customer = GetCustomerResponse.from_hash(hash['customer']) if
-        hash['customer']
+      shipping = GetShippingResponse.from_hash(hash['shipping']) if hash['shipping']
+      metadata = hash.key?('metadata') ? hash['metadata'] : SKIP
+      subscription_id =
+        hash.key?('subscription_id') ? hash['subscription_id'] : SKIP
+      customer = GetCustomerResponse.from_hash(hash['customer']) if hash['customer']
       cycle = GetPeriodResponse.from_hash(hash['cycle']) if hash['cycle']
-      due_at = APIHelper.rfc3339(hash['due_at']) if hash['due_at']
-      canceled_at = APIHelper.rfc3339(hash['canceled_at']) if
-        hash['canceled_at']
-      billing_at = APIHelper.rfc3339(hash['billing_at']) if hash['billing_at']
-      seen_at = APIHelper.rfc3339(hash['seen_at']) if hash['seen_at']
-      total_discount = hash['total_discount']
-      total_increment = hash['total_increment']
+      due_at = if hash.key?('due_at')
+                 (DateTimeHelper.from_rfc3339(hash['due_at']) if hash['due_at'])
+               else
+                 SKIP
+               end
+      canceled_at = if hash.key?('canceled_at')
+                      (DateTimeHelper.from_rfc3339(hash['canceled_at']) if hash['canceled_at'])
+                    else
+                      SKIP
+                    end
+      billing_at = if hash.key?('billing_at')
+                     (DateTimeHelper.from_rfc3339(hash['billing_at']) if hash['billing_at'])
+                   else
+                     SKIP
+                   end
+      seen_at = if hash.key?('seen_at')
+                  (DateTimeHelper.from_rfc3339(hash['seen_at']) if hash['seen_at'])
+                else
+                  SKIP
+                end
+      total_discount =
+        hash.key?('total_discount') ? hash['total_discount'] : SKIP
+      total_increment =
+        hash.key?('total_increment') ? hash['total_increment'] : SKIP
 
       # Create object from extracted values.
       GetInvoiceResponse.new(id,
@@ -242,6 +286,26 @@ module PagarmeCoreApi
                              seen_at,
                              total_discount,
                              total_increment)
+    end
+
+    def to_created_at
+      DateTimeHelper.to_rfc3339(created_at)
+    end
+
+    def to_due_at
+      DateTimeHelper.to_rfc3339(due_at)
+    end
+
+    def to_canceled_at
+      DateTimeHelper.to_rfc3339(canceled_at)
+    end
+
+    def to_billing_at
+      DateTimeHelper.to_rfc3339(billing_at)
+    end
+
+    def to_seen_at
+      DateTimeHelper.to_rfc3339(seen_at)
     end
   end
 end

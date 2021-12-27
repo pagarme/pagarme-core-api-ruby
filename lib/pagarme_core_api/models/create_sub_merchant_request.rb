@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # SubMerchant
   class CreateSubMerchantRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Payment Facilitator Code
     # @return [String]
     attr_accessor :payment_facilitator_code
@@ -52,6 +55,16 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(payment_facilitator_code = nil,
                    code = nil,
                    name = nil,
@@ -60,14 +73,14 @@ module PagarmeCoreApi
                    type = nil,
                    phone = nil,
                    address = nil)
-      @payment_facilitator_code = payment_facilitator_code
-      @code = code
-      @name = name
-      @merchant_category_code = merchant_category_code
-      @document = document
-      @type = type
-      @phone = phone
-      @address = address
+      @payment_facilitator_code = payment_facilitator_code unless payment_facilitator_code == SKIP
+      @code = code unless code == SKIP
+      @name = name unless name == SKIP
+      @merchant_category_code = merchant_category_code unless merchant_category_code == SKIP
+      @document = document unless document == SKIP
+      @type = type unless type == SKIP
+      @phone = phone unless phone == SKIP
+      @address = address unless address == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -75,15 +88,16 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      payment_facilitator_code = hash['payment_facilitator_code']
-      code = hash['code']
-      name = hash['name']
-      merchant_category_code = hash['merchant_category_code']
-      document = hash['document']
-      type = hash['type']
+      payment_facilitator_code =
+        hash.key?('payment_facilitator_code') ? hash['payment_facilitator_code'] : SKIP
+      code = hash.key?('code') ? hash['code'] : SKIP
+      name = hash.key?('name') ? hash['name'] : SKIP
+      merchant_category_code =
+        hash.key?('merchant_category_code') ? hash['merchant_category_code'] : SKIP
+      document = hash.key?('document') ? hash['document'] : SKIP
+      type = hash.key?('type') ? hash['type'] : SKIP
       phone = CreatePhoneRequest.from_hash(hash['phone']) if hash['phone']
-      address = CreateAddressRequest.from_hash(hash['address']) if
-        hash['address']
+      address = CreateAddressRequest.from_hash(hash['address']) if hash['address']
 
       # Create object from extracted values.
       CreateSubMerchantRequest.new(payment_facilitator_code,

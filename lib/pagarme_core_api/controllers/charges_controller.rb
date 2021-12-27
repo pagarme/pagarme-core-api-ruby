@@ -6,14 +6,8 @@
 module PagarmeCoreApi
   # ChargesController
   class ChargesController < BaseController
-    @instance = ChargesController.new
-
-    class << self
-      attr_accessor :instance
-    end
-
-    def instance
-      self.class.instance
+    def initialize(config, http_call_back: nil)
+      super(config, http_call_back: http_call_back)
     end
 
     # Updates the metadata from a charge
@@ -21,74 +15,38 @@ module PagarmeCoreApi
     # @param [UpdateMetadataRequest] request Required parameter: Request for
     # updating the charge metadata
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetChargeResponse response from the API call
+    # @return [GetChargeResponse] response from the API call
     def update_charge_metadata(charge_id,
                                request,
-                               idempotency_key = nil)
+                               idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/Charges/{charge_id}/metadata'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'charge_id' => charge_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/Charges/{charge_id}/metadata'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'charge_id' => { 'value' => charge_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json',
-        'content-type' => 'application/json; charset=utf-8',
-        'idempotency-key' => idempotency_key
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.patch(
-        _query_url,
-        headers: _headers,
-        parameters: request.to_json
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetChargeResponse.from_hash(decoded)
-    end
 
-    # Captures a charge
-    # @param [String] charge_id Required parameter: Charge id
-    # @param [CreateCaptureChargeRequest] request Optional parameter: Request
-    # for capturing a charge
-    # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetChargeResponse response from the API call
-    def capture_charge(charge_id,
-                       request = nil,
-                       idempotency_key = nil)
-      # Prepare query url.
-      _path_url = '/charges/{charge_id}/capture'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'charge_id' => charge_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'content-type' => 'application/json; charset=utf-8',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.post(
+      _request = config.http_client.patch(
         _query_url,
         headers: _headers,
         parameters: request.to_json
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetChargeResponse.from_hash(decoded)
     end
 
@@ -97,36 +55,38 @@ module PagarmeCoreApi
     # @param [UpdateChargePaymentMethodRequest] request Required parameter:
     # Request for updating the payment method from a charge
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetChargeResponse response from the API call
+    # @return [GetChargeResponse] response from the API call
     def update_charge_payment_method(charge_id,
                                      request,
-                                     idempotency_key = nil)
+                                     idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/charges/{charge_id}/payment-method'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'charge_id' => charge_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/charges/{charge_id}/payment-method'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'charge_id' => { 'value' => charge_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'content-type' => 'application/json; charset=utf-8',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.patch(
+      _request = config.http_client.patch(
         _query_url,
         headers: _headers,
         parameters: request.to_json
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetChargeResponse.from_hash(decoded)
     end
 
@@ -134,41 +94,40 @@ module PagarmeCoreApi
     # @param [String] charge_id Required parameter: Charge Id
     # @param [Integer] page Optional parameter: Page number
     # @param [Integer] size Optional parameter: Page size
-    # @return ListChargeTransactionsResponse response from the API call
+    # @return [ListChargeTransactionsResponse] response from the API call
     def get_charge_transactions(charge_id,
-                                page = nil,
-                                size = nil)
+                                page: nil,
+                                size: nil)
       # Prepare query url.
-      _path_url = '/charges/{charge_id}/transactions'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'charge_id' => charge_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/charges/{charge_id}/transactions'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'charge_id' => { 'value' => charge_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_builder = APIHelper.append_url_with_query_parameters(
         _query_builder,
-        {
-          'page' => page,
-          'size' => size
-        },
-        array_serialization: Configuration.array_serialization
+        'page' => page,
+        'size' => size
       )
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json'
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.get(
+      _request = config.http_client.get(
         _query_url,
         headers: _headers
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       ListChargeTransactionsResponse.from_hash(decoded)
     end
 
@@ -177,36 +136,38 @@ module PagarmeCoreApi
     # @param [UpdateChargeDueDateRequest] request Required parameter: Request
     # for updating the due date
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetChargeResponse response from the API call
+    # @return [GetChargeResponse] response from the API call
     def update_charge_due_date(charge_id,
                                request,
-                               idempotency_key = nil)
+                               idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/Charges/{charge_id}/due-date'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'charge_id' => charge_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/Charges/{charge_id}/due-date'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'charge_id' => { 'value' => charge_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'content-type' => 'application/json; charset=utf-8',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.patch(
+      _request = config.http_client.patch(
         _query_url,
         headers: _headers,
         parameters: request.to_json
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetChargeResponse.from_hash(decoded)
     end
 
@@ -225,51 +186,90 @@ module PagarmeCoreApi
     # beginning of the range for charge's creation
     # @param [DateTime] created_until Optional parameter: Filter for the end of
     # the range for charge's creation
-    # @return ListChargesResponse response from the API call
-    def get_charges(page = nil,
-                    size = nil,
-                    code = nil,
-                    status = nil,
-                    payment_method = nil,
-                    customer_id = nil,
-                    order_id = nil,
-                    created_since = nil,
-                    created_until = nil)
+    # @return [ListChargesResponse] response from the API call
+    def get_charges(page: nil,
+                    size: nil,
+                    code: nil,
+                    status: nil,
+                    payment_method: nil,
+                    customer_id: nil,
+                    order_id: nil,
+                    created_since: nil,
+                    created_until: nil)
       # Prepare query url.
-      _path_url = '/charges'
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
+      _query_builder = config.get_base_uri
+      _query_builder << '/charges'
       _query_builder = APIHelper.append_url_with_query_parameters(
         _query_builder,
-        {
-          'page' => page,
-          'size' => size,
-          'code' => code,
-          'status' => status,
-          'payment_method' => payment_method,
-          'customer_id' => customer_id,
-          'order_id' => order_id,
-          'created_since' => created_since,
-          'created_until' => created_until
-        },
-        array_serialization: Configuration.array_serialization
+        'page' => page,
+        'size' => size,
+        'code' => code,
+        'status' => status,
+        'payment_method' => payment_method,
+        'customer_id' => customer_id,
+        'order_id' => order_id,
+        'created_since' => created_since,
+        'created_until' => created_until
       )
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json'
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.get(
+      _request = config.http_client.get(
         _query_url,
         headers: _headers
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       ListChargesResponse.from_hash(decoded)
+    end
+
+    # Captures a charge
+    # @param [String] charge_id Required parameter: Charge id
+    # @param [CreateCaptureChargeRequest] request Optional parameter: Request
+    # for capturing a charge
+    # @param [String] idempotency_key Optional parameter: Example:
+    # @return [GetChargeResponse] response from the API call
+    def capture_charge(charge_id,
+                       request: nil,
+                       idempotency_key: nil)
+      # Prepare query url.
+      _query_builder = config.get_base_uri
+      _query_builder << '/charges/{charge_id}/capture'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'charge_id' => { 'value' => charge_id, 'encode' => true }
+      )
+      _query_url = APIHelper.clean_url _query_builder
+
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'content-type' => 'application/json; charset=utf-8',
+        'idempotency-key' => idempotency_key
+      }
+
+      # Prepare and execute HttpRequest.
+      _request = config.http_client.post(
+        _query_url,
+        headers: _headers,
+        parameters: request.to_json
+      )
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_response.raw_body)
+      GetChargeResponse.from_hash(decoded)
     end
 
     # Updates the card from a charge
@@ -277,66 +277,70 @@ module PagarmeCoreApi
     # @param [UpdateChargeCardRequest] request Required parameter: Request for
     # updating a charge's card
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetChargeResponse response from the API call
+    # @return [GetChargeResponse] response from the API call
     def update_charge_card(charge_id,
                            request,
-                           idempotency_key = nil)
+                           idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/charges/{charge_id}/card'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'charge_id' => charge_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/charges/{charge_id}/card'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'charge_id' => { 'value' => charge_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'content-type' => 'application/json; charset=utf-8',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.patch(
+      _request = config.http_client.patch(
         _query_url,
         headers: _headers,
         parameters: request.to_json
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetChargeResponse.from_hash(decoded)
     end
 
     # Get a charge from its id
     # @param [String] charge_id Required parameter: Charge id
-    # @return GetChargeResponse response from the API call
+    # @return [GetChargeResponse] response from the API call
     def get_charge(charge_id)
       # Prepare query url.
-      _path_url = '/charges/{charge_id}'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'charge_id' => charge_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/charges/{charge_id}'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'charge_id' => { 'value' => charge_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json'
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.get(
+      _request = config.http_client.get(
         _query_url,
         headers: _headers
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetChargeResponse.from_hash(decoded)
     end
 
@@ -344,71 +348,72 @@ module PagarmeCoreApi
     # @param [String] status Required parameter: Example:
     # @param [DateTime] created_since Optional parameter: Example:
     # @param [DateTime] created_until Optional parameter: Example:
-    # @return GetChargesSummaryResponse response from the API call
+    # @return [GetChargesSummaryResponse] response from the API call
     def get_charges_summary(status,
-                            created_since = nil,
-                            created_until = nil)
+                            created_since: nil,
+                            created_until: nil)
       # Prepare query url.
-      _path_url = '/charges/summary'
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
+      _query_builder = config.get_base_uri
+      _query_builder << '/charges/summary'
       _query_builder = APIHelper.append_url_with_query_parameters(
         _query_builder,
-        {
-          'status' => status,
-          'created_since' => created_since,
-          'created_until' => created_until
-        },
-        array_serialization: Configuration.array_serialization
+        'status' => status,
+        'created_since' => created_since,
+        'created_until' => created_until
       )
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json'
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.get(
+      _request = config.http_client.get(
         _query_url,
         headers: _headers
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetChargesSummaryResponse.from_hash(decoded)
     end
 
     # Retries a charge
     # @param [String] charge_id Required parameter: Charge id
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetChargeResponse response from the API call
+    # @return [GetChargeResponse] response from the API call
     def retry_charge(charge_id,
-                     idempotency_key = nil)
+                     idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/charges/{charge_id}/retry'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'charge_id' => charge_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/charges/{charge_id}/retry'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'charge_id' => { 'value' => charge_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.post(
+      _request = config.http_client.post(
         _query_url,
         headers: _headers
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetChargeResponse.from_hash(decoded)
     end
 
@@ -417,36 +422,38 @@ module PagarmeCoreApi
     # @param [CreateCancelChargeRequest] request Optional parameter: Request for
     # cancelling a charge
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetChargeResponse response from the API call
+    # @return [GetChargeResponse] response from the API call
     def cancel_charge(charge_id,
-                      request = nil,
-                      idempotency_key = nil)
+                      request: nil,
+                      idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/charges/{charge_id}'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'charge_id' => charge_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/charges/{charge_id}'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'charge_id' => { 'value' => charge_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'content-type' => 'application/json; charset=utf-8',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.delete(
+      _request = config.http_client.delete(
         _query_url,
         headers: _headers,
         parameters: request.to_json
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetChargeResponse.from_hash(decoded)
     end
 
@@ -454,31 +461,33 @@ module PagarmeCoreApi
     # @param [CreateChargeRequest] request Required parameter: Request for
     # creating a charge
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetChargeResponse response from the API call
+    # @return [GetChargeResponse] response from the API call
     def create_charge(request,
-                      idempotency_key = nil)
+                      idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/Charges'
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
+      _query_builder = config.get_base_uri
+      _query_builder << '/Charges'
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'content-type' => 'application/json; charset=utf-8',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.post(
+      _request = config.http_client.post(
         _query_url,
         headers: _headers,
         parameters: request.to_json
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetChargeResponse.from_hash(decoded)
     end
 
@@ -487,36 +496,38 @@ module PagarmeCoreApi
     # @param [CreateConfirmPaymentRequest] request Optional parameter: Request
     # for confirm payment
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetChargeResponse response from the API call
+    # @return [GetChargeResponse] response from the API call
     def confirm_payment(charge_id,
-                        request = nil,
-                        idempotency_key = nil)
+                        request: nil,
+                        idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/charges/{charge_id}/confirm-payment'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'charge_id' => charge_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/charges/{charge_id}/confirm-payment'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'charge_id' => { 'value' => charge_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'content-type' => 'application/json; charset=utf-8',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.post(
+      _request = config.http_client.post(
         _query_url,
         headers: _headers,
         parameters: request.to_json
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetChargeResponse.from_hash(decoded)
     end
   end

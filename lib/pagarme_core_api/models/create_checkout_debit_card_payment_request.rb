@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Checkout credit card payment request
   class CreateCheckoutDebitCardPaymentRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Card invoice text descriptor
     # @return [String]
     attr_accessor :statement_descriptor
@@ -22,10 +25,22 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        statement_descriptor
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(authentication = nil,
                    statement_descriptor = nil)
-      @statement_descriptor = statement_descriptor
-      @authentication = authentication
+      @statement_descriptor = statement_descriptor unless statement_descriptor == SKIP
+      @authentication = authentication unless authentication == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -33,10 +48,10 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      if hash['authentication']
-        authentication = CreatePaymentAuthenticationRequest.from_hash(hash['authentication'])
-      end
-      statement_descriptor = hash['statement_descriptor']
+      authentication = CreatePaymentAuthenticationRequest.from_hash(hash['authentication']) if
+        hash['authentication']
+      statement_descriptor =
+        hash.key?('statement_descriptor') ? hash['statement_descriptor'] : SKIP
 
       # Create object from extracted values.
       CreateCheckoutDebitCardPaymentRequest.new(authentication,

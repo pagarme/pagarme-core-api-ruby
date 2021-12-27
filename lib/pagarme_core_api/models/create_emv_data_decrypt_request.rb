@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # CreateEmvDataDecryptRequest Model.
   class CreateEmvDataDecryptRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Emv Decrypt cipher type
     # @return [String]
     attr_accessor :cipher
@@ -27,12 +30,24 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        dukpt
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(cipher = nil,
                    tags = nil,
                    dukpt = nil)
-      @cipher = cipher
-      @dukpt = dukpt
-      @tags = tags
+      @cipher = cipher unless cipher == SKIP
+      @dukpt = dukpt unless dukpt == SKIP
+      @tags = tags unless tags == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -40,7 +55,7 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      cipher = hash['cipher']
+      cipher = hash.key?('cipher') ? hash['cipher'] : SKIP
       # Parameter is an array, so we need to iterate through it
       tags = nil
       unless hash['tags'].nil?
@@ -49,8 +64,9 @@ module PagarmeCoreApi
           tags << (CreateEmvDataTlvDecryptRequest.from_hash(structure) if structure)
         end
       end
-      dukpt = CreateEmvDataDukptDecryptRequest.from_hash(hash['dukpt']) if
-        hash['dukpt']
+
+      tags = SKIP unless hash.key?('tags')
+      dukpt = CreateEmvDataDukptDecryptRequest.from_hash(hash['dukpt']) if hash['dukpt']
 
       # Create object from extracted values.
       CreateEmvDataDecryptRequest.new(cipher,

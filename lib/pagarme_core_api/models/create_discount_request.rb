@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Request for creating a new discount
   class CreateDiscountRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # The discount value
     # @return [Float]
     attr_accessor :value
@@ -37,16 +40,29 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        cycles
+        description
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(value = nil,
                    discount_type = nil,
                    item_id = nil,
                    cycles = nil,
                    description = nil)
-      @value = value
-      @discount_type = discount_type
-      @item_id = item_id
-      @cycles = cycles
-      @description = description
+      @value = value unless value == SKIP
+      @discount_type = discount_type unless discount_type == SKIP
+      @item_id = item_id unless item_id == SKIP
+      @cycles = cycles unless cycles == SKIP
+      @description = description unless description == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -54,11 +70,11 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      value = hash['value']
-      discount_type = hash['discount_type']
-      item_id = hash['item_id']
-      cycles = hash['cycles']
-      description = hash['description']
+      value = hash.key?('value') ? hash['value'] : SKIP
+      discount_type = hash.key?('discount_type') ? hash['discount_type'] : SKIP
+      item_id = hash.key?('item_id') ? hash['item_id'] : SKIP
+      cycles = hash.key?('cycles') ? hash['cycles'] : SKIP
+      description = hash.key?('description') ? hash['description'] : SKIP
 
       # Create object from extracted values.
       CreateDiscountRequest.new(value,

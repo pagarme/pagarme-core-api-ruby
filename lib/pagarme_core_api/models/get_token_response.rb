@@ -7,6 +7,9 @@ require 'date'
 module PagarmeCoreApi
   # Token data
   class GetTokenResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # TODO: Write general description for this method
     # @return [String]
     attr_accessor :id
@@ -38,16 +41,26 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(id = nil,
                    type = nil,
                    created_at = nil,
                    expires_at = nil,
                    card = nil)
-      @id = id
-      @type = type
-      @created_at = created_at
-      @expires_at = expires_at
-      @card = card
+      @id = id unless id == SKIP
+      @type = type unless type == SKIP
+      @created_at = created_at unless created_at == SKIP
+      @expires_at = expires_at unless expires_at == SKIP
+      @card = card unless card == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -55,10 +68,14 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      id = hash['id']
-      type = hash['type']
-      created_at = APIHelper.rfc3339(hash['created_at']) if hash['created_at']
-      expires_at = hash['expires_at']
+      id = hash.key?('id') ? hash['id'] : SKIP
+      type = hash.key?('type') ? hash['type'] : SKIP
+      created_at = if hash.key?('created_at')
+                     (DateTimeHelper.from_rfc3339(hash['created_at']) if hash['created_at'])
+                   else
+                     SKIP
+                   end
+      expires_at = hash.key?('expires_at') ? hash['expires_at'] : SKIP
       card = GetCardTokenResponse.from_hash(hash['card']) if hash['card']
 
       # Create object from extracted values.
@@ -67,6 +84,10 @@ module PagarmeCoreApi
                            created_at,
                            expires_at,
                            card)
+    end
+
+    def to_created_at
+      DateTimeHelper.to_rfc3339(created_at)
     end
   end
 end

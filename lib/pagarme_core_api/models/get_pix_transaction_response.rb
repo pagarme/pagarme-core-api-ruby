@@ -36,6 +36,18 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      _arr = []
+      (_arr << super()).flatten!
+    end
+
+    # An array for nullable fields
+    def nullables
+      _arr = []
+      (_arr << super()).flatten!
+    end
+
     def initialize(qr_code = nil,
                    qr_code_url = nil,
                    expires_at = nil,
@@ -54,12 +66,12 @@ module PagarmeCoreApi
                    antifraud_response = nil,
                    split = nil,
                    next_attempt = nil,
-                   transaction_type = nil,
+                   transaction_type = 'pix',
                    metadata = nil)
-      @qr_code = qr_code
-      @qr_code_url = qr_code_url
-      @expires_at = expires_at
-      @additional_information = additional_information
+      @qr_code = qr_code unless qr_code == SKIP
+      @qr_code_url = qr_code_url unless qr_code_url == SKIP
+      @expires_at = expires_at unless expires_at == SKIP
+      @additional_information = additional_information unless additional_information == SKIP
 
       # Call the constructor of the base class
       super(gateway_id,
@@ -85,9 +97,13 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      qr_code = hash['qr_code']
-      qr_code_url = hash['qr_code_url']
-      expires_at = APIHelper.rfc3339(hash['expires_at']) if hash['expires_at']
+      qr_code = hash.key?('qr_code') ? hash['qr_code'] : SKIP
+      qr_code_url = hash.key?('qr_code_url') ? hash['qr_code_url'] : SKIP
+      expires_at = if hash.key?('expires_at')
+                     (DateTimeHelper.from_rfc3339(hash['expires_at']) if hash['expires_at'])
+                   else
+                     SKIP
+                   end
       # Parameter is an array, so we need to iterate through it
       additional_information = nil
       unless hash['additional_information'].nil?
@@ -96,14 +112,24 @@ module PagarmeCoreApi
           additional_information << (PixAdditionalInformation.from_hash(structure) if structure)
         end
       end
-      gateway_id = hash['gateway_id']
-      amount = hash['amount']
-      status = hash['status']
-      success = hash['success']
-      created_at = APIHelper.rfc3339(hash['created_at']) if hash['created_at']
-      updated_at = APIHelper.rfc3339(hash['updated_at']) if hash['updated_at']
-      attempt_count = hash['attempt_count']
-      max_attempts = hash['max_attempts']
+
+      additional_information = SKIP unless hash.key?('additional_information')
+      gateway_id = hash.key?('gateway_id') ? hash['gateway_id'] : SKIP
+      amount = hash.key?('amount') ? hash['amount'] : SKIP
+      status = hash.key?('status') ? hash['status'] : SKIP
+      success = hash.key?('success') ? hash['success'] : SKIP
+      created_at = if hash.key?('created_at')
+                     (DateTimeHelper.from_rfc3339(hash['created_at']) if hash['created_at'])
+                   else
+                     SKIP
+                   end
+      updated_at = if hash.key?('updated_at')
+                     (DateTimeHelper.from_rfc3339(hash['updated_at']) if hash['updated_at'])
+                   else
+                     SKIP
+                   end
+      attempt_count = hash.key?('attempt_count') ? hash['attempt_count'] : SKIP
+      max_attempts = hash.key?('max_attempts') ? hash['max_attempts'] : SKIP
       # Parameter is an array, so we need to iterate through it
       splits = nil
       unless hash['splits'].nil?
@@ -112,13 +138,13 @@ module PagarmeCoreApi
           splits << (GetSplitResponse.from_hash(structure) if structure)
         end
       end
-      id = hash['id']
-      if hash['gateway_response']
-        gateway_response = GetGatewayResponseResponse.from_hash(hash['gateway_response'])
-      end
-      if hash['antifraud_response']
-        antifraud_response = GetAntifraudResponse.from_hash(hash['antifraud_response'])
-      end
+
+      splits = SKIP unless hash.key?('splits')
+      id = hash.key?('id') ? hash['id'] : SKIP
+      gateway_response = GetGatewayResponseResponse.from_hash(hash['gateway_response']) if
+        hash['gateway_response']
+      antifraud_response = GetAntifraudResponse.from_hash(hash['antifraud_response']) if
+        hash['antifraud_response']
       # Parameter is an array, so we need to iterate through it
       split = nil
       unless hash['split'].nil?
@@ -127,10 +153,15 @@ module PagarmeCoreApi
           split << (GetSplitResponse.from_hash(structure) if structure)
         end
       end
-      next_attempt = APIHelper.rfc3339(hash['next_attempt']) if
-        hash['next_attempt']
-      transaction_type = hash['transaction_type']
-      metadata = hash['metadata']
+
+      split = SKIP unless hash.key?('split')
+      next_attempt = if hash.key?('next_attempt')
+                       (DateTimeHelper.from_rfc3339(hash['next_attempt']) if hash['next_attempt'])
+                     else
+                       SKIP
+                     end
+      transaction_type = hash['transaction_type'] ||= 'pix'
+      metadata = hash.key?('metadata') ? hash['metadata'] : SKIP
 
       # Create object from extracted values.
       GetPixTransactionResponse.new(qr_code,
@@ -153,6 +184,10 @@ module PagarmeCoreApi
                                     next_attempt,
                                     transaction_type,
                                     metadata)
+    end
+
+    def to_expires_at
+      DateTimeHelper.to_rfc3339(expires_at)
     end
   end
 end

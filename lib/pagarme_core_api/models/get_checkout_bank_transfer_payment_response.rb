@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Bank transfer checkout response
   class GetCheckoutBankTransferPaymentResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # bank list response
     # @return [List of String]
     attr_accessor :bank
@@ -17,8 +20,18 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(bank = nil)
-      @bank = bank
+      @bank = bank unless bank == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -26,7 +39,7 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      bank = hash['bank']
+      bank = hash.key?('bank') ? hash['bank'] : SKIP
 
       # Create object from extracted values.
       GetCheckoutBankTransferPaymentResponse.new(bank)

@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # 3D-S payment authentication response
   class GetThreeDSecureResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # MPI Vendor
     # @return [String]
     attr_accessor :mpi
@@ -37,16 +40,26 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(mpi = nil,
                    eci = nil,
                    cavv = nil,
                    transaction_id = nil,
                    success_url = nil)
-      @mpi = mpi
-      @eci = eci
-      @cavv = cavv
-      @transaction_id = transaction_id
-      @success_url = success_url
+      @mpi = mpi unless mpi == SKIP
+      @eci = eci unless eci == SKIP
+      @cavv = cavv unless cavv == SKIP
+      @transaction_id = transaction_id unless transaction_id == SKIP
+      @success_url = success_url unless success_url == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -54,11 +67,12 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      mpi = hash['mpi']
-      eci = hash['eci']
-      cavv = hash['cavv']
-      transaction_id = hash['transaction_Id']
-      success_url = hash['success_url']
+      mpi = hash.key?('mpi') ? hash['mpi'] : SKIP
+      eci = hash.key?('eci') ? hash['eci'] : SKIP
+      cavv = hash.key?('cavv') ? hash['cavv'] : SKIP
+      transaction_id =
+        hash.key?('transaction_Id') ? hash['transaction_Id'] : SKIP
+      success_url = hash.key?('success_url') ? hash['success_url'] : SKIP
 
       # Create object from extracted values.
       GetThreeDSecureResponse.new(mpi,

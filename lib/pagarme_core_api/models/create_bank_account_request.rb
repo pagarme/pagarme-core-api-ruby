@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Request for creating a bank account
   class CreateBankAccountRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Bank account holder name
     # @return [String]
     attr_accessor :holder_name
@@ -43,7 +46,7 @@ module PagarmeCoreApi
     attr_accessor :type
 
     # Metadata
-    # @return [Array<String, String>]
+    # @return [Hash]
     attr_accessor :metadata
 
     # Pix key
@@ -67,6 +70,16 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(holder_name = nil,
                    holder_type = nil,
                    holder_document = nil,
@@ -78,17 +91,17 @@ module PagarmeCoreApi
                    type = nil,
                    metadata = nil,
                    pix_key = nil)
-      @holder_name = holder_name
-      @holder_type = holder_type
-      @holder_document = holder_document
-      @bank = bank
-      @branch_number = branch_number
-      @branch_check_digit = branch_check_digit
-      @account_number = account_number
-      @account_check_digit = account_check_digit
-      @type = type
-      @metadata = metadata
-      @pix_key = pix_key
+      @holder_name = holder_name unless holder_name == SKIP
+      @holder_type = holder_type unless holder_type == SKIP
+      @holder_document = holder_document unless holder_document == SKIP
+      @bank = bank unless bank == SKIP
+      @branch_number = branch_number unless branch_number == SKIP
+      @branch_check_digit = branch_check_digit unless branch_check_digit == SKIP
+      @account_number = account_number unless account_number == SKIP
+      @account_check_digit = account_check_digit unless account_check_digit == SKIP
+      @type = type unless type == SKIP
+      @metadata = metadata unless metadata == SKIP
+      @pix_key = pix_key unless pix_key == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -96,17 +109,21 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      holder_name = hash['holder_name']
-      holder_type = hash['holder_type']
-      holder_document = hash['holder_document']
-      bank = hash['bank']
-      branch_number = hash['branch_number']
-      branch_check_digit = hash['branch_check_digit']
-      account_number = hash['account_number']
-      account_check_digit = hash['account_check_digit']
-      type = hash['type']
-      metadata = hash['metadata']
-      pix_key = hash['pix_key']
+      holder_name = hash.key?('holder_name') ? hash['holder_name'] : SKIP
+      holder_type = hash.key?('holder_type') ? hash['holder_type'] : SKIP
+      holder_document =
+        hash.key?('holder_document') ? hash['holder_document'] : SKIP
+      bank = hash.key?('bank') ? hash['bank'] : SKIP
+      branch_number = hash.key?('branch_number') ? hash['branch_number'] : SKIP
+      branch_check_digit =
+        hash.key?('branch_check_digit') ? hash['branch_check_digit'] : SKIP
+      account_number =
+        hash.key?('account_number') ? hash['account_number'] : SKIP
+      account_check_digit =
+        hash.key?('account_check_digit') ? hash['account_check_digit'] : SKIP
+      type = hash.key?('type') ? hash['type'] : SKIP
+      metadata = hash.key?('metadata') ? hash['metadata'] : SKIP
+      pix_key = hash.key?('pix_key') ? hash['pix_key'] : SKIP
 
       # Create object from extracted values.
       CreateBankAccountRequest.new(holder_name,

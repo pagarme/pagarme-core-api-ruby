@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Anticipation limits
   class GetAnticipationLimitsResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Max limit
     # @return [GetAnticipationLimitResponse]
     attr_accessor :max
@@ -22,10 +25,20 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(max = nil,
                    min = nil)
-      @max = max
-      @min = min
+      @max = max unless max == SKIP
+      @min = min unless min == SKIP
     end
 
     # Creates an instance of the object from a hash.

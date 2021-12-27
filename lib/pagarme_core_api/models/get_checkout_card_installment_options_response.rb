@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # GetCheckoutCardInstallmentOptionsResponse Model.
   class GetCheckoutCardInstallmentOptionsResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Número de parcelas
     # @return [String]
     attr_accessor :number
@@ -22,10 +25,20 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(number = nil,
                    total = nil)
-      @number = number
-      @total = total
+      @number = number unless number == SKIP
+      @total = total unless total == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -33,8 +46,8 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      number = hash['number']
-      total = hash['total']
+      number = hash.key?('number') ? hash['number'] : SKIP
+      total = hash.key?('total') ? hash['total'] : SKIP
 
       # Create object from extracted values.
       GetCheckoutCardInstallmentOptionsResponse.new(number,

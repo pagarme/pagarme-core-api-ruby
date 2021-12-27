@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # The ApplePay header request
   class CreateApplePayHeaderRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # SHA–256 hash, Base64 string codified
     # @return [String]
     attr_accessor :public_key_hash
@@ -27,12 +30,25 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        public_key_hash
+        transaction_id
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(ephemeral_public_key = nil,
                    public_key_hash = nil,
                    transaction_id = nil)
-      @public_key_hash = public_key_hash
-      @ephemeral_public_key = ephemeral_public_key
-      @transaction_id = transaction_id
+      @public_key_hash = public_key_hash unless public_key_hash == SKIP
+      @ephemeral_public_key = ephemeral_public_key unless ephemeral_public_key == SKIP
+      @transaction_id = transaction_id unless transaction_id == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -40,9 +56,12 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      ephemeral_public_key = hash['ephemeral_public_key']
-      public_key_hash = hash['public_key_hash']
-      transaction_id = hash['transaction_id']
+      ephemeral_public_key =
+        hash.key?('ephemeral_public_key') ? hash['ephemeral_public_key'] : SKIP
+      public_key_hash =
+        hash.key?('public_key_hash') ? hash['public_key_hash'] : SKIP
+      transaction_id =
+        hash.key?('transaction_id') ? hash['transaction_id'] : SKIP
 
       # Create object from extracted values.
       CreateApplePayHeaderRequest.new(ephemeral_public_key,

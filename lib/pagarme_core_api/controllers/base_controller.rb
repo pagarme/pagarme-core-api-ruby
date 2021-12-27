@@ -4,67 +4,81 @@
 # ( https://apimatic.io ).
 
 module PagarmeCoreApi
-  # Base controller.
+  # BaseController.
   class BaseController
-    attr_accessor :http_client, :http_call_back
+    attr_accessor :config, :http_call_back
 
-    def initialize(http_client: nil, http_call_back: nil)
-      @http_client = http_client || FaradayClient.new
+    def initialize(config, http_call_back: nil)
+      @config = config
       @http_call_back = http_call_back
 
       @global_headers = {
-        'user-agent' => 'PagarmeCoreApi - Ruby 5.1.0'
+        'user-agent' => get_user_agent
       }
     end
 
     def validate_parameters(args)
       args.each do |_name, value|
-        if value.nil?
-          raise ArgumentError, "Required parameter #{_name} cannot be nil."
-        end
+        raise ArgumentError, "Required parameter #{_name} cannot be nil." if value.nil?
       end
     end
 
     def execute_request(request, binary: false)
-      @http_call_back.on_before_request(request) if @http_call_back
+      @http_call_back&.on_before_request(request)
 
       APIHelper.clean_hash(request.headers)
-      request.headers = @global_headers.clone.merge(request.headers)
+      request.headers.merge!(@global_headers)
 
       response = if binary
-                   @http_client.execute_as_binary(request)
+                   config.http_client.execute_as_binary(request)
                  else
-                   @http_client.execute_as_string(request)
+                   config.http_client.execute_as_string(request)
                  end
-      context = HttpContext.new(request, response)
+      @http_call_back&.on_after_response(response)
 
-      @http_call_back.on_after_response(context) if @http_call_back
-
-      context
+      response
     end
 
-    def validate_response(context)
-      if context.response.status_code == 400
-        raise ErrorException.new('Invalid request',
-                                 context)
-      elsif context.response.status_code == 401
-        raise ErrorException.new('Invalid API key',
-                                 context)
-      elsif context.response.status_code == 404
-        raise ErrorException.new('An informed resource was not found',
-                                 context)
-      elsif context.response.status_code == 412
-        raise ErrorException.new('Business validation error',
-                                 context)
-      elsif context.response.status_code == 422
-        raise ErrorException.new('Contract validation error',
-                                 context)
-      elsif context.response.status_code == 500
-        raise ErrorException.new('Internal server error',
-                                 context)
+    def validate_response(response)
+      case response.status_code
+      when 400
+        raise ErrorException.new(
+          'Invalid request',
+          response
+        )
+      when 401
+        raise ErrorException.new(
+          'Invalid API key',
+          response
+        )
+      when 404
+        raise ErrorException.new(
+          'An informed resource was not found',
+          response
+        )
+      when 412
+        raise ErrorException.new(
+          'Business validation error',
+          response
+        )
+      when 422
+        raise ErrorException.new(
+          'Contract validation error',
+          response
+        )
+      when 500
+        raise ErrorException.new(
+          'Internal server error',
+          response
+        )
       end
-      raise APIException.new 'HTTP Response Not OK', context unless
-        context.response.status_code.between?(200, 208) # [200,208] = HTTP OK
+      raise APIException.new 'HTTP Response Not OK', response unless
+        response.status_code.between?(200, 208) # [200,208] = HTTP OK
+    end
+
+    def get_user_agent
+      user_agent = 'PagarmeCoreApi - Ruby 5.1.1'
+      user_agent
     end
   end
 end

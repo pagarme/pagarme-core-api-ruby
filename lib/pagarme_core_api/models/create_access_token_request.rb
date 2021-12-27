@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Request for creating a new Access Token
   class CreateAccessTokenRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Minutes to expire the token
     # @return [Integer]
     attr_accessor :expires_in
@@ -17,8 +20,20 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        expires_in
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(expires_in = nil)
-      @expires_in = expires_in
+      @expires_in = expires_in unless expires_in == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -26,7 +41,7 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      expires_in = hash['expires_in']
+      expires_in = hash.key?('expires_in') ? hash['expires_in'] : SKIP
 
       # Create object from extracted values.
       CreateAccessTokenRequest.new(expires_in)

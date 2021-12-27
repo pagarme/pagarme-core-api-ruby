@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Request for updating a plan
   class UpdatePlanRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Plan's name
     # @return [String]
     attr_accessor :name
@@ -55,7 +58,7 @@ module PagarmeCoreApi
     attr_accessor :billing_days
 
     # Metadata
-    # @return [Array<String, String>]
+    # @return [Hash]
     attr_accessor :metadata
 
     # Minimum price
@@ -87,6 +90,19 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        minimum_price
+        trial_period_days
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(name = nil,
                    description = nil,
                    installments = nil,
@@ -102,21 +118,21 @@ module PagarmeCoreApi
                    metadata = nil,
                    minimum_price = nil,
                    trial_period_days = nil)
-      @name = name
-      @description = description
-      @installments = installments
-      @statement_descriptor = statement_descriptor
-      @currency = currency
-      @interval = interval
-      @interval_count = interval_count
-      @payment_methods = payment_methods
-      @billing_type = billing_type
-      @status = status
-      @shippable = shippable
-      @billing_days = billing_days
-      @metadata = metadata
-      @minimum_price = minimum_price
-      @trial_period_days = trial_period_days
+      @name = name unless name == SKIP
+      @description = description unless description == SKIP
+      @installments = installments unless installments == SKIP
+      @statement_descriptor = statement_descriptor unless statement_descriptor == SKIP
+      @currency = currency unless currency == SKIP
+      @interval = interval unless interval == SKIP
+      @interval_count = interval_count unless interval_count == SKIP
+      @payment_methods = payment_methods unless payment_methods == SKIP
+      @billing_type = billing_type unless billing_type == SKIP
+      @status = status unless status == SKIP
+      @shippable = shippable unless shippable == SKIP
+      @billing_days = billing_days unless billing_days == SKIP
+      @metadata = metadata unless metadata == SKIP
+      @minimum_price = minimum_price unless minimum_price == SKIP
+      @trial_period_days = trial_period_days unless trial_period_days == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -124,21 +140,25 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      name = hash['name']
-      description = hash['description']
-      installments = hash['installments']
-      statement_descriptor = hash['statement_descriptor']
-      currency = hash['currency']
-      interval = hash['interval']
-      interval_count = hash['interval_count']
-      payment_methods = hash['payment_methods']
-      billing_type = hash['billing_type']
-      status = hash['status']
-      shippable = hash['shippable']
-      billing_days = hash['billing_days']
-      metadata = hash['metadata']
-      minimum_price = hash['minimum_price']
-      trial_period_days = hash['trial_period_days']
+      name = hash.key?('name') ? hash['name'] : SKIP
+      description = hash.key?('description') ? hash['description'] : SKIP
+      installments = hash.key?('installments') ? hash['installments'] : SKIP
+      statement_descriptor =
+        hash.key?('statement_descriptor') ? hash['statement_descriptor'] : SKIP
+      currency = hash.key?('currency') ? hash['currency'] : SKIP
+      interval = hash.key?('interval') ? hash['interval'] : SKIP
+      interval_count =
+        hash.key?('interval_count') ? hash['interval_count'] : SKIP
+      payment_methods =
+        hash.key?('payment_methods') ? hash['payment_methods'] : SKIP
+      billing_type = hash.key?('billing_type') ? hash['billing_type'] : SKIP
+      status = hash.key?('status') ? hash['status'] : SKIP
+      shippable = hash.key?('shippable') ? hash['shippable'] : SKIP
+      billing_days = hash.key?('billing_days') ? hash['billing_days'] : SKIP
+      metadata = hash.key?('metadata') ? hash['metadata'] : SKIP
+      minimum_price = hash.key?('minimum_price') ? hash['minimum_price'] : SKIP
+      trial_period_days =
+        hash.key?('trial_period_days') ? hash['trial_period_days'] : SKIP
 
       # Create object from extracted values.
       UpdatePlanRequest.new(name,

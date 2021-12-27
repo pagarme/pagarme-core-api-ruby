@@ -7,6 +7,9 @@ require 'date'
 module PagarmeCoreApi
   # CreateCheckoutBoletoPaymentRequest Model.
   class CreateCheckoutBoletoPaymentRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Bank identifier
     # @return [String]
     attr_accessor :bank
@@ -28,12 +31,22 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(bank = nil,
                    instructions = nil,
                    due_at = nil)
-      @bank = bank
-      @instructions = instructions
-      @due_at = due_at
+      @bank = bank unless bank == SKIP
+      @instructions = instructions unless instructions == SKIP
+      @due_at = due_at unless due_at == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -41,14 +54,22 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      bank = hash['bank']
-      instructions = hash['instructions']
-      due_at = APIHelper.rfc3339(hash['due_at']) if hash['due_at']
+      bank = hash.key?('bank') ? hash['bank'] : SKIP
+      instructions = hash.key?('instructions') ? hash['instructions'] : SKIP
+      due_at = if hash.key?('due_at')
+                 (DateTimeHelper.from_rfc3339(hash['due_at']) if hash['due_at'])
+               else
+                 SKIP
+               end
 
       # Create object from extracted values.
       CreateCheckoutBoletoPaymentRequest.new(bank,
                                              instructions,
                                              due_at)
+    end
+
+    def to_due_at
+      DateTimeHelper.to_rfc3339(due_at)
     end
   end
 end

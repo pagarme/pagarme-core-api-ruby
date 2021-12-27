@@ -13,13 +13,14 @@ module PagarmeCoreApi
     def self.serialize_array(key, array, formatting: 'indexed')
       tuples = []
 
-      if formatting == 'unindexed'
+      case formatting
+      when 'unindexed'
         tuples += array.map { |element| ["#{key}[]", element] }
-      elsif formatting == 'indexed'
+      when 'indexed'
         tuples += array.map.with_index do |element, index|
           ["#{key}[#{index}]", element]
         end
-      elsif formatting == 'plain'
+      when 'plain'
         tuples += array.map { |element| [key, element] }
       else
         raise ArgumentError, 'Invalid format provided.'
@@ -41,21 +42,26 @@ module PagarmeCoreApi
       # Return if there are no parameters to replace.
       return query_builder if parameters.nil?
 
-      # Iterate and append parameters.
-      parameters.each do |key, value|
-        replace_value = ''
-
-        if value.nil?
+      parameters.each do |key, val|
+        if val.nil?
           replace_value = ''
-        elsif value.instance_of? Array
-          value.map! { |element| CGI.escape(element.to_s) }
-          replace_value = value.join('/')
+        elsif val['value'].instance_of? Array
+          if val['encode'] == true
+            val['value'].map! { |element| CGI.escape(element.to_s) }
+          else
+            val['value'].map!(&:to_s)
+          end
+          replace_value = val['value'].join('/')
         else
-          replace_value = CGI.escape(value.to_s)
+          replace_value = if val['encode'] == true
+                            CGI.escape(val['value'].to_s)
+                          else
+                            val['value'].to_s
+                          end
         end
 
         # Find the template parameter and replace it with its value.
-        query_builder = query_builder.gsub('{' + key.to_s + '}', replace_value)
+        query_builder = query_builder.gsub("{#{key}}", replace_value)
       end
       query_builder
     end
@@ -63,9 +69,7 @@ module PagarmeCoreApi
     # Appends the given set of parameters to the given query string.
     # @param [String] The query string builder to add the query parameters to.
     # @param [Hash] The parameters to append.
-    # @param [String] The format of array parameter serialization.
-    def self.append_url_with_query_parameters(query_builder, parameters,
-                                              array_serialization: 'indexed')
+    def self.append_url_with_query_parameters(query_builder, parameters)
       # Perform parameter validation.
       unless query_builder.instance_of? String
         raise ArgumentError, 'Given value for parameter \"query_builder\"
@@ -75,20 +79,23 @@ module PagarmeCoreApi
       # Return if there are no parameters to replace.
       return query_builder if parameters.nil?
 
+      array_serialization = 'indexed'
+
       parameters.each do |key, value|
         seperator = query_builder.include?('?') ? '&' : '?'
         unless value.nil?
           if value.instance_of? Array
             value.compact!
-            query_builder += if array_serialization == 'csv'
+            query_builder += case array_serialization
+                             when 'csv'
                                "#{seperator}#{key}=#{value.map do |element|
                                  CGI.escape(element.to_s)
                                end.join(',')}"
-                             elsif array_serialization == 'psv'
+                             when 'psv'
                                "#{seperator}#{key}=#{value.map do |element|
                                  CGI.escape(element.to_s)
                                end.join('|')}"
-                             elsif array_serialization == 'tsv'
+                             when 'tsv'
                                "#{seperator}#{key}=#{value.map do |element|
                                  CGI.escape(element.to_s)
                                end.join("\t")}"
@@ -114,7 +121,7 @@ module PagarmeCoreApi
       raise ArgumentError, 'Invalid Url.' unless url.instance_of? String
 
       # Ensure that the urls are absolute.
-      matches = url.match(%r{^(https?:\/\/[^\/]+)})
+      matches = url.match(%r{^(https?://[^/]+)})
       raise ArgumentError, 'Invalid Url format.' if matches.nil?
 
       # Get the http protocol match.
@@ -125,7 +132,7 @@ module PagarmeCoreApi
 
       # Remove redundant forward slashes.
       query = url[protocol.length...(!index.nil? ? index : url.length)]
-      query.gsub!(%r{\/\/+}, '/')
+      query.gsub!(%r{//+}, '/')
 
       # Get the parameters.
       parameters = !index.nil? ? url[url.index('?')...url.length] : ''
@@ -137,7 +144,7 @@ module PagarmeCoreApi
     # Parses JSON string.
     # @param [String] A JSON string.
     def self.json_deserialize(json)
-      return JSON.parse(json)
+      JSON.parse(json)
     rescue StandardError
       raise TypeError, 'Server responded with invalid JSON.'
     end
@@ -152,10 +159,11 @@ module PagarmeCoreApi
     # @param [Hash] The hash of parameters to encode.
     # @return [Hash] A hash with the same parameters form encoded.
     def self.form_encode_parameters(form_parameters)
+      array_serialization = 'indexed'
       encoded = {}
       form_parameters.each do |key, value|
         encoded.merge!(APIHelper.form_encode(value, key, formatting:
-          Configuration.array_serialization))
+          array_serialization))
       end
       encoded
     end
@@ -165,6 +173,7 @@ module PagarmeCoreApi
       a.each do |key, value_a|
         b.each do |k, value_b|
           next unless key == k
+
           x[k] = []
           if value_a.instance_of? Array
             value_a.each do |v|
@@ -209,67 +218,62 @@ module PagarmeCoreApi
       elsif obj.instance_of? Array
         if formatting == 'indexed'
           obj.each_with_index do |value, index|
-            retval.merge!(APIHelper.form_encode(value, instance_name + '[' +
-              index.to_s + ']'))
+            retval.merge!(APIHelper.form_encode(value, "#{instance_name}[#{index}]"))
           end
         elsif serializable_types.map { |x| obj[0].is_a? x }.any?
           obj.each do |value|
             abc = if formatting == 'unindexed'
-                    APIHelper.form_encode(value, instance_name + '[]',
+                    APIHelper.form_encode(value, "#{instance_name}[]",
                                           formatting: formatting)
                   else
                     APIHelper.form_encode(value, instance_name,
                                           formatting: formatting)
                   end
             retval = APIHelper.custom_merge(retval, abc)
-            # print retval
           end
         else
           obj.each_with_index do |value, index|
-            retval.merge!(APIHelper.form_encode(value, instance_name + '[' +
-              index.to_s + ']', formatting: formatting))
+            retval.merge!(APIHelper.form_encode(value, "#{instance_name}[#{index}]",
+                                                formatting: formatting))
           end
         end
       elsif obj.instance_of? Hash
         obj.each do |key, value|
-          retval.merge!(APIHelper.form_encode(value, instance_name + '[' +
-            key + ']', formatting: formatting))
+          retval.merge!(APIHelper.form_encode(value, "#{instance_name}[#{key}]",
+                                              formatting: formatting))
         end
+      elsif obj.instance_of? File
+        retval[instance_name] = UploadIO.new(
+          obj, 'application/octet-stream', File.basename(obj.path)
+        )
       else
         retval[instance_name] = obj
       end
       retval
     end
 
-    # Safely converts a string into an rfc3339 DateTime object
-    # @param [String] The datetime string
-    # @return [DateTime] A DateTime object of rfc3339 format
-    def self.rfc3339(date_time)
-      # missing timezone information
-      if date_time.end_with?('Z') || date_time.index('+')
-        DateTime.rfc3339(date_time)
-      else
-        DateTime.rfc3339(date_time + 'Z')
+    # Retrieves a field from a Hash/Array based on an Array of keys/indexes
+    # @param [Hash, Array] The hash to extract data from
+    # @param [Array<String, Integer>] The keys/indexes to use
+    # @return [Object] The extracted value
+    def self.map_response(obj, keys)
+      val = obj
+      begin
+        keys.each do |key|
+          val = if val.is_a? Array
+                  if key.to_i.to_s == key
+                    val[key.to_i]
+                  else
+                    val = nil
+                  end
+                else
+                  val.fetch(key.to_sym)
+                end
+        end
+      rescue NoMethodError, TypeError, IndexError
+        val = nil
       end
+      val
     end
   end
 end
-
-# Extend types to support to_bool.
-module ToBoolean
-  def to_bool
-    return true if self == true || to_s.strip =~ /^(true|yes|y|1)$/i
-    false
-  end
-end
-
-# Extend NilClass type to support to_bool.
-class NilClass; include ToBoolean; end
-# Extend TrueClass type to support to_bool.
-class TrueClass; include ToBoolean; end
-# Extend FalseClass type to support to_bool.
-class FalseClass; include ToBoolean; end
-# Extend Numeric type to support to_bool.
-class Numeric; include ToBoolean; end
-# Extend String type to support to_bool.
-class String; include ToBoolean; end

@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # The payment authentication request
   class CreatePaymentAuthenticationRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # The Authentication type
     # @return [String]
     attr_accessor :type
@@ -22,10 +25,20 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(type = nil,
                    threed_secure = nil)
-      @type = type
-      @threed_secure = threed_secure
+      @type = type unless type == SKIP
+      @threed_secure = threed_secure unless threed_secure == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -33,10 +46,9 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      type = hash['type']
-      if hash['threed_secure']
-        threed_secure = CreateThreeDSecureRequest.from_hash(hash['threed_secure'])
-      end
+      type = hash.key?('type') ? hash['type'] : SKIP
+      threed_secure = CreateThreeDSecureRequest.from_hash(hash['threed_secure']) if
+        hash['threed_secure']
 
       # Create object from extracted values.
       CreatePaymentAuthenticationRequest.new(type,

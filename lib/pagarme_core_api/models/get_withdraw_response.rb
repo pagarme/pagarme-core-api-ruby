@@ -7,6 +7,9 @@ require 'date'
 module PagarmeCoreApi
   # GetWithdrawResponse Model.
   class GetWithdrawResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # TODO: Write general description for this method
     # @return [String]
     attr_accessor :id
@@ -78,6 +81,21 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        metadata
+        fee
+        funding_date
+        funding_estimated_date
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(id = nil,
                    gateway_id = nil,
                    amount = nil,
@@ -91,19 +109,19 @@ module PagarmeCoreApi
                    fee = nil,
                    funding_date = nil,
                    funding_estimated_date = nil)
-      @id = id
-      @gateway_id = gateway_id
-      @amount = amount
-      @status = status
-      @created_at = created_at
-      @updated_at = updated_at
-      @metadata = metadata
-      @fee = fee
-      @funding_date = funding_date
-      @funding_estimated_date = funding_estimated_date
-      @type = type
-      @source = source
-      @target = target
+      @id = id unless id == SKIP
+      @gateway_id = gateway_id unless gateway_id == SKIP
+      @amount = amount unless amount == SKIP
+      @status = status unless status == SKIP
+      @created_at = created_at unless created_at == SKIP
+      @updated_at = updated_at unless updated_at == SKIP
+      @metadata = metadata unless metadata == SKIP
+      @fee = fee unless fee == SKIP
+      @funding_date = funding_date unless funding_date == SKIP
+      @funding_estimated_date = funding_estimated_date unless funding_estimated_date == SKIP
+      @type = type unless type == SKIP
+      @source = source unless source == SKIP
+      @target = target unless target == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -111,23 +129,35 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      id = hash['id']
-      gateway_id = hash['gateway_id']
-      amount = hash['amount']
-      status = hash['status']
-      created_at = APIHelper.rfc3339(hash['created_at']) if hash['created_at']
-      updated_at = APIHelper.rfc3339(hash['updated_at']) if hash['updated_at']
-      type = hash['type']
-      source = GetWithdrawSourceResponse.from_hash(hash['source']) if
-        hash['source']
-      target = GetWithdrawTargetResponse.from_hash(hash['target']) if
-        hash['target']
-      metadata = hash['metadata']
-      fee = hash['fee']
-      funding_date = APIHelper.rfc3339(hash['funding_date']) if
-        hash['funding_date']
-      funding_estimated_date = APIHelper.rfc3339(hash['funding_estimated_date']) if
-        hash['funding_estimated_date']
+      id = hash.key?('id') ? hash['id'] : SKIP
+      gateway_id = hash.key?('gateway_id') ? hash['gateway_id'] : SKIP
+      amount = hash.key?('amount') ? hash['amount'] : SKIP
+      status = hash.key?('status') ? hash['status'] : SKIP
+      created_at = if hash.key?('created_at')
+                     (DateTimeHelper.from_rfc3339(hash['created_at']) if hash['created_at'])
+                   else
+                     SKIP
+                   end
+      updated_at = if hash.key?('updated_at')
+                     (DateTimeHelper.from_rfc3339(hash['updated_at']) if hash['updated_at'])
+                   else
+                     SKIP
+                   end
+      type = hash.key?('type') ? hash['type'] : SKIP
+      source = GetWithdrawSourceResponse.from_hash(hash['source']) if hash['source']
+      target = GetWithdrawTargetResponse.from_hash(hash['target']) if hash['target']
+      metadata = hash.key?('metadata') ? hash['metadata'] : SKIP
+      fee = hash.key?('fee') ? hash['fee'] : SKIP
+      funding_date = if hash.key?('funding_date')
+                       (DateTimeHelper.from_rfc3339(hash['funding_date']) if hash['funding_date'])
+                     else
+                       SKIP
+                     end
+      funding_estimated_date = if hash.key?('funding_estimated_date')
+                                 (DateTimeHelper.from_rfc3339(hash['funding_estimated_date']) if hash['funding_estimated_date'])
+                               else
+                                 SKIP
+                               end
 
       # Create object from extracted values.
       GetWithdrawResponse.new(id,
@@ -143,6 +173,22 @@ module PagarmeCoreApi
                               fee,
                               funding_date,
                               funding_estimated_date)
+    end
+
+    def to_created_at
+      DateTimeHelper.to_rfc3339(created_at)
+    end
+
+    def to_updated_at
+      DateTimeHelper.to_rfc3339(updated_at)
+    end
+
+    def to_funding_date
+      DateTimeHelper.to_rfc3339(funding_date)
+    end
+
+    def to_funding_estimated_date
+      DateTimeHelper.to_rfc3339(funding_estimated_date)
     end
   end
 end

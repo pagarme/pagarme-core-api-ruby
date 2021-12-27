@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Gateway Response
   class GetGatewayErrorResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # The message error
     # @return [String]
     attr_accessor :message
@@ -17,8 +20,18 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(message = nil)
-      @message = message
+      @message = message unless message == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -26,7 +39,7 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      message = hash['message']
+      message = hash.key?('message') ? hash['message'] : SKIP
 
       # Create object from extracted values.
       GetGatewayErrorResponse.new(message)

@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Checkout Payment Settings Response
   class GetCheckoutPaymentSettingsResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Success Url
     # @return [String]
     attr_accessor :success_url
@@ -52,6 +55,21 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        customer
+        amount
+        default_payment_method
+        gateway_affiliation_id
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(success_url = nil,
                    payment_url = nil,
                    accepted_payment_methods = nil,
@@ -60,14 +78,14 @@ module PagarmeCoreApi
                    amount = nil,
                    default_payment_method = nil,
                    gateway_affiliation_id = nil)
-      @success_url = success_url
-      @payment_url = payment_url
-      @accepted_payment_methods = accepted_payment_methods
-      @status = status
-      @customer = customer
-      @amount = amount
-      @default_payment_method = default_payment_method
-      @gateway_affiliation_id = gateway_affiliation_id
+      @success_url = success_url unless success_url == SKIP
+      @payment_url = payment_url unless payment_url == SKIP
+      @accepted_payment_methods = accepted_payment_methods unless accepted_payment_methods == SKIP
+      @status = status unless status == SKIP
+      @customer = customer unless customer == SKIP
+      @amount = amount unless amount == SKIP
+      @default_payment_method = default_payment_method unless default_payment_method == SKIP
+      @gateway_affiliation_id = gateway_affiliation_id unless gateway_affiliation_id == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -75,15 +93,17 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      success_url = hash['success_url']
-      payment_url = hash['payment_url']
-      accepted_payment_methods = hash['accepted_payment_methods']
-      status = hash['status']
-      customer = GetCustomerResponse.from_hash(hash['customer']) if
-        hash['customer']
-      amount = hash['amount']
-      default_payment_method = hash['default_payment_method']
-      gateway_affiliation_id = hash['gateway_affiliation_id']
+      success_url = hash.key?('success_url') ? hash['success_url'] : SKIP
+      payment_url = hash.key?('payment_url') ? hash['payment_url'] : SKIP
+      accepted_payment_methods =
+        hash.key?('accepted_payment_methods') ? hash['accepted_payment_methods'] : SKIP
+      status = hash.key?('status') ? hash['status'] : SKIP
+      customer = GetCustomerResponse.from_hash(hash['customer']) if hash['customer']
+      amount = hash.key?('amount') ? hash['amount'] : SKIP
+      default_payment_method =
+        hash.key?('default_payment_method') ? hash['default_payment_method'] : SKIP
+      gateway_affiliation_id =
+        hash.key?('gateway_affiliation_id') ? hash['gateway_affiliation_id'] : SKIP
 
       # Create object from extracted values.
       GetCheckoutPaymentSettingsResponse.new(success_url,

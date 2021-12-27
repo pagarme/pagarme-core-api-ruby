@@ -6,8 +6,11 @@
 module PagarmeCoreApi
   # Request for creating a new Invoice
   class CreateInvoiceRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Metadata
-    # @return [Array<String, String>]
+    # @return [Hash]
     attr_accessor :metadata
 
     # A mapping from model property names to API property names.
@@ -17,8 +20,18 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(metadata = nil)
-      @metadata = metadata
+      @metadata = metadata unless metadata == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -26,7 +39,7 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      metadata = hash['metadata']
+      metadata = hash.key?('metadata') ? hash['metadata'] : SKIP
 
       # Create object from extracted values.
       CreateInvoiceRequest.new(metadata)

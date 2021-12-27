@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # GetAutomaticAnticipationResponse Model.
   class GetAutomaticAnticipationResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # TODO: Write general description for this method
     # @return [Boolean]
     attr_accessor :enabled
@@ -37,16 +40,26 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(enabled = nil,
                    type = nil,
                    volume_percentage = nil,
                    delay = nil,
                    days = nil)
-      @enabled = enabled
-      @type = type
-      @volume_percentage = volume_percentage
-      @delay = delay
-      @days = days
+      @enabled = enabled unless enabled == SKIP
+      @type = type unless type == SKIP
+      @volume_percentage = volume_percentage unless volume_percentage == SKIP
+      @delay = delay unless delay == SKIP
+      @days = days unless days == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -54,11 +67,12 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      enabled = hash['enabled']
-      type = hash['type']
-      volume_percentage = hash['volume_percentage']
-      delay = hash['delay']
-      days = hash['days']
+      enabled = hash.key?('enabled') ? hash['enabled'] : SKIP
+      type = hash.key?('type') ? hash['type'] : SKIP
+      volume_percentage =
+        hash.key?('volume_percentage') ? hash['volume_percentage'] : SKIP
+      delay = hash.key?('delay') ? hash['delay'] : SKIP
+      days = hash.key?('days') ? hash['days'] : SKIP
 
       # Create object from extracted values.
       GetAutomaticAnticipationResponse.new(enabled,

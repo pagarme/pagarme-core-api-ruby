@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # The settings for creating a voucher payment
   class CreateVoucherPaymentRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # The text that will be shown on the voucher's statement
     # @return [String]
     attr_accessor :statement_descriptor
@@ -32,14 +35,29 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        statement_descriptor
+        card_id
+        card_token
+        card
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(statement_descriptor = nil,
                    card_id = nil,
                    card_token = nil,
                    card = nil)
-      @statement_descriptor = statement_descriptor
-      @card_id = card_id
-      @card_token = card_token
-      @card = card
+      @statement_descriptor = statement_descriptor unless statement_descriptor == SKIP
+      @card_id = card_id unless card_id == SKIP
+      @card_token = card_token unless card_token == SKIP
+      @card = card unless card == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -47,9 +65,10 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      statement_descriptor = hash['statement_descriptor']
-      card_id = hash['card_id']
-      card_token = hash['card_token']
+      statement_descriptor =
+        hash.key?('statement_descriptor') ? hash['statement_descriptor'] : SKIP
+      card_id = hash.key?('card_id') ? hash['card_id'] : SKIP
+      card_token = hash.key?('card_token') ? hash['card_token'] : SKIP
       card = CreateCardRequest.from_hash(hash['Card']) if hash['Card']
 
       # Create object from extracted values.

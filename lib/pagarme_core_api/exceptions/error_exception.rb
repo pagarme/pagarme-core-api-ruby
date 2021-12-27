@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Api Error Exception
   class ErrorException < APIException
+    SKIP = Object.new
+    private_constant :SKIP
+
     # TODO: Write general description for this method
     # @return [String]
     attr_accessor :message
@@ -20,10 +23,10 @@ module PagarmeCoreApi
 
     # The constructor.
     # @param [String] The reason for raising an exception.
-    # @param [HttpContext] The HttpContext of the API call.
-    def initialize(reason, context)
-      super(reason, context)
-      hash = APIHelper.json_deserialize(@context.response.raw_body)
+    # @param [HttpResponse] The HttpReponse of the API call.
+    def initialize(reason, response)
+      super(reason, response)
+      hash = APIHelper.json_deserialize(@response.raw_body)
       unbox(hash)
     end
 
@@ -31,9 +34,9 @@ module PagarmeCoreApi
     # @param [Hash] The deserialized response sent by the server in the
     # response body.
     def unbox(hash)
-      @message = hash['message']
-      @errors = hash['errors']
-      @request = hash['request']
+      @message = hash.key?('message') ? hash['message'] : SKIP
+      @errors = hash.key?('errors') ? hash['errors'] : SKIP
+      @request = hash.key?('request') ? hash['request'] : SKIP
     end
   end
 end

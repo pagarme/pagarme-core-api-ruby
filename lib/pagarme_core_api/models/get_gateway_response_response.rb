@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # The Transaction Gateway Response
   class GetGatewayResponseResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # The error code
     # @return [String]
     attr_accessor :code
@@ -22,10 +25,20 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(code = nil,
                    errors = nil)
-      @code = code
-      @errors = errors
+      @code = code unless code == SKIP
+      @errors = errors unless errors == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -33,7 +46,7 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      code = hash['code']
+      code = hash.key?('code') ? hash['code'] : SKIP
       # Parameter is an array, so we need to iterate through it
       errors = nil
       unless hash['errors'].nil?
@@ -42,6 +55,8 @@ module PagarmeCoreApi
           errors << (GetGatewayErrorResponse.from_hash(structure) if structure)
         end
       end
+
+      errors = SKIP unless hash.key?('errors')
 
       # Create object from extracted values.
       GetGatewayResponseResponse.new(code,

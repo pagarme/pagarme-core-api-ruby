@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Request for creating a new subscription item
   class CreateSubscriptionItemRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Item description
     # @return [String]
     attr_accessor :description
@@ -57,6 +60,20 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        cycles
+        quantity
+        minimum_price
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(description = nil,
                    pricing_scheme = nil,
                    id = nil,
@@ -66,15 +83,15 @@ module PagarmeCoreApi
                    cycles = nil,
                    quantity = nil,
                    minimum_price = nil)
-      @description = description
-      @pricing_scheme = pricing_scheme
-      @id = id
-      @plan_item_id = plan_item_id
-      @discounts = discounts
-      @name = name
-      @cycles = cycles
-      @quantity = quantity
-      @minimum_price = minimum_price
+      @description = description unless description == SKIP
+      @pricing_scheme = pricing_scheme unless pricing_scheme == SKIP
+      @id = id unless id == SKIP
+      @plan_item_id = plan_item_id unless plan_item_id == SKIP
+      @discounts = discounts unless discounts == SKIP
+      @name = name unless name == SKIP
+      @cycles = cycles unless cycles == SKIP
+      @quantity = quantity unless quantity == SKIP
+      @minimum_price = minimum_price unless minimum_price == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -82,12 +99,11 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      description = hash['description']
-      if hash['pricing_scheme']
-        pricing_scheme = CreatePricingSchemeRequest.from_hash(hash['pricing_scheme'])
-      end
-      id = hash['id']
-      plan_item_id = hash['plan_item_id']
+      description = hash.key?('description') ? hash['description'] : SKIP
+      pricing_scheme = CreatePricingSchemeRequest.from_hash(hash['pricing_scheme']) if
+        hash['pricing_scheme']
+      id = hash.key?('id') ? hash['id'] : SKIP
+      plan_item_id = hash.key?('plan_item_id') ? hash['plan_item_id'] : SKIP
       # Parameter is an array, so we need to iterate through it
       discounts = nil
       unless hash['discounts'].nil?
@@ -96,10 +112,12 @@ module PagarmeCoreApi
           discounts << (CreateDiscountRequest.from_hash(structure) if structure)
         end
       end
-      name = hash['name']
-      cycles = hash['cycles']
-      quantity = hash['quantity']
-      minimum_price = hash['minimum_price']
+
+      discounts = SKIP unless hash.key?('discounts')
+      name = hash.key?('name') ? hash['name'] : SKIP
+      cycles = hash.key?('cycles') ? hash['cycles'] : SKIP
+      quantity = hash.key?('quantity') ? hash['quantity'] : SKIP
+      minimum_price = hash.key?('minimum_price') ? hash['minimum_price'] : SKIP
 
       # Create object from extracted values.
       CreateSubscriptionItemRequest.new(description,

@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # UpdateSubscriptionDueDaysRequest Model.
   class UpdateSubscriptionDueDaysRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # TODO: Write general description for this method
     # @return [Integer]
     attr_accessor :boleto_due_days
@@ -17,8 +20,18 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(boleto_due_days = nil)
-      @boleto_due_days = boleto_due_days
+      @boleto_due_days = boleto_due_days unless boleto_due_days == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -26,7 +39,8 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      boleto_due_days = hash['boleto_due_days']
+      boleto_due_days =
+        hash.key?('boleto_due_days') ? hash['boleto_due_days'] : SKIP
 
       # Create object from extracted values.
       UpdateSubscriptionDueDaysRequest.new(boleto_due_days)

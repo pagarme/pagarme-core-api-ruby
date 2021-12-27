@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # CreateTransfer Model.
   class CreateTransfer < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # TODO: Write general description for this method
     # @return [Integer]
     attr_accessor :amount
@@ -32,14 +35,26 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        metadata
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(amount = nil,
                    source_id = nil,
                    target_id = nil,
                    metadata = nil)
-      @amount = amount
-      @source_id = source_id
-      @target_id = target_id
-      @metadata = metadata
+      @amount = amount unless amount == SKIP
+      @source_id = source_id unless source_id == SKIP
+      @target_id = target_id unless target_id == SKIP
+      @metadata = metadata unless metadata == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -47,10 +62,10 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      amount = hash['amount']
-      source_id = hash['source_id']
-      target_id = hash['target_id']
-      metadata = hash['metadata']
+      amount = hash.key?('amount') ? hash['amount'] : SKIP
+      source_id = hash.key?('source_id') ? hash['source_id'] : SKIP
+      target_id = hash.key?('target_id') ? hash['target_id'] : SKIP
+      metadata = hash.key?('metadata') ? hash['metadata'] : SKIP
 
       # Create object from extracted values.
       CreateTransfer.new(amount,

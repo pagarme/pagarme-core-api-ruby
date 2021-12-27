@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Request for creating an order
   class CreateOrderRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Items
     # @return [List of CreateOrderItemRequest]
     attr_accessor :items
@@ -31,7 +34,7 @@ module PagarmeCoreApi
     attr_accessor :shipping
 
     # Metadata
-    # @return [Array<String, String>]
+    # @return [Hash]
     attr_accessor :metadata
 
     # Defines whether the order will go through anti-fraud
@@ -92,6 +95,26 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        shipping
+        antifraud_enabled
+        ip
+        session_id
+        location
+        device
+        currency
+        antifraud
+        submerchant
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(items = nil,
                    customer = nil,
                    payments = nil,
@@ -108,22 +131,22 @@ module PagarmeCoreApi
                    currency = nil,
                    antifraud = nil,
                    submerchant = nil)
-      @items = items
-      @customer = customer
-      @payments = payments
-      @code = code
-      @customer_id = customer_id
-      @shipping = shipping
-      @metadata = metadata
-      @antifraud_enabled = antifraud_enabled
-      @ip = ip
-      @session_id = session_id
-      @location = location
-      @device = device
-      @closed = closed
-      @currency = currency
-      @antifraud = antifraud
-      @submerchant = submerchant
+      @items = items unless items == SKIP
+      @customer = customer unless customer == SKIP
+      @payments = payments unless payments == SKIP
+      @code = code unless code == SKIP
+      @customer_id = customer_id unless customer_id == SKIP
+      @shipping = shipping unless shipping == SKIP
+      @metadata = metadata unless metadata == SKIP
+      @antifraud_enabled = antifraud_enabled unless antifraud_enabled == SKIP
+      @ip = ip unless ip == SKIP
+      @session_id = session_id unless session_id == SKIP
+      @location = location unless location == SKIP
+      @device = device unless device == SKIP
+      @closed = closed unless closed == SKIP
+      @currency = currency unless currency == SKIP
+      @antifraud = antifraud unless antifraud == SKIP
+      @submerchant = submerchant unless submerchant == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -139,8 +162,9 @@ module PagarmeCoreApi
           items << (CreateOrderItemRequest.from_hash(structure) if structure)
         end
       end
-      customer = CreateCustomerRequest.from_hash(hash['customer']) if
-        hash['customer']
+
+      items = SKIP unless hash.key?('items')
+      customer = CreateCustomerRequest.from_hash(hash['customer']) if hash['customer']
       # Parameter is an array, so we need to iterate through it
       payments = nil
       unless hash['payments'].nil?
@@ -149,23 +173,22 @@ module PagarmeCoreApi
           payments << (CreatePaymentRequest.from_hash(structure) if structure)
         end
       end
-      code = hash['code']
-      customer_id = hash['customer_id']
-      metadata = hash['metadata']
+
+      payments = SKIP unless hash.key?('payments')
+      code = hash.key?('code') ? hash['code'] : SKIP
+      customer_id = hash.key?('customer_id') ? hash['customer_id'] : SKIP
+      metadata = hash.key?('metadata') ? hash['metadata'] : SKIP
       closed = hash['closed'] ||= true
-      shipping = CreateShippingRequest.from_hash(hash['shipping']) if
-        hash['shipping']
-      antifraud_enabled = hash['antifraud_enabled']
-      ip = hash['ip']
-      session_id = hash['session_id']
-      location = CreateLocationRequest.from_hash(hash['location']) if
-        hash['location']
+      shipping = CreateShippingRequest.from_hash(hash['shipping']) if hash['shipping']
+      antifraud_enabled =
+        hash.key?('antifraud_enabled') ? hash['antifraud_enabled'] : SKIP
+      ip = hash.key?('ip') ? hash['ip'] : SKIP
+      session_id = hash.key?('session_id') ? hash['session_id'] : SKIP
+      location = CreateLocationRequest.from_hash(hash['location']) if hash['location']
       device = CreateDeviceRequest.from_hash(hash['device']) if hash['device']
-      currency = hash['currency']
-      antifraud = CreateAntifraudRequest.from_hash(hash['antifraud']) if
-        hash['antifraud']
-      submerchant = CreateSubMerchantRequest.from_hash(hash['submerchant']) if
-        hash['submerchant']
+      currency = hash.key?('currency') ? hash['currency'] : SKIP
+      antifraud = CreateAntifraudRequest.from_hash(hash['antifraud']) if hash['antifraud']
+      submerchant = CreateSubMerchantRequest.from_hash(hash['submerchant']) if hash['submerchant']
 
       # Create object from extracted values.
       CreateOrderRequest.new(items,

@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Informações de transferência do recebedor
   class CreateTransferSettingsRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # TODO: Write general description for this method
     # @return [Boolean]
     attr_accessor :transfer_enabled
@@ -27,12 +30,22 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(transfer_enabled = nil,
                    transfer_interval = nil,
                    transfer_day = nil)
-      @transfer_enabled = transfer_enabled
-      @transfer_interval = transfer_interval
-      @transfer_day = transfer_day
+      @transfer_enabled = transfer_enabled unless transfer_enabled == SKIP
+      @transfer_interval = transfer_interval unless transfer_interval == SKIP
+      @transfer_day = transfer_day unless transfer_day == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -40,9 +53,11 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      transfer_enabled = hash['transfer_enabled']
-      transfer_interval = hash['transfer_interval']
-      transfer_day = hash['transfer_day']
+      transfer_enabled =
+        hash.key?('transfer_enabled') ? hash['transfer_enabled'] : SKIP
+      transfer_interval =
+        hash.key?('transfer_interval') ? hash['transfer_interval'] : SKIP
+      transfer_day = hash.key?('transfer_day') ? hash['transfer_day'] : SKIP
 
       # Create object from extracted values.
       CreateTransferSettingsRequest.new(transfer_enabled,

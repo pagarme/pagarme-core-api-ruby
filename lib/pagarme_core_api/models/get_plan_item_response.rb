@@ -7,6 +7,9 @@ require 'date'
 module PagarmeCoreApi
   # Response object for getting a plan item
   class GetPlanItemResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # TODO: Write general description for this method
     # @return [String]
     attr_accessor :id
@@ -68,6 +71,20 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        quantity
+        cycles
+        deleted_at
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(id = nil,
                    name = nil,
                    status = nil,
@@ -79,17 +96,17 @@ module PagarmeCoreApi
                    quantity = nil,
                    cycles = nil,
                    deleted_at = nil)
-      @id = id
-      @name = name
-      @status = status
-      @created_at = created_at
-      @updated_at = updated_at
-      @pricing_scheme = pricing_scheme
-      @description = description
-      @plan = plan
-      @quantity = quantity
-      @cycles = cycles
-      @deleted_at = deleted_at
+      @id = id unless id == SKIP
+      @name = name unless name == SKIP
+      @status = status unless status == SKIP
+      @created_at = created_at unless created_at == SKIP
+      @updated_at = updated_at unless updated_at == SKIP
+      @pricing_scheme = pricing_scheme unless pricing_scheme == SKIP
+      @description = description unless description == SKIP
+      @plan = plan unless plan == SKIP
+      @quantity = quantity unless quantity == SKIP
+      @cycles = cycles unless cycles == SKIP
+      @deleted_at = deleted_at unless deleted_at == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -97,19 +114,30 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      id = hash['id']
-      name = hash['name']
-      status = hash['status']
-      created_at = APIHelper.rfc3339(hash['created_at']) if hash['created_at']
-      updated_at = APIHelper.rfc3339(hash['updated_at']) if hash['updated_at']
-      if hash['pricing_scheme']
-        pricing_scheme = GetPricingSchemeResponse.from_hash(hash['pricing_scheme'])
-      end
-      description = hash['description']
+      id = hash.key?('id') ? hash['id'] : SKIP
+      name = hash.key?('name') ? hash['name'] : SKIP
+      status = hash.key?('status') ? hash['status'] : SKIP
+      created_at = if hash.key?('created_at')
+                     (DateTimeHelper.from_rfc3339(hash['created_at']) if hash['created_at'])
+                   else
+                     SKIP
+                   end
+      updated_at = if hash.key?('updated_at')
+                     (DateTimeHelper.from_rfc3339(hash['updated_at']) if hash['updated_at'])
+                   else
+                     SKIP
+                   end
+      pricing_scheme = GetPricingSchemeResponse.from_hash(hash['pricing_scheme']) if
+        hash['pricing_scheme']
+      description = hash.key?('description') ? hash['description'] : SKIP
       plan = GetPlanResponse.from_hash(hash['plan']) if hash['plan']
-      quantity = hash['quantity']
-      cycles = hash['cycles']
-      deleted_at = APIHelper.rfc3339(hash['deleted_at']) if hash['deleted_at']
+      quantity = hash.key?('quantity') ? hash['quantity'] : SKIP
+      cycles = hash.key?('cycles') ? hash['cycles'] : SKIP
+      deleted_at = if hash.key?('deleted_at')
+                     (DateTimeHelper.from_rfc3339(hash['deleted_at']) if hash['deleted_at'])
+                   else
+                     SKIP
+                   end
 
       # Create object from extracted values.
       GetPlanItemResponse.new(id,
@@ -123,6 +151,18 @@ module PagarmeCoreApi
                               quantity,
                               cycles,
                               deleted_at)
+    end
+
+    def to_created_at
+      DateTimeHelper.to_rfc3339(created_at)
+    end
+
+    def to_updated_at
+      DateTimeHelper.to_rfc3339(updated_at)
+    end
+
+    def to_deleted_at
+      DateTimeHelper.to_rfc3339(deleted_at)
     end
   end
 end

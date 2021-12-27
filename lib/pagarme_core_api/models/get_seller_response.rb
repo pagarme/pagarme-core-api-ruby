@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # GetSellerResponse Model.
   class GetSellerResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Identification
     # @return [String]
     attr_accessor :id
@@ -43,7 +46,7 @@ module PagarmeCoreApi
     attr_accessor :address
 
     # Metadata
-    # @return [Array<String, String>]
+    # @return [Hash]
     attr_accessor :metadata
 
     # Deleted date
@@ -67,6 +70,18 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        deleted_at
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(id = nil,
                    name = nil,
                    code = nil,
@@ -78,17 +93,17 @@ module PagarmeCoreApi
                    address = nil,
                    metadata = nil,
                    deleted_at = nil)
-      @id = id
-      @name = name
-      @code = code
-      @document = document
-      @description = description
-      @status = status
-      @created_at = created_at
-      @updated_at = updated_at
-      @address = address
-      @metadata = metadata
-      @deleted_at = deleted_at
+      @id = id unless id == SKIP
+      @name = name unless name == SKIP
+      @code = code unless code == SKIP
+      @document = document unless document == SKIP
+      @description = description unless description == SKIP
+      @status = status unless status == SKIP
+      @created_at = created_at unless created_at == SKIP
+      @updated_at = updated_at unless updated_at == SKIP
+      @address = address unless address == SKIP
+      @metadata = metadata unless metadata == SKIP
+      @deleted_at = deleted_at unless deleted_at == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -96,18 +111,17 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      id = hash['id']
-      name = hash['name']
-      code = hash['code']
-      document = hash['document']
-      description = hash['description']
-      status = hash['Status']
-      created_at = hash['CreatedAt']
-      updated_at = hash['UpdatedAt']
-      address = GetAddressResponse.from_hash(hash['Address']) if
-        hash['Address']
-      metadata = hash['Metadata']
-      deleted_at = hash['DeletedAt']
+      id = hash.key?('id') ? hash['id'] : SKIP
+      name = hash.key?('name') ? hash['name'] : SKIP
+      code = hash.key?('code') ? hash['code'] : SKIP
+      document = hash.key?('document') ? hash['document'] : SKIP
+      description = hash.key?('description') ? hash['description'] : SKIP
+      status = hash.key?('Status') ? hash['Status'] : SKIP
+      created_at = hash.key?('CreatedAt') ? hash['CreatedAt'] : SKIP
+      updated_at = hash.key?('UpdatedAt') ? hash['UpdatedAt'] : SKIP
+      address = GetAddressResponse.from_hash(hash['Address']) if hash['Address']
+      metadata = hash.key?('Metadata') ? hash['Metadata'] : SKIP
+      deleted_at = hash.key?('DeletedAt') ? hash['DeletedAt'] : SKIP
 
       # Create object from extracted values.
       GetSellerResponse.new(id,

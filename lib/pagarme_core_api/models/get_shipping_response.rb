@@ -7,6 +7,9 @@ require 'date'
 module PagarmeCoreApi
   # Response object for getting the shipping data
   class GetShippingResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # TODO: Write general description for this method
     # @return [Integer]
     attr_accessor :amount
@@ -53,6 +56,19 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        max_delivery_date
+        estimated_delivery_date
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(amount = nil,
                    description = nil,
                    recipient_name = nil,
@@ -61,14 +77,14 @@ module PagarmeCoreApi
                    type = nil,
                    max_delivery_date = nil,
                    estimated_delivery_date = nil)
-      @amount = amount
-      @description = description
-      @recipient_name = recipient_name
-      @recipient_phone = recipient_phone
-      @address = address
-      @max_delivery_date = max_delivery_date
-      @estimated_delivery_date = estimated_delivery_date
-      @type = type
+      @amount = amount unless amount == SKIP
+      @description = description unless description == SKIP
+      @recipient_name = recipient_name unless recipient_name == SKIP
+      @recipient_phone = recipient_phone unless recipient_phone == SKIP
+      @address = address unless address == SKIP
+      @max_delivery_date = max_delivery_date unless max_delivery_date == SKIP
+      @estimated_delivery_date = estimated_delivery_date unless estimated_delivery_date == SKIP
+      @type = type unless type == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -76,17 +92,24 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      amount = hash['amount']
-      description = hash['description']
-      recipient_name = hash['recipient_name']
-      recipient_phone = hash['recipient_phone']
-      address = GetAddressResponse.from_hash(hash['address']) if
-        hash['address']
-      type = hash['type']
-      max_delivery_date = APIHelper.rfc3339(hash['max_delivery_date']) if
-        hash['max_delivery_date']
-      estimated_delivery_date = APIHelper.rfc3339(hash['estimated_delivery_date']) if
-        hash['estimated_delivery_date']
+      amount = hash.key?('amount') ? hash['amount'] : SKIP
+      description = hash.key?('description') ? hash['description'] : SKIP
+      recipient_name =
+        hash.key?('recipient_name') ? hash['recipient_name'] : SKIP
+      recipient_phone =
+        hash.key?('recipient_phone') ? hash['recipient_phone'] : SKIP
+      address = GetAddressResponse.from_hash(hash['address']) if hash['address']
+      type = hash.key?('type') ? hash['type'] : SKIP
+      max_delivery_date = if hash.key?('max_delivery_date')
+                            (DateTimeHelper.from_rfc3339(hash['max_delivery_date']) if hash['max_delivery_date'])
+                          else
+                            SKIP
+                          end
+      estimated_delivery_date = if hash.key?('estimated_delivery_date')
+                                  (DateTimeHelper.from_rfc3339(hash['estimated_delivery_date']) if hash['estimated_delivery_date'])
+                                else
+                                  SKIP
+                                end
 
       # Create object from extracted values.
       GetShippingResponse.new(amount,
@@ -97,6 +120,14 @@ module PagarmeCoreApi
                               type,
                               max_delivery_date,
                               estimated_delivery_date)
+    end
+
+    def to_max_delivery_date
+      DateTimeHelper.to_rfc3339(max_delivery_date)
+    end
+
+    def to_estimated_delivery_date
+      DateTimeHelper.to_rfc3339(estimated_delivery_date)
     end
   end
 end

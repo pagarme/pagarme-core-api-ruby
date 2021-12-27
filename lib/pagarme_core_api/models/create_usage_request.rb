@@ -7,6 +7,9 @@ require 'date'
 module PagarmeCoreApi
   # Request for creating a usage
   class CreateUsageRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # TODO: Write general description for this method
     # @return [Integer]
     attr_accessor :quantity
@@ -43,18 +46,32 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        code
+        group
+        amount
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(quantity = nil,
                    description = nil,
                    used_at = nil,
                    code = nil,
                    group = nil,
                    amount = nil)
-      @quantity = quantity
-      @description = description
-      @used_at = used_at
-      @code = code
-      @group = group
-      @amount = amount
+      @quantity = quantity unless quantity == SKIP
+      @description = description unless description == SKIP
+      @used_at = used_at unless used_at == SKIP
+      @code = code unless code == SKIP
+      @group = group unless group == SKIP
+      @amount = amount unless amount == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -62,12 +79,16 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      quantity = hash['quantity']
-      description = hash['description']
-      used_at = APIHelper.rfc3339(hash['used_at']) if hash['used_at']
-      code = hash['code']
-      group = hash['group']
-      amount = hash['amount']
+      quantity = hash.key?('quantity') ? hash['quantity'] : SKIP
+      description = hash.key?('description') ? hash['description'] : SKIP
+      used_at = if hash.key?('used_at')
+                  (DateTimeHelper.from_rfc3339(hash['used_at']) if hash['used_at'])
+                else
+                  SKIP
+                end
+      code = hash.key?('code') ? hash['code'] : SKIP
+      group = hash.key?('group') ? hash['group'] : SKIP
+      amount = hash.key?('amount') ? hash['amount'] : SKIP
 
       # Create object from extracted values.
       CreateUsageRequest.new(quantity,
@@ -76,6 +97,10 @@ module PagarmeCoreApi
                              code,
                              group,
                              amount)
+    end
+
+    def to_used_at
+      DateTimeHelper.to_rfc3339(used_at)
     end
   end
 end

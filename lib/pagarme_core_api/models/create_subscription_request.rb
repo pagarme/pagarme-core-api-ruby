@@ -7,6 +7,9 @@ require 'date'
 module PagarmeCoreApi
   # Request for creating a subcription
   class CreateSubscriptionRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Customer
     # @return [CreateCustomerRequest]
     attr_accessor :customer
@@ -64,7 +67,7 @@ module PagarmeCoreApi
     attr_accessor :discounts
 
     # Metadata
-    # @return [Array<String, String>]
+    # @return [Hash]
     attr_accessor :metadata
 
     # Setup data
@@ -168,6 +171,31 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        plan_id
+        customer_id
+        card_id
+        billing_day
+        installments
+        start_at
+        minimum_price
+        cycles
+        card_token
+        gateway_affiliation_id
+        quantity
+        boleto_due_days
+        period
+        submerchant
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(customer = nil,
                    card = nil,
                    code = nil,
@@ -199,37 +227,37 @@ module PagarmeCoreApi
                    boleto_due_days = nil,
                    period = nil,
                    submerchant = nil)
-      @customer = customer
-      @card = card
-      @code = code
-      @payment_method = payment_method
-      @billing_type = billing_type
-      @statement_descriptor = statement_descriptor
-      @description = description
-      @currency = currency
-      @interval = interval
-      @interval_count = interval_count
-      @pricing_scheme = pricing_scheme
-      @items = items
-      @shipping = shipping
-      @discounts = discounts
-      @metadata = metadata
-      @setup = setup
-      @plan_id = plan_id
-      @customer_id = customer_id
-      @card_id = card_id
-      @billing_day = billing_day
-      @installments = installments
-      @start_at = start_at
-      @minimum_price = minimum_price
-      @cycles = cycles
-      @card_token = card_token
-      @gateway_affiliation_id = gateway_affiliation_id
-      @quantity = quantity
-      @boleto_due_days = boleto_due_days
-      @increments = increments
-      @period = period
-      @submerchant = submerchant
+      @customer = customer unless customer == SKIP
+      @card = card unless card == SKIP
+      @code = code unless code == SKIP
+      @payment_method = payment_method unless payment_method == SKIP
+      @billing_type = billing_type unless billing_type == SKIP
+      @statement_descriptor = statement_descriptor unless statement_descriptor == SKIP
+      @description = description unless description == SKIP
+      @currency = currency unless currency == SKIP
+      @interval = interval unless interval == SKIP
+      @interval_count = interval_count unless interval_count == SKIP
+      @pricing_scheme = pricing_scheme unless pricing_scheme == SKIP
+      @items = items unless items == SKIP
+      @shipping = shipping unless shipping == SKIP
+      @discounts = discounts unless discounts == SKIP
+      @metadata = metadata unless metadata == SKIP
+      @setup = setup unless setup == SKIP
+      @plan_id = plan_id unless plan_id == SKIP
+      @customer_id = customer_id unless customer_id == SKIP
+      @card_id = card_id unless card_id == SKIP
+      @billing_day = billing_day unless billing_day == SKIP
+      @installments = installments unless installments == SKIP
+      @start_at = start_at unless start_at == SKIP
+      @minimum_price = minimum_price unless minimum_price == SKIP
+      @cycles = cycles unless cycles == SKIP
+      @card_token = card_token unless card_token == SKIP
+      @gateway_affiliation_id = gateway_affiliation_id unless gateway_affiliation_id == SKIP
+      @quantity = quantity unless quantity == SKIP
+      @boleto_due_days = boleto_due_days unless boleto_due_days == SKIP
+      @increments = increments unless increments == SKIP
+      @period = period unless period == SKIP
+      @submerchant = submerchant unless submerchant == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -237,20 +265,21 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      customer = CreateCustomerRequest.from_hash(hash['customer']) if
-        hash['customer']
+      customer = CreateCustomerRequest.from_hash(hash['customer']) if hash['customer']
       card = CreateCardRequest.from_hash(hash['card']) if hash['card']
-      code = hash['code']
-      payment_method = hash['payment_method']
-      billing_type = hash['billing_type']
-      statement_descriptor = hash['statement_descriptor']
-      description = hash['description']
-      currency = hash['currency']
-      interval = hash['interval']
-      interval_count = hash['interval_count']
-      if hash['pricing_scheme']
-        pricing_scheme = CreatePricingSchemeRequest.from_hash(hash['pricing_scheme'])
-      end
+      code = hash.key?('code') ? hash['code'] : SKIP
+      payment_method =
+        hash.key?('payment_method') ? hash['payment_method'] : SKIP
+      billing_type = hash.key?('billing_type') ? hash['billing_type'] : SKIP
+      statement_descriptor =
+        hash.key?('statement_descriptor') ? hash['statement_descriptor'] : SKIP
+      description = hash.key?('description') ? hash['description'] : SKIP
+      currency = hash.key?('currency') ? hash['currency'] : SKIP
+      interval = hash.key?('interval') ? hash['interval'] : SKIP
+      interval_count =
+        hash.key?('interval_count') ? hash['interval_count'] : SKIP
+      pricing_scheme = CreatePricingSchemeRequest.from_hash(hash['pricing_scheme']) if
+        hash['pricing_scheme']
       # Parameter is an array, so we need to iterate through it
       items = nil
       unless hash['items'].nil?
@@ -259,8 +288,9 @@ module PagarmeCoreApi
           items << (CreateSubscriptionItemRequest.from_hash(structure) if structure)
         end
       end
-      shipping = CreateShippingRequest.from_hash(hash['shipping']) if
-        hash['shipping']
+
+      items = SKIP unless hash.key?('items')
+      shipping = CreateShippingRequest.from_hash(hash['shipping']) if hash['shipping']
       # Parameter is an array, so we need to iterate through it
       discounts = nil
       unless hash['discounts'].nil?
@@ -269,7 +299,9 @@ module PagarmeCoreApi
           discounts << (CreateDiscountRequest.from_hash(structure) if structure)
         end
       end
-      metadata = hash['metadata']
+
+      discounts = SKIP unless hash.key?('discounts')
+      metadata = hash.key?('metadata') ? hash['metadata'] : SKIP
       setup = CreateSetupRequest.from_hash(hash['setup']) if hash['setup']
       # Parameter is an array, so we need to iterate through it
       increments = nil
@@ -279,21 +311,28 @@ module PagarmeCoreApi
           increments << (CreateIncrementRequest.from_hash(structure) if structure)
         end
       end
-      plan_id = hash['plan_id']
-      customer_id = hash['customer_id']
-      card_id = hash['card_id']
-      billing_day = hash['billing_day']
-      installments = hash['installments']
-      start_at = APIHelper.rfc3339(hash['start_at']) if hash['start_at']
-      minimum_price = hash['minimum_price']
-      cycles = hash['cycles']
-      card_token = hash['card_token']
-      gateway_affiliation_id = hash['gateway_affiliation_id']
-      quantity = hash['quantity']
-      boleto_due_days = hash['boleto_due_days']
+
+      increments = SKIP unless hash.key?('increments')
+      plan_id = hash.key?('plan_id') ? hash['plan_id'] : SKIP
+      customer_id = hash.key?('customer_id') ? hash['customer_id'] : SKIP
+      card_id = hash.key?('card_id') ? hash['card_id'] : SKIP
+      billing_day = hash.key?('billing_day') ? hash['billing_day'] : SKIP
+      installments = hash.key?('installments') ? hash['installments'] : SKIP
+      start_at = if hash.key?('start_at')
+                   (DateTimeHelper.from_rfc3339(hash['start_at']) if hash['start_at'])
+                 else
+                   SKIP
+                 end
+      minimum_price = hash.key?('minimum_price') ? hash['minimum_price'] : SKIP
+      cycles = hash.key?('cycles') ? hash['cycles'] : SKIP
+      card_token = hash.key?('card_token') ? hash['card_token'] : SKIP
+      gateway_affiliation_id =
+        hash.key?('gateway_affiliation_id') ? hash['gateway_affiliation_id'] : SKIP
+      quantity = hash.key?('quantity') ? hash['quantity'] : SKIP
+      boleto_due_days =
+        hash.key?('boleto_due_days') ? hash['boleto_due_days'] : SKIP
       period = CreatePeriodRequest.from_hash(hash['period']) if hash['period']
-      submerchant = CreateSubMerchantRequest.from_hash(hash['submerchant']) if
-        hash['submerchant']
+      submerchant = CreateSubMerchantRequest.from_hash(hash['submerchant']) if hash['submerchant']
 
       # Create object from extracted values.
       CreateSubscriptionRequest.new(customer,
@@ -327,6 +366,10 @@ module PagarmeCoreApi
                                     boleto_due_days,
                                     period,
                                     submerchant)
+    end
+
+    def to_start_at
+      DateTimeHelper.to_rfc3339(start_at)
     end
   end
 end

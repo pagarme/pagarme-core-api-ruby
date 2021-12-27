@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Options for creating the card
   class CreateCardOptionsRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Indicates if the card should be verified before creation. If true,
     # executes an authorization before saving the card.
     # @return [Boolean]
@@ -18,8 +21,18 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(verify_card = nil)
-      @verify_card = verify_card
+      @verify_card = verify_card unless verify_card == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -27,7 +40,7 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      verify_card = hash['verify_card']
+      verify_card = hash.key?('verify_card') ? hash['verify_card'] : SKIP
 
       # Create object from extracted values.
       CreateCardOptionsRequest.new(verify_card)

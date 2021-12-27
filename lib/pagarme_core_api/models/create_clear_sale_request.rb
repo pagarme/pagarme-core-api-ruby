@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # CreateClearSaleRequest Model.
   class CreateClearSaleRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # TODO: Write general description for this method
     # @return [Integer]
     attr_accessor :custom_sla
@@ -17,8 +20,18 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(custom_sla = nil)
-      @custom_sla = custom_sla
+      @custom_sla = custom_sla unless custom_sla == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -26,7 +39,7 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      custom_sla = hash['custom_sla']
+      custom_sla = hash.key?('custom_sla') ? hash['custom_sla'] : SKIP
 
       # Create object from extracted values.
       CreateClearSaleRequest.new(custom_sla)

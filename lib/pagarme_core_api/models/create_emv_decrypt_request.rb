@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # CreateEmvDecryptRequest Model.
   class CreateEmvDecryptRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # TODO: Write general description for this method
     # @return [String]
     attr_accessor :icc_data
@@ -32,14 +35,26 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        poi
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(icc_data = nil,
                    card_sequence_number = nil,
                    data = nil,
                    poi = nil)
-      @icc_data = icc_data
-      @card_sequence_number = card_sequence_number
-      @data = data
-      @poi = poi
+      @icc_data = icc_data unless icc_data == SKIP
+      @card_sequence_number = card_sequence_number unless card_sequence_number == SKIP
+      @data = data unless data == SKIP
+      @poi = poi unless poi == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -47,12 +62,11 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      icc_data = hash['icc_data']
-      card_sequence_number = hash['card_sequence_number']
-      data = CreateEmvDataDecryptRequest.from_hash(hash['data']) if
-        hash['data']
-      poi = CreateCardPaymentContactlessPOIRequest.from_hash(hash['poi']) if
-        hash['poi']
+      icc_data = hash.key?('icc_data') ? hash['icc_data'] : SKIP
+      card_sequence_number =
+        hash.key?('card_sequence_number') ? hash['card_sequence_number'] : SKIP
+      data = CreateEmvDataDecryptRequest.from_hash(hash['data']) if hash['data']
+      poi = CreateCardPaymentContactlessPOIRequest.from_hash(hash['poi']) if hash['poi']
 
       # Create object from extracted values.
       CreateEmvDecryptRequest.new(icc_data,

@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Response object for listing subscription cycles
   class ListCyclesResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # The subscription cycles objects
     # @return [List of GetPeriodResponse]
     attr_accessor :data
@@ -22,10 +25,23 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        data
+        paging
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(data = nil,
                    paging = nil)
-      @data = data
-      @paging = paging
+      @data = data unless data == SKIP
+      @paging = paging unless paging == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -41,6 +57,8 @@ module PagarmeCoreApi
           data << (GetPeriodResponse.from_hash(structure) if structure)
         end
       end
+
+      data = SKIP unless hash.key?('data')
       paging = PagingResponse.from_hash(hash['paging']) if hash['paging']
 
       # Create object from extracted values.

@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Request for creating a new customer
   class CreateCustomerRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Name
     # @return [String]
     attr_accessor :name
@@ -27,7 +30,7 @@ module PagarmeCoreApi
     attr_accessor :address
 
     # Metadata
-    # @return [Array<String, String>]
+    # @return [Hash]
     attr_accessor :metadata
 
     # Metadata
@@ -62,6 +65,19 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        gender
+        document_type
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(name = nil,
                    email = nil,
                    document = nil,
@@ -72,16 +88,16 @@ module PagarmeCoreApi
                    code = nil,
                    gender = nil,
                    document_type = nil)
-      @name = name
-      @email = email
-      @document = document
-      @type = type
-      @address = address
-      @metadata = metadata
-      @phones = phones
-      @code = code
-      @gender = gender
-      @document_type = document_type
+      @name = name unless name == SKIP
+      @email = email unless email == SKIP
+      @document = document unless document == SKIP
+      @type = type unless type == SKIP
+      @address = address unless address == SKIP
+      @metadata = metadata unless metadata == SKIP
+      @phones = phones unless phones == SKIP
+      @code = code unless code == SKIP
+      @gender = gender unless gender == SKIP
+      @document_type = document_type unless document_type == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -89,17 +105,16 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      name = hash['name']
-      email = hash['email']
-      document = hash['document']
-      type = hash['type']
-      address = CreateAddressRequest.from_hash(hash['address']) if
-        hash['address']
-      metadata = hash['metadata']
+      name = hash.key?('name') ? hash['name'] : SKIP
+      email = hash.key?('email') ? hash['email'] : SKIP
+      document = hash.key?('document') ? hash['document'] : SKIP
+      type = hash.key?('type') ? hash['type'] : SKIP
+      address = CreateAddressRequest.from_hash(hash['address']) if hash['address']
+      metadata = hash.key?('metadata') ? hash['metadata'] : SKIP
       phones = CreatePhonesRequest.from_hash(hash['phones']) if hash['phones']
-      code = hash['code']
-      gender = hash['gender']
-      document_type = hash['document_type']
+      code = hash.key?('code') ? hash['code'] : SKIP
+      gender = hash.key?('gender') ? hash['gender'] : SKIP
+      document_type = hash.key?('document_type') ? hash['document_type'] : SKIP
 
       # Create object from extracted values.
       CreateCustomerRequest.new(name,

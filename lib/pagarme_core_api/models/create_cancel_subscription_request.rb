@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Request for canceling a subscription
   class CreateCancelSubscriptionRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Indicates if the pending invoices must also be canceled.
     # @return [Boolean]
     attr_accessor :cancel_pending_invoices
@@ -17,8 +20,18 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(cancel_pending_invoices = true)
-      @cancel_pending_invoices = cancel_pending_invoices
+      @cancel_pending_invoices = cancel_pending_invoices unless cancel_pending_invoices == SKIP
     end
 
     # Creates an instance of the object from a hash.

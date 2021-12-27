@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # The settings for creating a debit card payment
   class CreateDebitCardPaymentRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # The text that will be shown on the debit card's statement
     # @return [String]
     attr_accessor :statement_descriptor
@@ -47,6 +50,24 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        statement_descriptor
+        card
+        card_id
+        card_token
+        recurrence
+        authentication
+        token
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(statement_descriptor = nil,
                    card = nil,
                    card_id = nil,
@@ -54,13 +75,13 @@ module PagarmeCoreApi
                    recurrence = nil,
                    authentication = nil,
                    token = nil)
-      @statement_descriptor = statement_descriptor
-      @card = card
-      @card_id = card_id
-      @card_token = card_token
-      @recurrence = recurrence
-      @authentication = authentication
-      @token = token
+      @statement_descriptor = statement_descriptor unless statement_descriptor == SKIP
+      @card = card unless card == SKIP
+      @card_id = card_id unless card_id == SKIP
+      @card_token = card_token unless card_token == SKIP
+      @recurrence = recurrence unless recurrence == SKIP
+      @authentication = authentication unless authentication == SKIP
+      @token = token unless token == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -68,16 +89,15 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      statement_descriptor = hash['statement_descriptor']
+      statement_descriptor =
+        hash.key?('statement_descriptor') ? hash['statement_descriptor'] : SKIP
       card = CreateCardRequest.from_hash(hash['card']) if hash['card']
-      card_id = hash['card_id']
-      card_token = hash['card_token']
-      recurrence = hash['recurrence']
-      if hash['authentication']
-        authentication = CreatePaymentAuthenticationRequest.from_hash(hash['authentication'])
-      end
-      token = CreateCardPaymentContactlessRequest.from_hash(hash['token']) if
-        hash['token']
+      card_id = hash.key?('card_id') ? hash['card_id'] : SKIP
+      card_token = hash.key?('card_token') ? hash['card_token'] : SKIP
+      recurrence = hash.key?('recurrence') ? hash['recurrence'] : SKIP
+      authentication = CreatePaymentAuthenticationRequest.from_hash(hash['authentication']) if
+        hash['authentication']
+      token = CreateCardPaymentContactlessRequest.from_hash(hash['token']) if hash['token']
 
       # Create object from extracted values.
       CreateDebitCardPaymentRequest.new(statement_descriptor,

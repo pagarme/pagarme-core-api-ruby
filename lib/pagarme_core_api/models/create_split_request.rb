@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Split
   class CreateSplitRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Split type
     # @return [String]
     attr_accessor :type
@@ -32,14 +35,26 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        options
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(type = nil,
                    amount = nil,
                    recipient_id = nil,
                    options = nil)
-      @type = type
-      @amount = amount
-      @recipient_id = recipient_id
-      @options = options
+      @type = type unless type == SKIP
+      @amount = amount unless amount == SKIP
+      @recipient_id = recipient_id unless recipient_id == SKIP
+      @options = options unless options == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -47,11 +62,10 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      type = hash['type']
-      amount = hash['amount']
-      recipient_id = hash['recipient_id']
-      options = CreateSplitOptionsRequest.from_hash(hash['options']) if
-        hash['options']
+      type = hash.key?('type') ? hash['type'] : SKIP
+      amount = hash.key?('amount') ? hash['amount'] : SKIP
+      recipient_id = hash.key?('recipient_id') ? hash['recipient_id'] : SKIP
+      options = CreateSplitOptionsRequest.from_hash(hash['options']) if hash['options']
 
       # Create object from extracted values.
       CreateSplitRequest.new(type,

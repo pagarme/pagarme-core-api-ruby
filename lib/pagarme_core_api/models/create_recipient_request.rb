@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Request for creating a recipient
   class CreateRecipientRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Recipient name
     # @return [String]
     attr_accessor :name
@@ -31,7 +34,7 @@ module PagarmeCoreApi
     attr_accessor :default_bank_account
 
     # Metadata
-    # @return [Array<String, String>]
+    # @return [Hash]
     attr_accessor :metadata
 
     # Receiver Transfer Information
@@ -62,6 +65,18 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        transfer_settings
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(name = nil,
                    email = nil,
                    description = nil,
@@ -72,16 +87,16 @@ module PagarmeCoreApi
                    code = nil,
                    payment_mode = 'bank_transfer',
                    transfer_settings = nil)
-      @name = name
-      @email = email
-      @description = description
-      @document = document
-      @type = type
-      @default_bank_account = default_bank_account
-      @metadata = metadata
-      @transfer_settings = transfer_settings
-      @code = code
-      @payment_mode = payment_mode
+      @name = name unless name == SKIP
+      @email = email unless email == SKIP
+      @description = description unless description == SKIP
+      @document = document unless document == SKIP
+      @type = type unless type == SKIP
+      @default_bank_account = default_bank_account unless default_bank_account == SKIP
+      @metadata = metadata unless metadata == SKIP
+      @transfer_settings = transfer_settings unless transfer_settings == SKIP
+      @code = code unless code == SKIP
+      @payment_mode = payment_mode unless payment_mode == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -89,20 +104,18 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      name = hash['name']
-      email = hash['email']
-      description = hash['description']
-      document = hash['document']
-      type = hash['type']
-      if hash['default_bank_account']
-        default_bank_account = CreateBankAccountRequest.from_hash(hash['default_bank_account'])
-      end
-      metadata = hash['metadata']
-      code = hash['code']
+      name = hash.key?('name') ? hash['name'] : SKIP
+      email = hash.key?('email') ? hash['email'] : SKIP
+      description = hash.key?('description') ? hash['description'] : SKIP
+      document = hash.key?('document') ? hash['document'] : SKIP
+      type = hash.key?('type') ? hash['type'] : SKIP
+      default_bank_account = CreateBankAccountRequest.from_hash(hash['default_bank_account']) if
+        hash['default_bank_account']
+      metadata = hash.key?('metadata') ? hash['metadata'] : SKIP
+      code = hash.key?('code') ? hash['code'] : SKIP
       payment_mode = hash['payment_mode'] ||= 'bank_transfer'
-      if hash['transfer_settings']
-        transfer_settings = CreateTransferSettingsRequest.from_hash(hash['transfer_settings'])
-      end
+      transfer_settings = CreateTransferSettingsRequest.from_hash(hash['transfer_settings']) if
+        hash['transfer_settings']
 
       # Create object from extracted values.
       CreateRecipientRequest.new(name,

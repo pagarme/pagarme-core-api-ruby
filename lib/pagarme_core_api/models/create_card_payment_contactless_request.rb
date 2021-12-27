@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # The card payment contactless request
   class CreateCardPaymentContactlessRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # The authentication type
     # @return [String]
     attr_accessor :type
@@ -32,14 +35,28 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        apple_pay
+        google_pay
+        emv
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(type = nil,
                    apple_pay = nil,
                    google_pay = nil,
                    emv = nil)
-      @type = type
-      @apple_pay = apple_pay
-      @google_pay = google_pay
-      @emv = emv
+      @type = type unless type == SKIP
+      @apple_pay = apple_pay unless apple_pay == SKIP
+      @google_pay = google_pay unless google_pay == SKIP
+      @emv = emv unless emv == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -47,11 +64,9 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      type = hash['type']
-      apple_pay = CreateApplePayRequest.from_hash(hash['apple_pay']) if
-        hash['apple_pay']
-      google_pay = CreateGooglePayRequest.from_hash(hash['google_pay']) if
-        hash['google_pay']
+      type = hash.key?('type') ? hash['type'] : SKIP
+      apple_pay = CreateApplePayRequest.from_hash(hash['apple_pay']) if hash['apple_pay']
+      google_pay = CreateGooglePayRequest.from_hash(hash['google_pay']) if hash['google_pay']
       emv = CreateEmvDecryptRequest.from_hash(hash['emv']) if hash['emv']
 
       # Create object from extracted values.

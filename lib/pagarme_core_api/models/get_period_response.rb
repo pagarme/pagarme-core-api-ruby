@@ -7,6 +7,9 @@ require 'date'
 module PagarmeCoreApi
   # Response object for getting a period
   class GetPeriodResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # TODO: Write general description for this method
     # @return [DateTime]
     attr_accessor :start_at
@@ -63,6 +66,16 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(start_at = nil,
                    end_at = nil,
                    id = nil,
@@ -73,16 +86,16 @@ module PagarmeCoreApi
                    created_at = nil,
                    updated_at = nil,
                    cycle = nil)
-      @start_at = start_at
-      @end_at = end_at
-      @id = id
-      @billing_at = billing_at
-      @subscription = subscription
-      @status = status
-      @duration = duration
-      @created_at = created_at
-      @updated_at = updated_at
-      @cycle = cycle
+      @start_at = start_at unless start_at == SKIP
+      @end_at = end_at unless end_at == SKIP
+      @id = id unless id == SKIP
+      @billing_at = billing_at unless billing_at == SKIP
+      @subscription = subscription unless subscription == SKIP
+      @status = status unless status == SKIP
+      @duration = duration unless duration == SKIP
+      @created_at = created_at unless created_at == SKIP
+      @updated_at = updated_at unless updated_at == SKIP
+      @cycle = cycle unless cycle == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -90,17 +103,29 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      start_at = APIHelper.rfc3339(hash['start_at']) if hash['start_at']
-      end_at = APIHelper.rfc3339(hash['end_at']) if hash['end_at']
-      id = hash['id']
-      billing_at = APIHelper.rfc3339(hash['billing_at']) if hash['billing_at']
+      start_at = if hash.key?('start_at')
+                   (DateTimeHelper.from_rfc3339(hash['start_at']) if hash['start_at'])
+                 else
+                   SKIP
+                 end
+      end_at = if hash.key?('end_at')
+                 (DateTimeHelper.from_rfc3339(hash['end_at']) if hash['end_at'])
+               else
+                 SKIP
+               end
+      id = hash.key?('id') ? hash['id'] : SKIP
+      billing_at = if hash.key?('billing_at')
+                     (DateTimeHelper.from_rfc3339(hash['billing_at']) if hash['billing_at'])
+                   else
+                     SKIP
+                   end
       subscription = GetSubscriptionResponse.from_hash(hash['subscription']) if
         hash['subscription']
-      status = hash['status']
-      duration = hash['duration']
-      created_at = hash['created_at']
-      updated_at = hash['updated_at']
-      cycle = hash['cycle']
+      status = hash.key?('status') ? hash['status'] : SKIP
+      duration = hash.key?('duration') ? hash['duration'] : SKIP
+      created_at = hash.key?('created_at') ? hash['created_at'] : SKIP
+      updated_at = hash.key?('updated_at') ? hash['updated_at'] : SKIP
+      cycle = hash.key?('cycle') ? hash['cycle'] : SKIP
 
       # Create object from extracted values.
       GetPeriodResponse.new(start_at,
@@ -113,6 +138,18 @@ module PagarmeCoreApi
                             created_at,
                             updated_at,
                             cycle)
+    end
+
+    def to_start_at
+      DateTimeHelper.to_rfc3339(start_at)
+    end
+
+    def to_end_at
+      DateTimeHelper.to_rfc3339(end_at)
+    end
+
+    def to_billing_at
+      DateTimeHelper.to_rfc3339(billing_at)
     end
   end
 end

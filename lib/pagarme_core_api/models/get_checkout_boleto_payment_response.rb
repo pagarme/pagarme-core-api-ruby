@@ -7,6 +7,9 @@ require 'date'
 module PagarmeCoreApi
   # GetCheckoutBoletoPaymentResponse Model.
   class GetCheckoutBoletoPaymentResponse < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Data de vencimento do boleto
     # @return [DateTime]
     attr_accessor :due_at
@@ -23,10 +26,20 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(due_at = nil,
                    instructions = nil)
-      @due_at = due_at
-      @instructions = instructions
+      @due_at = due_at unless due_at == SKIP
+      @instructions = instructions unless instructions == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -34,12 +47,20 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      due_at = APIHelper.rfc3339(hash['due_at']) if hash['due_at']
-      instructions = hash['instructions']
+      due_at = if hash.key?('due_at')
+                 (DateTimeHelper.from_rfc3339(hash['due_at']) if hash['due_at'])
+               else
+                 SKIP
+               end
+      instructions = hash.key?('instructions') ? hash['instructions'] : SKIP
 
       # Create object from extracted values.
       GetCheckoutBoletoPaymentResponse.new(due_at,
                                            instructions)
+    end
+
+    def to_due_at
+      DateTimeHelper.to_rfc3339(due_at)
     end
   end
 end

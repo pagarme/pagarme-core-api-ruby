@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # The settings for creating a private label payment
   class CreatePrivateLabelPaymentRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Number of installments
     # @return [Integer]
     attr_accessor :installments
@@ -58,6 +61,26 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        installments
+        statement_descriptor
+        card
+        card_id
+        card_token
+        recurrence
+        capture
+        extended_limit_enabled
+        extended_limit_code
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(installments = 1,
                    statement_descriptor = nil,
                    card = nil,
@@ -67,15 +90,15 @@ module PagarmeCoreApi
                    capture = true,
                    extended_limit_enabled = nil,
                    extended_limit_code = nil)
-      @installments = installments
-      @statement_descriptor = statement_descriptor
-      @card = card
-      @card_id = card_id
-      @card_token = card_token
-      @recurrence = recurrence
-      @capture = capture
-      @extended_limit_enabled = extended_limit_enabled
-      @extended_limit_code = extended_limit_code
+      @installments = installments unless installments == SKIP
+      @statement_descriptor = statement_descriptor unless statement_descriptor == SKIP
+      @card = card unless card == SKIP
+      @card_id = card_id unless card_id == SKIP
+      @card_token = card_token unless card_token == SKIP
+      @recurrence = recurrence unless recurrence == SKIP
+      @capture = capture unless capture == SKIP
+      @extended_limit_enabled = extended_limit_enabled unless extended_limit_enabled == SKIP
+      @extended_limit_code = extended_limit_code unless extended_limit_code == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -84,14 +107,17 @@ module PagarmeCoreApi
 
       # Extract variables from the hash.
       installments = hash['installments'] ||= 1
-      statement_descriptor = hash['statement_descriptor']
+      statement_descriptor =
+        hash.key?('statement_descriptor') ? hash['statement_descriptor'] : SKIP
       card = CreateCardRequest.from_hash(hash['card']) if hash['card']
-      card_id = hash['card_id']
-      card_token = hash['card_token']
-      recurrence = hash['recurrence']
+      card_id = hash.key?('card_id') ? hash['card_id'] : SKIP
+      card_token = hash.key?('card_token') ? hash['card_token'] : SKIP
+      recurrence = hash.key?('recurrence') ? hash['recurrence'] : SKIP
       capture = hash['capture'] ||= true
-      extended_limit_enabled = hash['extended_limit_enabled']
-      extended_limit_code = hash['extended_limit_code']
+      extended_limit_enabled =
+        hash.key?('extended_limit_enabled') ? hash['extended_limit_enabled'] : SKIP
+      extended_limit_code =
+        hash.key?('extended_limit_code') ? hash['extended_limit_code'] : SKIP
 
       # Create object from extracted values.
       CreatePrivateLabelPaymentRequest.new(installments,

@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Pix Additional Information
   class PixAdditionalInformation < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # TODO: Write general description for this method
     # @return [String]
     attr_accessor :name
@@ -22,10 +25,20 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(name = nil,
                    value = nil)
-      @name = name
-      @value = value
+      @name = name unless name == SKIP
+      @value = value unless value == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -33,8 +46,8 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      name = hash['Name']
-      value = hash['Value']
+      name = hash.key?('Name') ? hash['Name'] : SKIP
+      value = hash.key?('Value') ? hash['Value'] : SKIP
 
       # Create object from extracted values.
       PixAdditionalInformation.new(name,

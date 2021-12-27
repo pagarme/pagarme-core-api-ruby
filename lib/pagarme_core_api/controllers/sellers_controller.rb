@@ -6,44 +6,40 @@
 module PagarmeCoreApi
   # SellersController
   class SellersController < BaseController
-    @instance = SellersController.new
-
-    class << self
-      attr_accessor :instance
-    end
-
-    def instance
-      self.class.instance
+    def initialize(config, http_call_back: nil)
+      super(config, http_call_back: http_call_back)
     end
 
     # TODO: type endpoint description here
     # @param [CreateSellerRequest] request Required parameter: Seller Model
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetSellerResponse response from the API call
+    # @return [GetSellerResponse] response from the API call
     def create_seller(request,
-                      idempotency_key = nil)
+                      idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/sellers/'
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
+      _query_builder = config.get_base_uri
+      _query_builder << '/sellers/'
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'content-type' => 'application/json; charset=utf-8',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.post(
+      _request = config.http_client.post(
         _query_url,
         headers: _headers,
         parameters: request.to_json
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetSellerResponse.from_hash(decoded)
     end
 
@@ -52,36 +48,38 @@ module PagarmeCoreApi
     # @param [UpdateMetadataRequest] request Required parameter: Request for
     # updating the charge metadata
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetSellerResponse response from the API call
+    # @return [GetSellerResponse] response from the API call
     def update_seller_metadata(seller_id,
                                request,
-                               idempotency_key = nil)
+                               idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/sellers/{seller_id}/metadata'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'seller_id' => seller_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/sellers/{seller_id}/metadata'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'seller_id' => { 'value' => seller_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'content-type' => 'application/json; charset=utf-8',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.patch(
+      _request = config.http_client.patch(
         _query_url,
         headers: _headers,
         parameters: request.to_json
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetSellerResponse.from_hash(decoded)
     end
 
@@ -90,99 +88,105 @@ module PagarmeCoreApi
     # @param [UpdateSellerRequest] request Required parameter: Update Seller
     # model
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetSellerResponse response from the API call
+    # @return [GetSellerResponse] response from the API call
     def update_seller(id,
                       request,
-                      idempotency_key = nil)
+                      idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/sellers/{id}'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'id' => id
+      _query_builder = config.get_base_uri
+      _query_builder << '/sellers/{id}'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'id' => { 'value' => id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'content-type' => 'application/json; charset=utf-8',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.put(
+      _request = config.http_client.put(
         _query_url,
         headers: _headers,
         parameters: request.to_json
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetSellerResponse.from_hash(decoded)
     end
 
     # TODO: type endpoint description here
     # @param [String] seller_id Required parameter: Seller Id
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetSellerResponse response from the API call
+    # @return [GetSellerResponse] response from the API call
     def delete_seller(seller_id,
-                      idempotency_key = nil)
+                      idempotency_key: nil)
       # Prepare query url.
-      _path_url = '/sellers/{sellerId}'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'sellerId' => seller_id
+      _query_builder = config.get_base_uri
+      _query_builder << '/sellers/{sellerId}'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'sellerId' => { 'value' => seller_id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
         'idempotency-key' => idempotency_key
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.delete(
+      _request = config.http_client.delete(
         _query_url,
         headers: _headers
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetSellerResponse.from_hash(decoded)
     end
 
     # TODO: type endpoint description here
     # @param [String] id Required parameter: Seller Id
-    # @return GetSellerResponse response from the API call
+    # @return [GetSellerResponse] response from the API call
     def get_seller_by_id(id)
       # Prepare query url.
-      _path_url = '/sellers/{id}'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'id' => id
+      _query_builder = config.get_base_uri
+      _query_builder << '/sellers/{id}'
+      _query_builder = APIHelper.append_url_with_template_parameters(
+        _query_builder,
+        'id' => { 'value' => id, 'encode' => true }
       )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json'
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.get(
+      _request = config.http_client.get(
         _query_url,
         headers: _headers
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       GetSellerResponse.from_hash(decoded)
     end
 
@@ -196,50 +200,49 @@ module PagarmeCoreApi
     # @param [String] type Optional parameter: Example:
     # @param [DateTime] created_since Optional parameter: Example:
     # @param [DateTime] created_until Optional parameter: Example:
-    # @return ListSellerResponse response from the API call
-    def get_sellers(page = nil,
-                    size = nil,
-                    name = nil,
-                    document = nil,
-                    code = nil,
-                    status = nil,
-                    type = nil,
-                    created_since = nil,
-                    created_until = nil)
+    # @return [ListSellerResponse] response from the API call
+    def get_sellers(page: nil,
+                    size: nil,
+                    name: nil,
+                    document: nil,
+                    code: nil,
+                    status: nil,
+                    type: nil,
+                    created_since: nil,
+                    created_until: nil)
       # Prepare query url.
-      _path_url = '/sellers'
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
+      _query_builder = config.get_base_uri
+      _query_builder << '/sellers'
       _query_builder = APIHelper.append_url_with_query_parameters(
         _query_builder,
-        {
-          'page' => page,
-          'size' => size,
-          'name' => name,
-          'document' => document,
-          'code' => code,
-          'status' => status,
-          'type' => type,
-          'created_Since' => created_since,
-          'created_Until' => created_until
-        },
-        array_serialization: Configuration.array_serialization
+        'page' => page,
+        'size' => size,
+        'name' => name,
+        'document' => document,
+        'code' => code,
+        'status' => status,
+        'type' => type,
+        'created_Since' => created_since,
+        'created_Until' => created_until
       )
       _query_url = APIHelper.clean_url _query_builder
+
       # Prepare headers.
       _headers = {
         'accept' => 'application/json'
       }
+
       # Prepare and execute HttpRequest.
-      _request = @http_client.get(
+      _request = config.http_client.get(
         _query_url,
         headers: _headers
       )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
+      BasicAuth.apply(config, _request)
+      _response = execute_request(_request)
+      validate_response(_response)
+
       # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      decoded = APIHelper.json_deserialize(_response.raw_body)
       ListSellerResponse.from_hash(decoded)
     end
   end

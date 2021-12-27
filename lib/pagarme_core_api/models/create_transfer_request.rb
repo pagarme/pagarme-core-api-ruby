@@ -6,12 +6,15 @@
 module PagarmeCoreApi
   # Request for creating a transfer
   class CreateTransferRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Transfer amount
     # @return [Integer]
     attr_accessor :amount
 
     # Metadata
-    # @return [Array<String, String>]
+    # @return [Hash]
     attr_accessor :metadata
 
     # A mapping from model property names to API property names.
@@ -22,10 +25,20 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(amount = nil,
                    metadata = nil)
-      @amount = amount
-      @metadata = metadata
+      @amount = amount unless amount == SKIP
+      @metadata = metadata unless metadata == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -33,8 +46,8 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      amount = hash['amount']
-      metadata = hash['metadata']
+      amount = hash.key?('amount') ? hash['amount'] : SKIP
+      metadata = hash.key?('metadata') ? hash['metadata'] : SKIP
 
       # Create object from extracted values.
       CreateTransferRequest.new(amount,

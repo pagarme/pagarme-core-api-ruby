@@ -7,6 +7,9 @@ require 'date'
 module PagarmeCoreApi
   # Contains the settings for creating a boleto payment
   class CreateBoletoPaymentRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Number of retries
     # @return [Integer]
     attr_accessor :retries
@@ -59,6 +62,19 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      %w[
+        due_at
+        nosso_numero
+      ]
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(retries = nil,
                    bank = nil,
                    instructions = nil,
@@ -68,15 +84,15 @@ module PagarmeCoreApi
                    statement_descriptor = nil,
                    due_at = nil,
                    nosso_numero = nil)
-      @retries = retries
-      @bank = bank
-      @instructions = instructions
-      @due_at = due_at
-      @billing_address = billing_address
-      @billing_address_id = billing_address_id
-      @nosso_numero = nosso_numero
-      @document_number = document_number
-      @statement_descriptor = statement_descriptor
+      @retries = retries unless retries == SKIP
+      @bank = bank unless bank == SKIP
+      @instructions = instructions unless instructions == SKIP
+      @due_at = due_at unless due_at == SKIP
+      @billing_address = billing_address unless billing_address == SKIP
+      @billing_address_id = billing_address_id unless billing_address_id == SKIP
+      @nosso_numero = nosso_numero unless nosso_numero == SKIP
+      @document_number = document_number unless document_number == SKIP
+      @statement_descriptor = statement_descriptor unless statement_descriptor == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -84,17 +100,23 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      retries = hash['retries']
-      bank = hash['bank']
-      instructions = hash['instructions']
-      if hash['billing_address']
-        billing_address = CreateAddressRequest.from_hash(hash['billing_address'])
-      end
-      billing_address_id = hash['billing_address_id']
-      document_number = hash['document_number']
-      statement_descriptor = hash['statement_descriptor']
-      due_at = APIHelper.rfc3339(hash['due_at']) if hash['due_at']
-      nosso_numero = hash['nosso_numero']
+      retries = hash.key?('retries') ? hash['retries'] : SKIP
+      bank = hash.key?('bank') ? hash['bank'] : SKIP
+      instructions = hash.key?('instructions') ? hash['instructions'] : SKIP
+      billing_address = CreateAddressRequest.from_hash(hash['billing_address']) if
+        hash['billing_address']
+      billing_address_id =
+        hash.key?('billing_address_id') ? hash['billing_address_id'] : SKIP
+      document_number =
+        hash.key?('document_number') ? hash['document_number'] : SKIP
+      statement_descriptor =
+        hash.key?('statement_descriptor') ? hash['statement_descriptor'] : SKIP
+      due_at = if hash.key?('due_at')
+                 (DateTimeHelper.from_rfc3339(hash['due_at']) if hash['due_at'])
+               else
+                 SKIP
+               end
+      nosso_numero = hash.key?('nosso_numero') ? hash['nosso_numero'] : SKIP
 
       # Create object from extracted values.
       CreateBoletoPaymentRequest.new(retries,
@@ -106,6 +128,10 @@ module PagarmeCoreApi
                                      statement_descriptor,
                                      due_at,
                                      nosso_numero)
+    end
+
+    def to_due_at
+      DateTimeHelper.to_rfc3339(due_at)
     end
   end
 end

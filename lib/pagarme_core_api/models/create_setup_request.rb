@@ -7,6 +7,9 @@ module PagarmeCoreApi
   # Request for creating a Setup for a subscription. The setup is an order that
   # will be created at the subscription creation.
   class CreateSetupRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # Setup amount
     # @return [Integer]
     attr_accessor :amount
@@ -28,12 +31,22 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(amount = nil,
                    description = nil,
                    payment = nil)
-      @amount = amount
-      @description = description
-      @payment = payment
+      @amount = amount unless amount == SKIP
+      @description = description unless description == SKIP
+      @payment = payment unless payment == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -41,10 +54,9 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      amount = hash['amount']
-      description = hash['description']
-      payment = CreatePaymentRequest.from_hash(hash['payment']) if
-        hash['payment']
+      amount = hash.key?('amount') ? hash['amount'] : SKIP
+      description = hash.key?('description') ? hash['description'] : SKIP
+      payment = CreatePaymentRequest.from_hash(hash['payment']) if hash['payment']
 
       # Create object from extracted values.
       CreateSetupRequest.new(amount,

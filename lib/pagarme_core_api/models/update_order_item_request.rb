@@ -6,6 +6,9 @@
 module PagarmeCoreApi
   # Update Order item Request
   class UpdateOrderItemRequest < BaseModel
+    SKIP = Object.new
+    private_constant :SKIP
+
     # TODO: Write general description for this method
     # @return [Integer]
     attr_accessor :amount
@@ -32,14 +35,24 @@ module PagarmeCoreApi
       @_hash
     end
 
+    # An array for optional fields
+    def optionals
+      []
+    end
+
+    # An array for nullable fields
+    def nullables
+      []
+    end
+
     def initialize(amount = nil,
                    description = nil,
                    quantity = nil,
                    category = nil)
-      @amount = amount
-      @description = description
-      @quantity = quantity
-      @category = category
+      @amount = amount unless amount == SKIP
+      @description = description unless description == SKIP
+      @quantity = quantity unless quantity == SKIP
+      @category = category unless category == SKIP
     end
 
     # Creates an instance of the object from a hash.
@@ -47,10 +60,10 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      amount = hash['amount']
-      description = hash['description']
-      quantity = hash['quantity']
-      category = hash['category']
+      amount = hash.key?('amount') ? hash['amount'] : SKIP
+      description = hash.key?('description') ? hash['description'] : SKIP
+      quantity = hash.key?('quantity') ? hash['quantity'] : SKIP
+      category = hash.key?('category') ? hash['category'] : SKIP
 
       # Create object from extracted values.
       UpdateOrderItemRequest.new(amount,
