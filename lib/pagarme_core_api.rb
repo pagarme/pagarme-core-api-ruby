@@ -263,7 +263,6 @@ require_relative 'pagarme_core_api/models/update_subscription_due_days' \
 require_relative 'pagarme_core_api/models/create_checkout_pix_payment' \
                  '_request.rb'
 require_relative 'pagarme_core_api/models/get_checkout_pix_payment_response.rb'
-require_relative 'pagarme_core_api/models/cancel_split_request.rb'
 require_relative 'pagarme_core_api/models/create_subscription_split_request.rb'
 require_relative 'pagarme_core_api/models/update_subscription_split_request.rb'
 require_relative 'pagarme_core_api/models/get_subscription_split_response.rb'

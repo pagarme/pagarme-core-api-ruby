@@ -22,6 +22,10 @@ module PagarmeCoreApi
     # @return [CreateSplitOptionsRequest]
     attr_accessor :options
 
+    # Rule code used in cancellation.
+    # @return [String]
+    attr_accessor :split_rule_id
+
     # A mapping from model property names to API property names.
     def self.names
       @_hash = {} if @_hash.nil?
@@ -29,17 +33,20 @@ module PagarmeCoreApi
       @_hash['amount'] = 'amount'
       @_hash['recipient_id'] = 'recipient_id'
       @_hash['options'] = 'options'
+      @_hash['split_rule_id'] = 'split_rule_id'
       @_hash
     end
 
     def initialize(type = nil,
                    amount = nil,
                    recipient_id = nil,
-                   options = nil)
+                   options = nil,
+                   split_rule_id = nil)
       @type = type
       @amount = amount
       @recipient_id = recipient_id
       @options = options
+      @split_rule_id = split_rule_id
     end
 
     # Creates an instance of the object from a hash.
@@ -52,12 +59,14 @@ module PagarmeCoreApi
       recipient_id = hash['recipient_id']
       options = CreateSplitOptionsRequest.from_hash(hash['options']) if
         hash['options']
+      split_rule_id = hash['split_rule_id']
 
       # Create object from extracted values.
       CreateSplitRequest.new(type,
                              amount,
                              recipient_id,
-                             options)
+                             options,
+                             split_rule_id)
     end
   end
 end
