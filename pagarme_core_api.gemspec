@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'pagarme_core_api'
-  s.version = '5.5.0'
+  s.version = '5.7.0'
   s.summary = 'pagarme_core_api'
   s.description = 'Pagarme API'
   s.authors = ['APIMatic SDK Generator']
