@@ -16,44 +16,6 @@ module PagarmeCoreApi
       self.class.instance
     end
 
-    # Updates the metadata from an invoice
-    # @param [String] invoice_id Required parameter: The invoice id
-    # @param [UpdateMetadataRequest] request Required parameter: Request for
-    # updating the invoice metadata
-    # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetInvoiceResponse response from the API call
-    def update_invoice_metadata(invoice_id,
-                                request,
-                                idempotency_key = nil)
-      # Prepare query url.
-      _path_url = '/invoices/{invoice_id}/metadata'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'invoice_id' => invoice_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json',
-        'content-type' => 'application/json; charset=utf-8',
-        'idempotency-key' => idempotency_key
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.patch(
-        _query_url,
-        headers: _headers,
-        parameters: request.to_json
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetInvoiceResponse.from_hash(decoded)
-    end
-
     # TODO: type endpoint description here
     # @param [String] subscription_id Required parameter: Subscription Id
     # @return GetInvoiceResponse response from the API call
@@ -145,6 +107,44 @@ module PagarmeCoreApi
       }
       # Prepare and execute HttpRequest.
       _request = @http_client.post(
+        _query_url,
+        headers: _headers,
+        parameters: request.to_json
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetInvoiceResponse.from_hash(decoded)
+    end
+
+    # Updates the metadata from an invoice
+    # @param [String] invoice_id Required parameter: The invoice id
+    # @param [UpdateMetadataRequest] request Required parameter: Request for
+    # updating the invoice metadata
+    # @param [String] idempotency_key Optional parameter: Example:
+    # @return GetInvoiceResponse response from the API call
+    def update_invoice_metadata(invoice_id,
+                                request,
+                                idempotency_key = nil)
+      # Prepare query url.
+      _path_url = '/invoices/{invoice_id}/metadata'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'invoice_id' => invoice_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'content-type' => 'application/json; charset=utf-8',
+        'idempotency-key' => idempotency_key
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.patch(
         _query_url,
         headers: _headers,
         parameters: request.to_json

@@ -8,9 +8,9 @@ This client library is a Ruby gem which can be compiled and used in your Ruby an
 
 1. Open the command line interface or the terminal and navigate to the folder containing the source code.
 2. Run ``` gem build pagarme_core_api.gemspec ``` to build the gem.
-3. Once built, the gem can be installed on the current work environment using ``` gem install pagarme_core_api-5.5.0.gem ```
+3. Once built, the gem can be installed on the current work environment using ``` gem install pagarme_core_api-5.6.0.gem ```
 
-![Building Gem](https://apidocs.io/illustration/ruby?step=buildSDK&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi-Ruby&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.5.0)
+![Building Gem](https://apidocs.io/illustration/ruby?step=buildSDK&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi-Ruby&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.6.0)
 
 ## How to Use
 
@@ -20,41 +20,41 @@ The following section explains how to use the PagarmeCoreApi Ruby Gem in a new R
 
 Close any existing projects in RubyMine&trade; by selecting ``` File -> Close Project ```. Next, click on ``` Create New Project ``` to create a new project from scratch.
 
-![Create a new project in RubyMine](https://apidocs.io/illustration/ruby?step=createNewProject0&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.5.0)
+![Create a new project in RubyMine](https://apidocs.io/illustration/ruby?step=createNewProject0&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.6.0)
 
 Next, provide ``` TestApp ``` as the project name, choose ``` Rails Application ``` as the project type, and click ``` OK ```.
 
-![Create a new Rails Application in RubyMine - step 1](https://apidocs.io/illustration/ruby?step=createNewProject1&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.5.0)
+![Create a new Rails Application in RubyMine - step 1](https://apidocs.io/illustration/ruby?step=createNewProject1&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.6.0)
 
 In the next dialog make sure that correct *Ruby SDK* is being used (minimum 2.0.0) and click ``` OK ```.
 
-![Create a new Rails Application in RubyMine - step 2](https://apidocs.io/illustration/ruby?step=createNewProject2&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.5.0)
+![Create a new Rails Application in RubyMine - step 2](https://apidocs.io/illustration/ruby?step=createNewProject2&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.6.0)
 
 This will create a new Rails Application project with an existing set of files and folder.
 
 ### 2. Add reference of the gem
 
-In order to use the PagarmeCoreApi gem in the new project we must add a gem reference. Locate the ```Gemfile``` in the *Project Explorer* window under the ``` TestApp ``` project node. The file contains references to all gems being used in the project. Here, add the reference to the library gem by adding the following line: ``` gem 'pagarme_core_api', '~> 5.5.0' ```
+In order to use the PagarmeCoreApi gem in the new project we must add a gem reference. Locate the ```Gemfile``` in the *Project Explorer* window under the ``` TestApp ``` project node. The file contains references to all gems being used in the project. Here, add the reference to the library gem by adding the following line: ``` gem 'pagarme_core_api', '~> 5.6.0' ```
 
-![Add references of the Gemfile](https://apidocs.io/illustration/ruby?step=addReference&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.5.0)
+![Add references of the Gemfile](https://apidocs.io/illustration/ruby?step=addReference&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.6.0)
 
 ### 3. Adding a new Rails Controller
 
 Once the ``` TestApp ``` project is created, a folder named ``` controllers ``` will be visible in the *Project Explorer* under the following path: ``` TestApp > app > controllers ```. Right click on this folder and select ``` New -> Run Rails Generator... ```.
 
-![Run Rails Generator on Controllers Folder](https://apidocs.io/illustration/ruby?step=addCode0&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.5.0)
+![Run Rails Generator on Controllers Folder](https://apidocs.io/illustration/ruby?step=addCode0&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.6.0)
 
 Selecting the said option will popup a small window where the generator names are displayed. Here, select the ``` controller ``` template.
 
-![Create a new Controller](https://apidocs.io/illustration/ruby?step=addCode1&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.5.0)
+![Create a new Controller](https://apidocs.io/illustration/ruby?step=addCode1&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.6.0)
 
 Next, a popup window will ask you for a Controller name and included Actions. For controller name provide ``` Hello ``` and include an action named ``` Index ``` and click ``` OK ```.
 
-![Add a new Controller](https://apidocs.io/illustration/ruby?step=addCode2&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.5.0)
+![Add a new Controller](https://apidocs.io/illustration/ruby?step=addCode2&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.6.0)
 
 A new controller class anmed ``` HelloController ``` will be created in a file named ``` hello_controller.rb ``` containing a method named ``` Index ```. In this method, add code for initialization and a sample for its usage.
 
-![Initialize the library](https://apidocs.io/illustration/ruby?step=addCode3&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.5.0)
+![Initialize the library](https://apidocs.io/illustration/ruby?step=addCode3&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.6.0)
 
 ## How to Test
 
@@ -91,7 +91,7 @@ client = PagarmeCoreApi::PagarmeCoreApiClient.new(
 
 The added initlization code can be debugged by putting a breakpoint in the ``` Index ``` method and running the project in debug mode by selecting ``` Run -> Debug 'Development: TestApp' ```.
 
-![Debug the TestApp](https://apidocs.io/illustration/ruby?step=addCode4&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.5.0&initLine=client%2520%253D%2520PagarmeCoreApiClient.new%2528%2527basic_auth_user_name%2527%252C%2520%2527basic_auth_password%2527%2529)
+![Debug the TestApp](https://apidocs.io/illustration/ruby?step=addCode4&workspaceFolder=PagarmeCoreApi-Ruby&workspaceName=PagarmeCoreApi&projectName=pagarme_core_api&gemName=pagarme_core_api&gemVer=5.6.0&initLine=client%2520%253D%2520PagarmeCoreApiClient.new%2528%2527basic_auth_user_name%2527%252C%2520%2527basic_auth_password%2527%2529)
 
 
 
@@ -101,12 +101,12 @@ The added initlization code can be debugged by putting a breakpoint in the ``` I
 
 * [PlansController](#plans_controller)
 * [SubscriptionsController](#subscriptions_controller)
-* [InvoicesController](#invoices_controller)
 * [OrdersController](#orders_controller)
+* [InvoicesController](#invoices_controller)
 * [CustomersController](#customers_controller)
-* [RecipientsController](#recipients_controller)
 * [ChargesController](#charges_controller)
 * [TransfersController](#transfers_controller)
+* [RecipientsController](#recipients_controller)
 * [TokensController](#tokens_controller)
 * [TransactionsController](#transactions_controller)
 
@@ -142,35 +142,6 @@ def get_plan(plan_id); end
 plan_id = 'plan_id'
 
 result = plans_controller.get_plan(plan_id)
-
-```
-
-
-### <a name="delete_plan"></a>![Method: ](https://apidocs.io/img/method.png ".PlansController.delete_plan") delete_plan
-
-> Deletes a plan
-
-
-```ruby
-def delete_plan(plan_id,
-                    idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| plan_id |  ``` Required ```  | Plan id |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-plan_id = 'plan_id'
-idempotency_key = 'idempotency-key'
-
-result = plans_controller.delete_plan(plan_id, idempotency_key)
 
 ```
 
@@ -395,8 +366,8 @@ def get_plans(page = nil,
 #### Example Usage
 
 ```ruby
-page = 119
-size = 119
+page = 104
+size = 104
 name = 'name'
 status = 'status'
 billing_type = 'billing_type'
@@ -440,6 +411,35 @@ result = plans_controller.update_plan(plan_id, request, idempotency_key)
 ```
 
 
+### <a name="delete_plan"></a>![Method: ](https://apidocs.io/img/method.png ".PlansController.delete_plan") delete_plan
+
+> Deletes a plan
+
+
+```ruby
+def delete_plan(plan_id,
+                    idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| plan_id |  ``` Required ```  | Plan id |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+plan_id = 'plan_id'
+idempotency_key = 'idempotency-key'
+
+result = plans_controller.delete_plan(plan_id, idempotency_key)
+
+```
+
+
 [Back to List of Controllers](#list_of_controllers)
 
 ## <a name="subscriptions_controller"></a>![Class: ](https://apidocs.io/img/class.png ".SubscriptionsController") SubscriptionsController
@@ -451,35 +451,6 @@ The singleton instance of the ``` SubscriptionsController ``` class can be acces
 ```ruby
 subscriptions_controller = client.subscriptions
 ```
-
-### <a name="renew_subscription"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.renew_subscription") renew_subscription
-
-> TODO: Add a method description
-
-
-```ruby
-def renew_subscription(subscription_id,
-                           idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| subscription_id |  ``` Required ```  | TODO: Add a parameter description |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-subscription_id = 'subscription_id'
-idempotency_key = 'idempotency-key'
-
-result = subscriptions_controller.renew_subscription(subscription_id, idempotency_key)
-
-```
-
 
 ### <a name="update_subscription_card"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.update_subscription_card") update_subscription_card
 
@@ -644,6 +615,38 @@ subscriptions_controller.update_current_cycle_status(subscription_id, request, i
 ```
 
 
+### <a name="update_subscription_payment_method"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.update_subscription_payment_method") update_subscription_payment_method
+
+> Updates the payment method from a subscription
+
+
+```ruby
+def update_subscription_payment_method(subscription_id,
+                                           request,
+                                           idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| subscription_id |  ``` Required ```  | Subscription id |
+| request |  ``` Required ```  | Request for updating the paymentmethod from a subscription |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+subscription_id = 'subscription_id'
+request = UpdateSubscriptionPaymentMethodRequest.new
+idempotency_key = 'idempotency-key'
+
+result = subscriptions_controller.update_subscription_payment_method(subscription_id, request, idempotency_key)
+
+```
+
+
 ### <a name="delete_discount"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.delete_discount") delete_discount
 
 > Deletes a discount
@@ -712,8 +715,8 @@ def get_subscription_items(subscription_id,
 
 ```ruby
 subscription_id = 'subscription_id'
-page = 119
-size = 119
+page = 104
+size = 104
 name = 'name'
 code = 'code'
 status = 'status'
@@ -722,38 +725,6 @@ created_since = 'created_since'
 created_until = 'created_until'
 
 result = subscriptions_controller.get_subscription_items(subscription_id, page, size, name, code, status, description, created_since, created_until)
-
-```
-
-
-### <a name="update_subscription_payment_method"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.update_subscription_payment_method") update_subscription_payment_method
-
-> Updates the payment method from a subscription
-
-
-```ruby
-def update_subscription_payment_method(subscription_id,
-                                           request,
-                                           idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| subscription_id |  ``` Required ```  | Subscription id |
-| request |  ``` Required ```  | Request for updating the paymentmethod from a subscription |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-subscription_id = 'subscription_id'
-request = UpdateSubscriptionPaymentMethodRequest.new
-idempotency_key = 'idempotency-key'
-
-result = subscriptions_controller.update_subscription_payment_method(subscription_id, request, idempotency_key)
 
 ```
 
@@ -828,8 +799,8 @@ def get_subscriptions(page = nil,
 #### Example Usage
 
 ```ruby
-page = 119
-size = 119
+page = 104
+size = 104
 code = 'code'
 billing_type = 'billing_type'
 customer_id = 'customer_id'
@@ -945,35 +916,6 @@ result = subscriptions_controller.create_usage(subscription_id, item_id, body, i
 ```
 
 
-### <a name="get_discount_by_id"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.get_discount_by_id") get_discount_by_id
-
-> TODO: Add a method description
-
-
-```ruby
-def get_discount_by_id(subscription_id,
-                           discount_id); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| subscription_id |  ``` Required ```  | The subscription id |
-| discount_id |  ``` Required ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-subscription_id = 'subscription_id'
-discount_id = 'discountId'
-
-result = subscriptions_controller.get_discount_by_id(subscription_id, discount_id)
-
-```
-
-
 ### <a name="create_subscription"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.create_subscription") create_subscription
 
 > Creates a new subscription
@@ -1003,31 +945,31 @@ result = subscriptions_controller.create_subscription(body, idempotency_key)
 ```
 
 
-### <a name="get_increment_by_id"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.get_increment_by_id") get_increment_by_id
+### <a name="get_discount_by_id"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.get_discount_by_id") get_discount_by_id
 
 > TODO: Add a method description
 
 
 ```ruby
-def get_increment_by_id(subscription_id,
-                            increment_id); end
+def get_discount_by_id(subscription_id,
+                           discount_id); end
 ```
 
 #### Parameters
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| subscription_id |  ``` Required ```  | The subscription Id |
-| increment_id |  ``` Required ```  | The increment Id |
+| subscription_id |  ``` Required ```  | The subscription id |
+| discount_id |  ``` Required ```  | TODO: Add a parameter description |
 
 
 #### Example Usage
 
 ```ruby
 subscription_id = 'subscription_id'
-increment_id = 'increment_id'
+discount_id = 'discountId'
 
-result = subscriptions_controller.get_increment_by_id(subscription_id, increment_id)
+result = subscriptions_controller.get_discount_by_id(subscription_id, discount_id)
 
 ```
 
@@ -1160,6 +1102,35 @@ result = subscriptions_controller.get_subscription_cycles(subscription_id, page,
 ```
 
 
+### <a name="get_increment_by_id"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.get_increment_by_id") get_increment_by_id
+
+> TODO: Add a method description
+
+
+```ruby
+def get_increment_by_id(subscription_id,
+                            increment_id); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| subscription_id |  ``` Required ```  | The subscription Id |
+| increment_id |  ``` Required ```  | The increment Id |
+
+
+#### Example Usage
+
+```ruby
+subscription_id = 'subscription_id'
+increment_id = 'increment_id'
+
+result = subscriptions_controller.get_increment_by_id(subscription_id, increment_id)
+
+```
+
+
 ### <a name="get_discounts"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.get_discounts") get_discounts
 
 > TODO: Add a method description
@@ -1184,8 +1155,8 @@ def get_discounts(subscription_id,
 
 ```ruby
 subscription_id = 'subscription_id'
-page = 119
-size = 119
+page = 63
+size = 63
 
 result = subscriptions_controller.get_discounts(subscription_id, page, size)
 
@@ -1280,8 +1251,8 @@ def get_increments(subscription_id,
 
 ```ruby
 subscription_id = 'subscription_id'
-page = 119
-size = 119
+page = 63
+size = 63
 
 result = subscriptions_controller.get_increments(subscription_id, page, size)
 
@@ -1480,8 +1451,8 @@ def get_usages(subscription_id,
 ```ruby
 subscription_id = 'subscription_id'
 item_id = 'item_id'
-page = 77
-size = 77
+page = 63
+size = 63
 code = 'code'
 group = 'group'
 used_since = DateTime.now
@@ -1585,6 +1556,35 @@ result = subscriptions_controller.get_subscription_cycle_by_id(subscription_id, 
 ```
 
 
+### <a name="renew_subscription"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.renew_subscription") renew_subscription
+
+> TODO: Add a method description
+
+
+```ruby
+def renew_subscription(subscription_id,
+                           idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| subscription_id |  ``` Required ```  | TODO: Add a parameter description |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+subscription_id = 'subscription_id'
+idempotency_key = 'idempotency-key'
+
+result = subscriptions_controller.renew_subscription(subscription_id, idempotency_key)
+
+```
+
+
 ### <a name="get_usage_report"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.get_usage_report") get_usage_report
 
 > TODO: Add a method description
@@ -1645,254 +1645,6 @@ result = subscriptions_controller.update_split_subscription(id, request)
 
 [Back to List of Controllers](#list_of_controllers)
 
-## <a name="invoices_controller"></a>![Class: ](https://apidocs.io/img/class.png ".InvoicesController") InvoicesController
-
-### Get singleton instance
-
-The singleton instance of the ``` InvoicesController ``` class can be accessed from the API Client.
-
-```ruby
-invoices_controller = client.invoices
-```
-
-### <a name="update_invoice_metadata"></a>![Method: ](https://apidocs.io/img/method.png ".InvoicesController.update_invoice_metadata") update_invoice_metadata
-
-> Updates the metadata from an invoice
-
-
-```ruby
-def update_invoice_metadata(invoice_id,
-                                request,
-                                idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| invoice_id |  ``` Required ```  | The invoice id |
-| request |  ``` Required ```  | Request for updating the invoice metadata |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-invoice_id = 'invoice_id'
-request = UpdateMetadataRequest.new
-idempotency_key = 'idempotency-key'
-
-result = invoices_controller.update_invoice_metadata(invoice_id, request, idempotency_key)
-
-```
-
-
-### <a name="get_partial_invoice"></a>![Method: ](https://apidocs.io/img/method.png ".InvoicesController.get_partial_invoice") get_partial_invoice
-
-> TODO: Add a method description
-
-
-```ruby
-def get_partial_invoice(subscription_id); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| subscription_id |  ``` Required ```  | Subscription Id |
-
-
-#### Example Usage
-
-```ruby
-subscription_id = 'subscription_id'
-
-result = invoices_controller.get_partial_invoice(subscription_id)
-
-```
-
-
-### <a name="cancel_invoice"></a>![Method: ](https://apidocs.io/img/method.png ".InvoicesController.cancel_invoice") cancel_invoice
-
-> Cancels an invoice
-
-
-```ruby
-def cancel_invoice(invoice_id,
-                       idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| invoice_id |  ``` Required ```  | Invoice id |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-invoice_id = 'invoice_id'
-idempotency_key = 'idempotency-key'
-
-result = invoices_controller.cancel_invoice(invoice_id, idempotency_key)
-
-```
-
-
-### <a name="create_invoice"></a>![Method: ](https://apidocs.io/img/method.png ".InvoicesController.create_invoice") create_invoice
-
-> Create an Invoice
-
-
-```ruby
-def create_invoice(subscription_id,
-                       cycle_id,
-                       request = nil,
-                       idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| subscription_id |  ``` Required ```  | Subscription Id |
-| cycle_id |  ``` Required ```  | Cycle Id |
-| request |  ``` Optional ```  | TODO: Add a parameter description |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-subscription_id = 'subscription_id'
-cycle_id = 'cycle_id'
-request = CreateInvoiceRequest.new
-idempotency_key = 'idempotency-key'
-
-result = invoices_controller.create_invoice(subscription_id, cycle_id, request, idempotency_key)
-
-```
-
-
-### <a name="get_invoices"></a>![Method: ](https://apidocs.io/img/method.png ".InvoicesController.get_invoices") get_invoices
-
-> Gets all invoices
-
-
-```ruby
-def get_invoices(page = nil,
-                     size = nil,
-                     code = nil,
-                     customer_id = nil,
-                     subscription_id = nil,
-                     created_since = nil,
-                     created_until = nil,
-                     status = nil,
-                     due_since = nil,
-                     due_until = nil,
-                     customer_document = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| page |  ``` Optional ```  | Page number |
-| size |  ``` Optional ```  | Page size |
-| code |  ``` Optional ```  | Filter for Invoice's code |
-| customer_id |  ``` Optional ```  | Filter for Invoice's customer id |
-| subscription_id |  ``` Optional ```  | Filter for Invoice's subscription id |
-| created_since |  ``` Optional ```  | Filter for Invoice's creation date start range |
-| created_until |  ``` Optional ```  | Filter for Invoices creation date end range |
-| status |  ``` Optional ```  | Filter for Invoice's status |
-| due_since |  ``` Optional ```  | Filter for Invoice's due date start range |
-| due_until |  ``` Optional ```  | Filter for Invoice's due date end range |
-| customer_document |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-page = 77
-size = 77
-code = 'code'
-customer_id = 'customer_id'
-subscription_id = 'subscription_id'
-created_since = DateTime.now
-created_until = DateTime.now
-status = 'status'
-due_since = DateTime.now
-due_until = DateTime.now
-customer_document = 'customer_document'
-
-result = invoices_controller.get_invoices(page, size, code, customer_id, subscription_id, created_since, created_until, status, due_since, due_until, customer_document)
-
-```
-
-
-### <a name="get_invoice"></a>![Method: ](https://apidocs.io/img/method.png ".InvoicesController.get_invoice") get_invoice
-
-> Gets an invoice
-
-
-```ruby
-def get_invoice(invoice_id); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| invoice_id |  ``` Required ```  | Invoice Id |
-
-
-#### Example Usage
-
-```ruby
-invoice_id = 'invoice_id'
-
-result = invoices_controller.get_invoice(invoice_id)
-
-```
-
-
-### <a name="update_invoice_status"></a>![Method: ](https://apidocs.io/img/method.png ".InvoicesController.update_invoice_status") update_invoice_status
-
-> Updates the status from an invoice
-
-
-```ruby
-def update_invoice_status(invoice_id,
-                              request,
-                              idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| invoice_id |  ``` Required ```  | Invoice Id |
-| request |  ``` Required ```  | Request for updating an invoice's status |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-invoice_id = 'invoice_id'
-request = UpdateInvoiceStatusRequest.new
-idempotency_key = 'idempotency-key'
-
-result = invoices_controller.update_invoice_status(invoice_id, request, idempotency_key)
-
-```
-
-
-[Back to List of Controllers](#list_of_controllers)
-
 ## <a name="orders_controller"></a>![Class: ](https://apidocs.io/img/class.png ".OrdersController") OrdersController
 
 ### Get singleton instance
@@ -1934,8 +1686,8 @@ def get_orders(page = nil,
 #### Example Usage
 
 ```ruby
-page = 77
-size = 77
+page = 63
+size = 63
 code = 'code'
 status = 'status'
 created_since = DateTime.now
@@ -1943,6 +1695,35 @@ created_until = DateTime.now
 customer_id = 'customer_id'
 
 result = orders_controller.get_orders(page, size, code, status, created_since, created_until, customer_id)
+
+```
+
+
+### <a name="delete_all_order_items"></a>![Method: ](https://apidocs.io/img/method.png ".OrdersController.delete_all_order_items") delete_all_order_items
+
+> TODO: Add a method description
+
+
+```ruby
+def delete_all_order_items(order_id,
+                               idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| order_id |  ``` Required ```  | Order Id |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+order_id = 'orderId'
+idempotency_key = 'idempotency-key'
+
+result = orders_controller.delete_all_order_items(order_id, idempotency_key)
 
 ```
 
@@ -1978,35 +1759,6 @@ request = UpdateOrderItemRequest.new
 idempotency_key = 'idempotency-key'
 
 result = orders_controller.update_order_item(order_id, item_id, request, idempotency_key)
-
-```
-
-
-### <a name="delete_all_order_items"></a>![Method: ](https://apidocs.io/img/method.png ".OrdersController.delete_all_order_items") delete_all_order_items
-
-> TODO: Add a method description
-
-
-```ruby
-def delete_all_order_items(order_id,
-                               idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| order_id |  ``` Required ```  | Order Id |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-order_id = 'orderId'
-idempotency_key = 'idempotency-key'
-
-result = orders_controller.delete_all_order_items(order_id, idempotency_key)
 
 ```
 
@@ -2225,6 +1977,254 @@ result = orders_controller.get_order(order_id)
 
 [Back to List of Controllers](#list_of_controllers)
 
+## <a name="invoices_controller"></a>![Class: ](https://apidocs.io/img/class.png ".InvoicesController") InvoicesController
+
+### Get singleton instance
+
+The singleton instance of the ``` InvoicesController ``` class can be accessed from the API Client.
+
+```ruby
+invoices_controller = client.invoices
+```
+
+### <a name="get_partial_invoice"></a>![Method: ](https://apidocs.io/img/method.png ".InvoicesController.get_partial_invoice") get_partial_invoice
+
+> TODO: Add a method description
+
+
+```ruby
+def get_partial_invoice(subscription_id); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| subscription_id |  ``` Required ```  | Subscription Id |
+
+
+#### Example Usage
+
+```ruby
+subscription_id = 'subscription_id'
+
+result = invoices_controller.get_partial_invoice(subscription_id)
+
+```
+
+
+### <a name="cancel_invoice"></a>![Method: ](https://apidocs.io/img/method.png ".InvoicesController.cancel_invoice") cancel_invoice
+
+> Cancels an invoice
+
+
+```ruby
+def cancel_invoice(invoice_id,
+                       idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| invoice_id |  ``` Required ```  | Invoice id |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+invoice_id = 'invoice_id'
+idempotency_key = 'idempotency-key'
+
+result = invoices_controller.cancel_invoice(invoice_id, idempotency_key)
+
+```
+
+
+### <a name="create_invoice"></a>![Method: ](https://apidocs.io/img/method.png ".InvoicesController.create_invoice") create_invoice
+
+> Create an Invoice
+
+
+```ruby
+def create_invoice(subscription_id,
+                       cycle_id,
+                       request = nil,
+                       idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| subscription_id |  ``` Required ```  | Subscription Id |
+| cycle_id |  ``` Required ```  | Cycle Id |
+| request |  ``` Optional ```  | TODO: Add a parameter description |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+subscription_id = 'subscription_id'
+cycle_id = 'cycle_id'
+request = CreateInvoiceRequest.new
+idempotency_key = 'idempotency-key'
+
+result = invoices_controller.create_invoice(subscription_id, cycle_id, request, idempotency_key)
+
+```
+
+
+### <a name="update_invoice_metadata"></a>![Method: ](https://apidocs.io/img/method.png ".InvoicesController.update_invoice_metadata") update_invoice_metadata
+
+> Updates the metadata from an invoice
+
+
+```ruby
+def update_invoice_metadata(invoice_id,
+                                request,
+                                idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| invoice_id |  ``` Required ```  | The invoice id |
+| request |  ``` Required ```  | Request for updating the invoice metadata |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+invoice_id = 'invoice_id'
+request = UpdateMetadataRequest.new
+idempotency_key = 'idempotency-key'
+
+result = invoices_controller.update_invoice_metadata(invoice_id, request, idempotency_key)
+
+```
+
+
+### <a name="get_invoices"></a>![Method: ](https://apidocs.io/img/method.png ".InvoicesController.get_invoices") get_invoices
+
+> Gets all invoices
+
+
+```ruby
+def get_invoices(page = nil,
+                     size = nil,
+                     code = nil,
+                     customer_id = nil,
+                     subscription_id = nil,
+                     created_since = nil,
+                     created_until = nil,
+                     status = nil,
+                     due_since = nil,
+                     due_until = nil,
+                     customer_document = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| page |  ``` Optional ```  | Page number |
+| size |  ``` Optional ```  | Page size |
+| code |  ``` Optional ```  | Filter for Invoice's code |
+| customer_id |  ``` Optional ```  | Filter for Invoice's customer id |
+| subscription_id |  ``` Optional ```  | Filter for Invoice's subscription id |
+| created_since |  ``` Optional ```  | Filter for Invoice's creation date start range |
+| created_until |  ``` Optional ```  | Filter for Invoices creation date end range |
+| status |  ``` Optional ```  | Filter for Invoice's status |
+| due_since |  ``` Optional ```  | Filter for Invoice's due date start range |
+| due_until |  ``` Optional ```  | Filter for Invoice's due date end range |
+| customer_document |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+page = 63
+size = 63
+code = 'code'
+customer_id = 'customer_id'
+subscription_id = 'subscription_id'
+created_since = DateTime.now
+created_until = DateTime.now
+status = 'status'
+due_since = DateTime.now
+due_until = DateTime.now
+customer_document = 'customer_document'
+
+result = invoices_controller.get_invoices(page, size, code, customer_id, subscription_id, created_since, created_until, status, due_since, due_until, customer_document)
+
+```
+
+
+### <a name="get_invoice"></a>![Method: ](https://apidocs.io/img/method.png ".InvoicesController.get_invoice") get_invoice
+
+> Gets an invoice
+
+
+```ruby
+def get_invoice(invoice_id); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| invoice_id |  ``` Required ```  | Invoice Id |
+
+
+#### Example Usage
+
+```ruby
+invoice_id = 'invoice_id'
+
+result = invoices_controller.get_invoice(invoice_id)
+
+```
+
+
+### <a name="update_invoice_status"></a>![Method: ](https://apidocs.io/img/method.png ".InvoicesController.update_invoice_status") update_invoice_status
+
+> Updates the status from an invoice
+
+
+```ruby
+def update_invoice_status(invoice_id,
+                              request,
+                              idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| invoice_id |  ``` Required ```  | Invoice Id |
+| request |  ``` Required ```  | Request for updating an invoice's status |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+invoice_id = 'invoice_id'
+request = UpdateInvoiceStatusRequest.new
+idempotency_key = 'idempotency-key'
+
+result = invoices_controller.update_invoice_status(invoice_id, request, idempotency_key)
+
+```
+
+
+[Back to List of Controllers](#list_of_controllers)
+
 ## <a name="customers_controller"></a>![Class: ](https://apidocs.io/img/class.png ".CustomersController") CustomersController
 
 ### Get singleton instance
@@ -2337,31 +2337,34 @@ result = customers_controller.delete_access_token(customer_id, token_id, idempot
 ```
 
 
-### <a name="create_customer"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.create_customer") create_customer
+### <a name="create_access_token"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.create_access_token") create_access_token
 
-> Creates a new customer
+> Creates a access token for a customer
 
 
 ```ruby
-def create_customer(request,
-                        idempotency_key = nil); end
+def create_access_token(customer_id,
+                            request,
+                            idempotency_key = nil); end
 ```
 
 #### Parameters
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| request |  ``` Required ```  | Request for creating a customer |
+| customer_id |  ``` Required ```  | Customer Id |
+| request |  ``` Required ```  | Request for creating a access token |
 | idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
 
 
 #### Example Usage
 
 ```ruby
-request = CreateCustomerRequest.new
+customer_id = 'customer_id'
+request = CreateAccessTokenRequest.new
 idempotency_key = 'idempotency-key'
 
-result = customers_controller.create_customer(request, idempotency_key)
+result = customers_controller.create_access_token(customer_id, request, idempotency_key)
 
 ```
 
@@ -2394,6 +2397,35 @@ request = CreateAddressRequest.new
 idempotency_key = 'idempotency-key'
 
 result = customers_controller.create_address(customer_id, request, idempotency_key)
+
+```
+
+
+### <a name="create_customer"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.create_customer") create_customer
+
+> Creates a new customer
+
+
+```ruby
+def create_customer(request,
+                        idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| request |  ``` Required ```  | Request for creating a customer |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+request = CreateCustomerRequest.new
+idempotency_key = 'idempotency-key'
+
+result = customers_controller.create_customer(request, idempotency_key)
 
 ```
 
@@ -2590,38 +2622,6 @@ result = customers_controller.update_customer(customer_id, request, idempotency_
 ```
 
 
-### <a name="create_access_token"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.create_access_token") create_access_token
-
-> Creates a access token for a customer
-
-
-```ruby
-def create_access_token(customer_id,
-                            request,
-                            idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| customer_id |  ``` Required ```  | Customer Id |
-| request |  ``` Required ```  | Request for creating a access token |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-customer_id = 'customer_id'
-request = CreateAccessTokenRequest.new
-idempotency_key = 'idempotency-key'
-
-result = customers_controller.create_access_token(customer_id, request, idempotency_key)
-
-```
-
-
 ### <a name="get_access_tokens"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.get_access_tokens") get_access_tokens
 
 > Get all access tokens from a customer
@@ -2646,8 +2646,8 @@ def get_access_tokens(customer_id,
 
 ```ruby
 customer_id = 'customer_id'
-page = 77
-size = 77
+page = 63
+size = 63
 
 result = customers_controller.get_access_tokens(customer_id, page, size)
 
@@ -2678,8 +2678,8 @@ def get_cards(customer_id,
 
 ```ruby
 customer_id = 'customer_id'
-page = 77
-size = 77
+page = 63
+size = 63
 
 result = customers_controller.get_cards(customer_id, page, size)
 
@@ -2835,8 +2835,8 @@ def get_addresses(customer_id,
 
 ```ruby
 customer_id = 'customer_id'
-page = 77
-size = 77
+page = 63
+size = 63
 
 result = customers_controller.get_addresses(customer_id, page, size)
 
@@ -2900,676 +2900,6 @@ result = customers_controller.get_card(customer_id, card_id)
 
 [Back to List of Controllers](#list_of_controllers)
 
-## <a name="recipients_controller"></a>![Class: ](https://apidocs.io/img/class.png ".RecipientsController") RecipientsController
-
-### Get singleton instance
-
-The singleton instance of the ``` RecipientsController ``` class can be accessed from the API Client.
-
-```ruby
-recipients_controller = client.recipients
-```
-
-### <a name="update_recipient"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.update_recipient") update_recipient
-
-> Updates a recipient
-
-
-```ruby
-def update_recipient(recipient_id,
-                         request,
-                         idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| recipient_id |  ``` Required ```  | Recipient id |
-| request |  ``` Required ```  | Recipient data |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-recipient_id = 'recipient_id'
-request = UpdateRecipientRequest.new
-idempotency_key = 'idempotency-key'
-
-result = recipients_controller.update_recipient(recipient_id, request, idempotency_key)
-
-```
-
-
-### <a name="create_anticipation"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.create_anticipation") create_anticipation
-
-> Creates an anticipation
-
-
-```ruby
-def create_anticipation(recipient_id,
-                            request,
-                            idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| recipient_id |  ``` Required ```  | Recipient id |
-| request |  ``` Required ```  | Anticipation data |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-recipient_id = 'recipient_id'
-request = CreateAnticipationRequest.new
-idempotency_key = 'idempotency-key'
-
-result = recipients_controller.create_anticipation(recipient_id, request, idempotency_key)
-
-```
-
-
-### <a name="get_anticipation_limits"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_anticipation_limits") get_anticipation_limits
-
-> Gets the anticipation limits for a recipient
-
-
-```ruby
-def get_anticipation_limits(recipient_id,
-                                timeframe,
-                                payment_date); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| recipient_id |  ``` Required ```  | Recipient id |
-| timeframe |  ``` Required ```  | Timeframe |
-| payment_date |  ``` Required ```  | Anticipation payment date |
-
-
-#### Example Usage
-
-```ruby
-recipient_id = 'recipient_id'
-timeframe = 'timeframe'
-payment_date = DateTime.now
-
-result = recipients_controller.get_anticipation_limits(recipient_id, timeframe, payment_date)
-
-```
-
-
-### <a name="get_recipients"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_recipients") get_recipients
-
-> Retrieves paginated recipients information
-
-
-```ruby
-def get_recipients(page = nil,
-                       size = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| page |  ``` Optional ```  | Page number |
-| size |  ``` Optional ```  | Page size |
-
-
-#### Example Usage
-
-```ruby
-page = 77
-size = 77
-
-result = recipients_controller.get_recipients(page, size)
-
-```
-
-
-### <a name="get_withdraw_by_id"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_withdraw_by_id") get_withdraw_by_id
-
-> TODO: Add a method description
-
-
-```ruby
-def get_withdraw_by_id(recipient_id,
-                           withdrawal_id); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| recipient_id |  ``` Required ```  | TODO: Add a parameter description |
-| withdrawal_id |  ``` Required ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-recipient_id = 'recipient_id'
-withdrawal_id = 'withdrawal_id'
-
-result = recipients_controller.get_withdraw_by_id(recipient_id, withdrawal_id)
-
-```
-
-
-### <a name="update_recipient_default_bank_account"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.update_recipient_default_bank_account") update_recipient_default_bank_account
-
-> Updates the default bank account from a recipient
-
-
-```ruby
-def update_recipient_default_bank_account(recipient_id,
-                                              request,
-                                              idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| recipient_id |  ``` Required ```  | Recipient id |
-| request |  ``` Required ```  | Bank account data |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-recipient_id = 'recipient_id'
-request = UpdateRecipientBankAccountRequest.new
-idempotency_key = 'idempotency-key'
-
-result = recipients_controller.update_recipient_default_bank_account(recipient_id, request, idempotency_key)
-
-```
-
-
-### <a name="update_recipient_metadata"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.update_recipient_metadata") update_recipient_metadata
-
-> Updates recipient metadata
-
-
-```ruby
-def update_recipient_metadata(recipient_id,
-                                  request,
-                                  idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| recipient_id |  ``` Required ```  | Recipient id |
-| request |  ``` Required ```  | Metadata |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-recipient_id = 'recipient_id'
-request = UpdateMetadataRequest.new
-idempotency_key = 'idempotency-key'
-
-result = recipients_controller.update_recipient_metadata(recipient_id, request, idempotency_key)
-
-```
-
-
-### <a name="get_transfers"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_transfers") get_transfers
-
-> Gets a paginated list of transfers for the recipient
-
-
-```ruby
-def get_transfers(recipient_id,
-                      page = nil,
-                      size = nil,
-                      status = nil,
-                      created_since = nil,
-                      created_until = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| recipient_id |  ``` Required ```  | Recipient id |
-| page |  ``` Optional ```  | Page number |
-| size |  ``` Optional ```  | Page size |
-| status |  ``` Optional ```  | Filter for transfer status |
-| created_since |  ``` Optional ```  | Filter for start range of transfer creation date |
-| created_until |  ``` Optional ```  | Filter for end range of transfer creation date |
-
-
-#### Example Usage
-
-```ruby
-recipient_id = 'recipient_id'
-page = 77
-size = 77
-status = 'status'
-created_since = DateTime.now
-created_until = DateTime.now
-
-result = recipients_controller.get_transfers(recipient_id, page, size, status, created_since, created_until)
-
-```
-
-
-### <a name="get_transfer"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_transfer") get_transfer
-
-> Gets a transfer
-
-
-```ruby
-def get_transfer(recipient_id,
-                     transfer_id); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| recipient_id |  ``` Required ```  | Recipient id |
-| transfer_id |  ``` Required ```  | Transfer id |
-
-
-#### Example Usage
-
-```ruby
-recipient_id = 'recipient_id'
-transfer_id = 'transfer_id'
-
-result = recipients_controller.get_transfer(recipient_id, transfer_id)
-
-```
-
-
-### <a name="create_withdraw"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.create_withdraw") create_withdraw
-
-> TODO: Add a method description
-
-
-```ruby
-def create_withdraw(recipient_id,
-                        request); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| recipient_id |  ``` Required ```  | TODO: Add a parameter description |
-| request |  ``` Required ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-recipient_id = 'recipient_id'
-request = CreateWithdrawRequest.new
-
-result = recipients_controller.create_withdraw(recipient_id, request)
-
-```
-
-
-### <a name="update_automatic_anticipation_settings"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.update_automatic_anticipation_settings") update_automatic_anticipation_settings
-
-> Updates recipient metadata
-
-
-```ruby
-def update_automatic_anticipation_settings(recipient_id,
-                                               request,
-                                               idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| recipient_id |  ``` Required ```  | Recipient id |
-| request |  ``` Required ```  | Metadata |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-recipient_id = 'recipient_id'
-request = UpdateAutomaticAnticipationSettingsRequest.new
-idempotency_key = 'idempotency-key'
-
-result = recipients_controller.update_automatic_anticipation_settings(recipient_id, request, idempotency_key)
-
-```
-
-
-### <a name="get_anticipation"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_anticipation") get_anticipation
-
-> Gets an anticipation
-
-
-```ruby
-def get_anticipation(recipient_id,
-                         anticipation_id); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| recipient_id |  ``` Required ```  | Recipient id |
-| anticipation_id |  ``` Required ```  | Anticipation id |
-
-
-#### Example Usage
-
-```ruby
-recipient_id = 'recipient_id'
-anticipation_id = 'anticipation_id'
-
-result = recipients_controller.get_anticipation(recipient_id, anticipation_id)
-
-```
-
-
-### <a name="update_recipient_transfer_settings"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.update_recipient_transfer_settings") update_recipient_transfer_settings
-
-> TODO: Add a method description
-
-
-```ruby
-def update_recipient_transfer_settings(recipient_id,
-                                           request,
-                                           idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| recipient_id |  ``` Required ```  | Recipient Identificator |
-| request |  ``` Required ```  | TODO: Add a parameter description |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-recipient_id = 'recipient_id'
-request = UpdateTransferSettingsRequest.new
-idempotency_key = 'idempotency-key'
-
-result = recipients_controller.update_recipient_transfer_settings(recipient_id, request, idempotency_key)
-
-```
-
-
-### <a name="get_anticipations"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_anticipations") get_anticipations
-
-> Retrieves a paginated list of anticipations from a recipient
-
-
-```ruby
-def get_anticipations(recipient_id,
-                          page = nil,
-                          size = nil,
-                          status = nil,
-                          timeframe = nil,
-                          payment_date_since = nil,
-                          payment_date_until = nil,
-                          created_since = nil,
-                          created_until = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| recipient_id |  ``` Required ```  | Recipient id |
-| page |  ``` Optional ```  | Page number |
-| size |  ``` Optional ```  | Page size |
-| status |  ``` Optional ```  | Filter for anticipation status |
-| timeframe |  ``` Optional ```  | Filter for anticipation timeframe |
-| payment_date_since |  ``` Optional ```  | Filter for start range for anticipation payment date |
-| payment_date_until |  ``` Optional ```  | Filter for end range for anticipation payment date |
-| created_since |  ``` Optional ```  | Filter for start range for anticipation creation date |
-| created_until |  ``` Optional ```  | Filter for end range for anticipation creation date |
-
-
-#### Example Usage
-
-```ruby
-recipient_id = 'recipient_id'
-page = 77
-size = 77
-status = 'status'
-timeframe = 'timeframe'
-payment_date_since = DateTime.now
-payment_date_until = DateTime.now
-created_since = DateTime.now
-created_until = DateTime.now
-
-result = recipients_controller.get_anticipations(recipient_id, page, size, status, timeframe, payment_date_since, payment_date_until, created_since, created_until)
-
-```
-
-
-### <a name="get_recipient"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_recipient") get_recipient
-
-> Retrieves recipient information
-
-
-```ruby
-def get_recipient(recipient_id); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| recipient_id |  ``` Required ```  | Recipiend id |
-
-
-#### Example Usage
-
-```ruby
-recipient_id = 'recipient_id'
-
-result = recipients_controller.get_recipient(recipient_id)
-
-```
-
-
-### <a name="get_balance"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_balance") get_balance
-
-> Get balance information for a recipient
-
-
-```ruby
-def get_balance(recipient_id); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| recipient_id |  ``` Required ```  | Recipient id |
-
-
-#### Example Usage
-
-```ruby
-recipient_id = 'recipient_id'
-
-result = recipients_controller.get_balance(recipient_id)
-
-```
-
-
-### <a name="get_withdrawals"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_withdrawals") get_withdrawals
-
-> Gets a paginated list of transfers for the recipient
-
-
-```ruby
-def get_withdrawals(recipient_id,
-                        page = nil,
-                        size = nil,
-                        status = nil,
-                        created_since = nil,
-                        created_until = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| recipient_id |  ``` Required ```  | TODO: Add a parameter description |
-| page |  ``` Optional ```  | TODO: Add a parameter description |
-| size |  ``` Optional ```  | TODO: Add a parameter description |
-| status |  ``` Optional ```  | TODO: Add a parameter description |
-| created_since |  ``` Optional ```  | TODO: Add a parameter description |
-| created_until |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-recipient_id = 'recipient_id'
-page = 77
-size = 77
-status = 'status'
-created_since = DateTime.now
-created_until = DateTime.now
-
-result = recipients_controller.get_withdrawals(recipient_id, page, size, status, created_since, created_until)
-
-```
-
-
-### <a name="create_transfer"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.create_transfer") create_transfer
-
-> Creates a transfer for a recipient
-
-
-```ruby
-def create_transfer(recipient_id,
-                        request,
-                        idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| recipient_id |  ``` Required ```  | Recipient Id |
-| request |  ``` Required ```  | Transfer data |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-recipient_id = 'recipient_id'
-request = CreateTransferRequest.new
-idempotency_key = 'idempotency-key'
-
-result = recipients_controller.create_transfer(recipient_id, request, idempotency_key)
-
-```
-
-
-### <a name="create_recipient"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.create_recipient") create_recipient
-
-> Creates a new recipient
-
-
-```ruby
-def create_recipient(request,
-                         idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| request |  ``` Required ```  | Recipient data |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-request = CreateRecipientRequest.new
-idempotency_key = 'idempotency-key'
-
-result = recipients_controller.create_recipient(request, idempotency_key)
-
-```
-
-
-### <a name="get_recipient_by_code"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_recipient_by_code") get_recipient_by_code
-
-> Retrieves recipient information
-
-
-```ruby
-def get_recipient_by_code(code); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| code |  ``` Required ```  | Recipient code |
-
-
-#### Example Usage
-
-```ruby
-code = 'code'
-
-result = recipients_controller.get_recipient_by_code(code)
-
-```
-
-
-### <a name="get_default_recipient"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_default_recipient") get_default_recipient
-
-> TODO: Add a method description
-
-
-```ruby
-def get_default_recipient; end
-```
-
-#### Example Usage
-
-```ruby
-
-result = recipients_controller.get_default_recipient()
-
-```
-
-
-[Back to List of Controllers](#list_of_controllers)
-
 ## <a name="charges_controller"></a>![Class: ](https://apidocs.io/img/class.png ".ChargesController") ChargesController
 
 ### Get singleton instance
@@ -3608,6 +2938,38 @@ request = UpdateMetadataRequest.new
 idempotency_key = 'idempotency-key'
 
 result = charges_controller.update_charge_metadata(charge_id, request, idempotency_key)
+
+```
+
+
+### <a name="capture_charge"></a>![Method: ](https://apidocs.io/img/method.png ".ChargesController.capture_charge") capture_charge
+
+> Captures a charge
+
+
+```ruby
+def capture_charge(charge_id,
+                       request = nil,
+                       idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| charge_id |  ``` Required ```  | Charge id |
+| request |  ``` Optional ```  | Request for capturing a charge |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+charge_id = 'charge_id'
+request = CreateCaptureChargeRequest.new
+idempotency_key = 'idempotency-key'
+
+result = charges_controller.capture_charge(charge_id, request, idempotency_key)
 
 ```
 
@@ -3668,8 +3030,8 @@ def get_charge_transactions(charge_id,
 
 ```ruby
 charge_id = 'charge_id'
-page = 169
-size = 169
+page = 63
+size = 63
 
 result = charges_controller.get_charge_transactions(charge_id, page, size)
 
@@ -3743,8 +3105,8 @@ def get_charges(page = nil,
 #### Example Usage
 
 ```ruby
-page = 169
-size = 169
+page = 154
+size = 154
 code = 'code'
 status = 'status'
 payment_method = 'payment_method'
@@ -3754,38 +3116,6 @@ created_since = DateTime.now
 created_until = DateTime.now
 
 result = charges_controller.get_charges(page, size, code, status, payment_method, customer_id, order_id, created_since, created_until)
-
-```
-
-
-### <a name="capture_charge"></a>![Method: ](https://apidocs.io/img/method.png ".ChargesController.capture_charge") capture_charge
-
-> Captures a charge
-
-
-```ruby
-def capture_charge(charge_id,
-                       request = nil,
-                       idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| charge_id |  ``` Required ```  | Charge id |
-| request |  ``` Optional ```  | Request for capturing a charge |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-charge_id = 'charge_id'
-request = CreateCaptureChargeRequest.new
-idempotency_key = 'idempotency-key'
-
-result = charges_controller.capture_charge(charge_id, request, idempotency_key)
 
 ```
 
@@ -4080,6 +3410,676 @@ def get_transfers; end
 ```ruby
 
 result = transfers_controller.get_transfers()
+
+```
+
+
+[Back to List of Controllers](#list_of_controllers)
+
+## <a name="recipients_controller"></a>![Class: ](https://apidocs.io/img/class.png ".RecipientsController") RecipientsController
+
+### Get singleton instance
+
+The singleton instance of the ``` RecipientsController ``` class can be accessed from the API Client.
+
+```ruby
+recipients_controller = client.recipients
+```
+
+### <a name="get_transfer"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_transfer") get_transfer
+
+> Gets a transfer
+
+
+```ruby
+def get_transfer(recipient_id,
+                     transfer_id); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| recipient_id |  ``` Required ```  | Recipient id |
+| transfer_id |  ``` Required ```  | Transfer id |
+
+
+#### Example Usage
+
+```ruby
+recipient_id = 'recipient_id'
+transfer_id = 'transfer_id'
+
+result = recipients_controller.get_transfer(recipient_id, transfer_id)
+
+```
+
+
+### <a name="update_recipient"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.update_recipient") update_recipient
+
+> Updates a recipient
+
+
+```ruby
+def update_recipient(recipient_id,
+                         request,
+                         idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| recipient_id |  ``` Required ```  | Recipient id |
+| request |  ``` Required ```  | Recipient data |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+recipient_id = 'recipient_id'
+request = UpdateRecipientRequest.new
+idempotency_key = 'idempotency-key'
+
+result = recipients_controller.update_recipient(recipient_id, request, idempotency_key)
+
+```
+
+
+### <a name="create_anticipation"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.create_anticipation") create_anticipation
+
+> Creates an anticipation
+
+
+```ruby
+def create_anticipation(recipient_id,
+                            request,
+                            idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| recipient_id |  ``` Required ```  | Recipient id |
+| request |  ``` Required ```  | Anticipation data |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+recipient_id = 'recipient_id'
+request = CreateAnticipationRequest.new
+idempotency_key = 'idempotency-key'
+
+result = recipients_controller.create_anticipation(recipient_id, request, idempotency_key)
+
+```
+
+
+### <a name="get_anticipation_limits"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_anticipation_limits") get_anticipation_limits
+
+> Gets the anticipation limits for a recipient
+
+
+```ruby
+def get_anticipation_limits(recipient_id,
+                                timeframe,
+                                payment_date); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| recipient_id |  ``` Required ```  | Recipient id |
+| timeframe |  ``` Required ```  | Timeframe |
+| payment_date |  ``` Required ```  | Anticipation payment date |
+
+
+#### Example Usage
+
+```ruby
+recipient_id = 'recipient_id'
+timeframe = 'timeframe'
+payment_date = DateTime.now
+
+result = recipients_controller.get_anticipation_limits(recipient_id, timeframe, payment_date)
+
+```
+
+
+### <a name="get_recipients"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_recipients") get_recipients
+
+> Retrieves paginated recipients information
+
+
+```ruby
+def get_recipients(page = nil,
+                       size = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| page |  ``` Optional ```  | Page number |
+| size |  ``` Optional ```  | Page size |
+
+
+#### Example Usage
+
+```ruby
+page = 154
+size = 154
+
+result = recipients_controller.get_recipients(page, size)
+
+```
+
+
+### <a name="get_withdraw_by_id"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_withdraw_by_id") get_withdraw_by_id
+
+> TODO: Add a method description
+
+
+```ruby
+def get_withdraw_by_id(recipient_id,
+                           withdrawal_id); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| recipient_id |  ``` Required ```  | TODO: Add a parameter description |
+| withdrawal_id |  ``` Required ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+recipient_id = 'recipient_id'
+withdrawal_id = 'withdrawal_id'
+
+result = recipients_controller.get_withdraw_by_id(recipient_id, withdrawal_id)
+
+```
+
+
+### <a name="update_recipient_default_bank_account"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.update_recipient_default_bank_account") update_recipient_default_bank_account
+
+> Updates the default bank account from a recipient
+
+
+```ruby
+def update_recipient_default_bank_account(recipient_id,
+                                              request,
+                                              idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| recipient_id |  ``` Required ```  | Recipient id |
+| request |  ``` Required ```  | Bank account data |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+recipient_id = 'recipient_id'
+request = UpdateRecipientBankAccountRequest.new
+idempotency_key = 'idempotency-key'
+
+result = recipients_controller.update_recipient_default_bank_account(recipient_id, request, idempotency_key)
+
+```
+
+
+### <a name="update_recipient_metadata"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.update_recipient_metadata") update_recipient_metadata
+
+> Updates recipient metadata
+
+
+```ruby
+def update_recipient_metadata(recipient_id,
+                                  request,
+                                  idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| recipient_id |  ``` Required ```  | Recipient id |
+| request |  ``` Required ```  | Metadata |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+recipient_id = 'recipient_id'
+request = UpdateMetadataRequest.new
+idempotency_key = 'idempotency-key'
+
+result = recipients_controller.update_recipient_metadata(recipient_id, request, idempotency_key)
+
+```
+
+
+### <a name="get_transfers"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_transfers") get_transfers
+
+> Gets a paginated list of transfers for the recipient
+
+
+```ruby
+def get_transfers(recipient_id,
+                      page = nil,
+                      size = nil,
+                      status = nil,
+                      created_since = nil,
+                      created_until = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| recipient_id |  ``` Required ```  | Recipient id |
+| page |  ``` Optional ```  | Page number |
+| size |  ``` Optional ```  | Page size |
+| status |  ``` Optional ```  | Filter for transfer status |
+| created_since |  ``` Optional ```  | Filter for start range of transfer creation date |
+| created_until |  ``` Optional ```  | Filter for end range of transfer creation date |
+
+
+#### Example Usage
+
+```ruby
+recipient_id = 'recipient_id'
+page = 154
+size = 154
+status = 'status'
+created_since = DateTime.now
+created_until = DateTime.now
+
+result = recipients_controller.get_transfers(recipient_id, page, size, status, created_since, created_until)
+
+```
+
+
+### <a name="create_withdraw"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.create_withdraw") create_withdraw
+
+> TODO: Add a method description
+
+
+```ruby
+def create_withdraw(recipient_id,
+                        request); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| recipient_id |  ``` Required ```  | TODO: Add a parameter description |
+| request |  ``` Required ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+recipient_id = 'recipient_id'
+request = CreateWithdrawRequest.new
+
+result = recipients_controller.create_withdraw(recipient_id, request)
+
+```
+
+
+### <a name="update_automatic_anticipation_settings"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.update_automatic_anticipation_settings") update_automatic_anticipation_settings
+
+> Updates recipient metadata
+
+
+```ruby
+def update_automatic_anticipation_settings(recipient_id,
+                                               request,
+                                               idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| recipient_id |  ``` Required ```  | Recipient id |
+| request |  ``` Required ```  | Metadata |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+recipient_id = 'recipient_id'
+request = UpdateAutomaticAnticipationSettingsRequest.new
+idempotency_key = 'idempotency-key'
+
+result = recipients_controller.update_automatic_anticipation_settings(recipient_id, request, idempotency_key)
+
+```
+
+
+### <a name="get_anticipation"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_anticipation") get_anticipation
+
+> Gets an anticipation
+
+
+```ruby
+def get_anticipation(recipient_id,
+                         anticipation_id); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| recipient_id |  ``` Required ```  | Recipient id |
+| anticipation_id |  ``` Required ```  | Anticipation id |
+
+
+#### Example Usage
+
+```ruby
+recipient_id = 'recipient_id'
+anticipation_id = 'anticipation_id'
+
+result = recipients_controller.get_anticipation(recipient_id, anticipation_id)
+
+```
+
+
+### <a name="update_recipient_transfer_settings"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.update_recipient_transfer_settings") update_recipient_transfer_settings
+
+> TODO: Add a method description
+
+
+```ruby
+def update_recipient_transfer_settings(recipient_id,
+                                           request,
+                                           idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| recipient_id |  ``` Required ```  | Recipient Identificator |
+| request |  ``` Required ```  | TODO: Add a parameter description |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+recipient_id = 'recipient_id'
+request = UpdateTransferSettingsRequest.new
+idempotency_key = 'idempotency-key'
+
+result = recipients_controller.update_recipient_transfer_settings(recipient_id, request, idempotency_key)
+
+```
+
+
+### <a name="get_anticipations"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_anticipations") get_anticipations
+
+> Retrieves a paginated list of anticipations from a recipient
+
+
+```ruby
+def get_anticipations(recipient_id,
+                          page = nil,
+                          size = nil,
+                          status = nil,
+                          timeframe = nil,
+                          payment_date_since = nil,
+                          payment_date_until = nil,
+                          created_since = nil,
+                          created_until = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| recipient_id |  ``` Required ```  | Recipient id |
+| page |  ``` Optional ```  | Page number |
+| size |  ``` Optional ```  | Page size |
+| status |  ``` Optional ```  | Filter for anticipation status |
+| timeframe |  ``` Optional ```  | Filter for anticipation timeframe |
+| payment_date_since |  ``` Optional ```  | Filter for start range for anticipation payment date |
+| payment_date_until |  ``` Optional ```  | Filter for end range for anticipation payment date |
+| created_since |  ``` Optional ```  | Filter for start range for anticipation creation date |
+| created_until |  ``` Optional ```  | Filter for end range for anticipation creation date |
+
+
+#### Example Usage
+
+```ruby
+recipient_id = 'recipient_id'
+page = 154
+size = 154
+status = 'status'
+timeframe = 'timeframe'
+payment_date_since = DateTime.now
+payment_date_until = DateTime.now
+created_since = DateTime.now
+created_until = DateTime.now
+
+result = recipients_controller.get_anticipations(recipient_id, page, size, status, timeframe, payment_date_since, payment_date_until, created_since, created_until)
+
+```
+
+
+### <a name="get_recipient"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_recipient") get_recipient
+
+> Retrieves recipient information
+
+
+```ruby
+def get_recipient(recipient_id); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| recipient_id |  ``` Required ```  | Recipiend id |
+
+
+#### Example Usage
+
+```ruby
+recipient_id = 'recipient_id'
+
+result = recipients_controller.get_recipient(recipient_id)
+
+```
+
+
+### <a name="get_withdrawals"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_withdrawals") get_withdrawals
+
+> Gets a paginated list of transfers for the recipient
+
+
+```ruby
+def get_withdrawals(recipient_id,
+                        page = nil,
+                        size = nil,
+                        status = nil,
+                        created_since = nil,
+                        created_until = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| recipient_id |  ``` Required ```  | TODO: Add a parameter description |
+| page |  ``` Optional ```  | TODO: Add a parameter description |
+| size |  ``` Optional ```  | TODO: Add a parameter description |
+| status |  ``` Optional ```  | TODO: Add a parameter description |
+| created_since |  ``` Optional ```  | TODO: Add a parameter description |
+| created_until |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+recipient_id = 'recipient_id'
+page = 154
+size = 154
+status = 'status'
+created_since = DateTime.now
+created_until = DateTime.now
+
+result = recipients_controller.get_withdrawals(recipient_id, page, size, status, created_since, created_until)
+
+```
+
+
+### <a name="get_balance"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_balance") get_balance
+
+> Get balance information for a recipient
+
+
+```ruby
+def get_balance(recipient_id); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| recipient_id |  ``` Required ```  | Recipient id |
+
+
+#### Example Usage
+
+```ruby
+recipient_id = 'recipient_id'
+
+result = recipients_controller.get_balance(recipient_id)
+
+```
+
+
+### <a name="create_transfer"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.create_transfer") create_transfer
+
+> Creates a transfer for a recipient
+
+
+```ruby
+def create_transfer(recipient_id,
+                        request,
+                        idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| recipient_id |  ``` Required ```  | Recipient Id |
+| request |  ``` Required ```  | Transfer data |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+recipient_id = 'recipient_id'
+request = CreateTransferRequest.new
+idempotency_key = 'idempotency-key'
+
+result = recipients_controller.create_transfer(recipient_id, request, idempotency_key)
+
+```
+
+
+### <a name="create_recipient"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.create_recipient") create_recipient
+
+> Creates a new recipient
+
+
+```ruby
+def create_recipient(request,
+                         idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| request |  ``` Required ```  | Recipient data |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+request = CreateRecipientRequest.new
+idempotency_key = 'idempotency-key'
+
+result = recipients_controller.create_recipient(request, idempotency_key)
+
+```
+
+
+### <a name="get_recipient_by_code"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_recipient_by_code") get_recipient_by_code
+
+> Retrieves recipient information
+
+
+```ruby
+def get_recipient_by_code(code); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| code |  ``` Required ```  | Recipient code |
+
+
+#### Example Usage
+
+```ruby
+code = 'code'
+
+result = recipients_controller.get_recipient_by_code(code)
+
+```
+
+
+### <a name="get_default_recipient"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_default_recipient") get_default_recipient
+
+> TODO: Add a method description
+
+
+```ruby
+def get_default_recipient; end
+```
+
+#### Example Usage
+
+```ruby
+
+result = recipients_controller.get_default_recipient()
 
 ```
 
