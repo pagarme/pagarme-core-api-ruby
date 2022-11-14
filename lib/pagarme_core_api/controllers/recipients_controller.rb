@@ -16,39 +16,6 @@ module PagarmeCoreApi
       self.class.instance
     end
 
-    # Gets a transfer
-    # @param [String] recipient_id Required parameter: Recipient id
-    # @param [String] transfer_id Required parameter: Transfer id
-    # @return GetTransferResponse response from the API call
-    def get_transfer(recipient_id,
-                     transfer_id)
-      # Prepare query url.
-      _path_url = '/recipients/{recipient_id}/transfers/{transfer_id}'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'recipient_id' => recipient_id,
-        'transfer_id' => transfer_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json'
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.get(
-        _query_url,
-        headers: _headers
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetTransferResponse.from_hash(decoded)
-    end
-
     # Updates a recipient
     # @param [String] recipient_id Required parameter: Recipient id
     # @param [UpdateRecipientRequest] request Required parameter: Recipient
@@ -365,6 +332,39 @@ module PagarmeCoreApi
       ListTransferResponse.from_hash(decoded)
     end
 
+    # Gets a transfer
+    # @param [String] recipient_id Required parameter: Recipient id
+    # @param [String] transfer_id Required parameter: Transfer id
+    # @return GetTransferResponse response from the API call
+    def get_transfer(recipient_id,
+                     transfer_id)
+      # Prepare query url.
+      _path_url = '/recipients/{recipient_id}/transfers/{transfer_id}'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'recipient_id' => recipient_id,
+        'transfer_id' => transfer_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json'
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.get(
+        _query_url,
+        headers: _headers
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetTransferResponse.from_hash(decoded)
+    end
+
     # TODO: type endpoint description here
     # @param [String] recipient_id Required parameter: Example:
     # @param [CreateWithdrawRequest] request Required parameter: Example:
@@ -604,6 +604,36 @@ module PagarmeCoreApi
       GetRecipientResponse.from_hash(decoded)
     end
 
+    # Get balance information for a recipient
+    # @param [String] recipient_id Required parameter: Recipient id
+    # @return GetBalanceResponse response from the API call
+    def get_balance(recipient_id)
+      # Prepare query url.
+      _path_url = '/recipients/{recipient_id}/balance'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'recipient_id' => recipient_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json'
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.get(
+        _query_url,
+        headers: _headers
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetBalanceResponse.from_hash(decoded)
+    end
+
     # Gets a paginated list of transfers for the recipient
     # @param [String] recipient_id Required parameter: Example:
     # @param [Integer] page Optional parameter: Example:
@@ -653,36 +683,6 @@ module PagarmeCoreApi
       # Return appropriate response type.
       decoded = APIHelper.json_deserialize(_context.response.raw_body)
       ListWithdrawals.from_hash(decoded)
-    end
-
-    # Get balance information for a recipient
-    # @param [String] recipient_id Required parameter: Recipient id
-    # @return GetBalanceResponse response from the API call
-    def get_balance(recipient_id)
-      # Prepare query url.
-      _path_url = '/recipients/{recipient_id}/balance'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'recipient_id' => recipient_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json'
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.get(
-        _query_url,
-        headers: _headers
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetBalanceResponse.from_hash(decoded)
     end
 
     # Creates a transfer for a recipient

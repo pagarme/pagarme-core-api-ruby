@@ -134,21 +134,15 @@ module PagarmeCoreApi
       GetAccessTokenResponse.from_hash(decoded)
     end
 
-    # Creates a access token for a customer
-    # @param [String] customer_id Required parameter: Customer Id
-    # @param [CreateAccessTokenRequest] request Required parameter: Request for
-    # creating a access token
+    # Creates a new customer
+    # @param [CreateCustomerRequest] request Required parameter: Request for
+    # creating a customer
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetAccessTokenResponse response from the API call
-    def create_access_token(customer_id,
-                            request,
-                            idempotency_key = nil)
+    # @return GetCustomerResponse response from the API call
+    def create_customer(request,
+                        idempotency_key = nil)
       # Prepare query url.
-      _path_url = '/customers/{customer_id}/access-tokens'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'customer_id' => customer_id
-      )
+      _path_url = '/customers'
       _query_builder = Configuration.base_uri.dup
       _query_builder << _path_url
       _query_url = APIHelper.clean_url _query_builder
@@ -169,7 +163,7 @@ module PagarmeCoreApi
       validate_response(_context)
       # Return appropriate response type.
       decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetAccessTokenResponse.from_hash(decoded)
+      GetCustomerResponse.from_hash(decoded)
     end
 
     # Creates a new address for a customer
@@ -208,38 +202,6 @@ module PagarmeCoreApi
       # Return appropriate response type.
       decoded = APIHelper.json_deserialize(_context.response.raw_body)
       GetAddressResponse.from_hash(decoded)
-    end
-
-    # Creates a new customer
-    # @param [CreateCustomerRequest] request Required parameter: Request for
-    # creating a customer
-    # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetCustomerResponse response from the API call
-    def create_customer(request,
-                        idempotency_key = nil)
-      # Prepare query url.
-      _path_url = '/customers'
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json',
-        'content-type' => 'application/json; charset=utf-8',
-        'idempotency-key' => idempotency_key
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.post(
-        _query_url,
-        headers: _headers,
-        parameters: request.to_json
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetCustomerResponse.from_hash(decoded)
     end
 
     # Delete a Customer's access tokens
@@ -463,6 +425,44 @@ module PagarmeCoreApi
       # Return appropriate response type.
       decoded = APIHelper.json_deserialize(_context.response.raw_body)
       GetCustomerResponse.from_hash(decoded)
+    end
+
+    # Creates a access token for a customer
+    # @param [String] customer_id Required parameter: Customer Id
+    # @param [CreateAccessTokenRequest] request Required parameter: Request for
+    # creating a access token
+    # @param [String] idempotency_key Optional parameter: Example:
+    # @return GetAccessTokenResponse response from the API call
+    def create_access_token(customer_id,
+                            request,
+                            idempotency_key = nil)
+      # Prepare query url.
+      _path_url = '/customers/{customer_id}/access-tokens'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'customer_id' => customer_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'content-type' => 'application/json; charset=utf-8',
+        'idempotency-key' => idempotency_key
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.post(
+        _query_url,
+        headers: _headers,
+        parameters: request.to_json
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetAccessTokenResponse.from_hash(decoded)
     end
 
     # Get all access tokens from a customer
