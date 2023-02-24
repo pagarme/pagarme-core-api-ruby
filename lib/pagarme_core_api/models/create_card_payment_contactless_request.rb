@@ -10,15 +10,15 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :type
 
-    # The ApplePay encrypted request
+    # The ApplePay Token Payment Request
     # @return [CreateApplePayRequest]
     attr_accessor :apple_pay
 
-    # The GooglePay encrypted request
+    # The GooglePay Token Payment Request
     # @return [CreateGooglePayRequest]
     attr_accessor :google_pay
 
-    # The Emv encrypted request
+    # The GooglePay Token Payment Request
     # @return [CreateEmvDecryptRequest]
     attr_accessor :emv
 

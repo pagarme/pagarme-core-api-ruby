@@ -14,31 +14,31 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :payment_method
 
-    # Credit card data
+    # The settings for creating a credit card payment
     # @return [CreateCreditCardPaymentRequest]
     attr_accessor :credit_card
 
-    # Debit card data
+    # The settings for creating a debit card payment
     # @return [CreateDebitCardPaymentRequest]
     attr_accessor :debit_card
 
-    # Boleto data
+    # Contains the settings for creating a boleto payment
     # @return [CreateBoletoPaymentRequest]
     attr_accessor :boleto
 
-    # Voucher data
+    # The settings for creating a voucher payment
     # @return [CreateVoucherPaymentRequest]
     attr_accessor :voucher
 
-    # Cash data
+    # The settings for creating a voucher payment
     # @return [CreateCashPaymentRequest]
     attr_accessor :cash
 
-    # Bank Transfer data
+    # Request for creating a bank transfer payment
     # @return [CreateBankTransferPaymentRequest]
     attr_accessor :bank_transfer
 
-    # Bank Transfer data
+    # The settings for creating a private label payment
     # @return [CreatePrivateLabelPaymentRequest]
     attr_accessor :private_label
 

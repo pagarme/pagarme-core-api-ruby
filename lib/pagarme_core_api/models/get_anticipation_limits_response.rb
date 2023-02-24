@@ -6,11 +6,11 @@
 module PagarmeCoreApi
   # Anticipation limits
   class GetAnticipationLimitsResponse < BaseModel
-    # Max limit
+    # Anticipation limit
     # @return [GetAnticipationLimitResponse]
     attr_accessor :max
 
-    # Min limit
+    # Anticipation limit
     # @return [GetAnticipationLimitResponse]
     attr_accessor :min
 

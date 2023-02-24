@@ -14,7 +14,7 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :statement_descriptor
 
-    # Credit card data
+    # Card data
     # @return [CreateCardRequest]
     attr_accessor :card
 
@@ -51,7 +51,7 @@ module PagarmeCoreApi
     # @return [CreatePaymentAuthenticationRequest]
     attr_accessor :authentication
 
-    # The Credit card payment contactless request
+    # The card payment contactless request
     # @return [CreateCardPaymentContactlessRequest]
     attr_accessor :contactless
 

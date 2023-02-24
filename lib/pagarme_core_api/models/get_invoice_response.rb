@@ -39,51 +39,51 @@ module PagarmeCoreApi
     # @return [List of GetInvoiceItemResponse]
     attr_accessor :items
 
-    # TODO: Write general description for this method
+    # Response object for getting a customer
     # @return [GetCustomerResponse]
     attr_accessor :customer
 
-    # TODO: Write general description for this method
+    # Response object for getting a charge
     # @return [GetChargeResponse]
     attr_accessor :charge
 
-    # TODO: Write general description for this method
+    # Response object for getting a charge
     # @return [Integer]
     attr_accessor :installments
 
-    # TODO: Write general description for this method
+    # Response object for getting a billing address
     # @return [GetBillingAddressResponse]
     attr_accessor :billing_address
 
-    # TODO: Write general description for this method
+    # Response object for getting a billing address
     # @return [GetSubscriptionResponse]
     attr_accessor :subscription
 
-    # TODO: Write general description for this method
+    # Response object for getting a period
     # @return [GetPeriodResponse]
     attr_accessor :cycle
 
-    # TODO: Write general description for this method
+    # Response object for getting the shipping data
     # @return [GetShippingResponse]
     attr_accessor :shipping
 
-    # TODO: Write general description for this method
+    # Response object for getting the shipping data
     # @return [Array<String, String>]
     attr_accessor :metadata
 
-    # TODO: Write general description for this method
+    # Response object for getting the shipping data
     # @return [DateTime]
     attr_accessor :due_at
 
-    # TODO: Write general description for this method
+    # Response object for getting the shipping data
     # @return [DateTime]
     attr_accessor :canceled_at
 
-    # TODO: Write general description for this method
+    # Response object for getting the shipping data
     # @return [DateTime]
     attr_accessor :billing_at
 
-    # TODO: Write general description for this method
+    # Response object for getting the shipping data
     # @return [DateTime]
     attr_accessor :seen_at
 

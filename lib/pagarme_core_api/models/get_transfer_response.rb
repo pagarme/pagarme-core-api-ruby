@@ -27,7 +27,7 @@ module PagarmeCoreApi
     # @return [DateTime]
     attr_accessor :updated_at
 
-    # Bank account
+    # Transfer last update date
     # @return [GetBankAccountResponse]
     attr_accessor :bank_account
 

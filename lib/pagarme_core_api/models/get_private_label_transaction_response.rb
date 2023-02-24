@@ -37,7 +37,7 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :operation_type
 
-    # Card data
+    # Response object for getting a credit card
     # @return [GetCardResponse]
     attr_accessor :card
 

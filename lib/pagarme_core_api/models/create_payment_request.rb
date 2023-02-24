@@ -10,15 +10,15 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :payment_method
 
-    # Settings for credit card payment
+    # The settings for creating a credit card payment
     # @return [CreateCreditCardPaymentRequest]
     attr_accessor :credit_card
 
-    # Settings for debit card payment
+    # The settings for creating a debit card payment
     # @return [CreateDebitCardPaymentRequest]
     attr_accessor :debit_card
 
-    # Settings for boleto payment
+    # Contains the settings for creating a boleto payment
     # @return [CreateBoletoPaymentRequest]
     attr_accessor :boleto
 
@@ -26,7 +26,7 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :currency
 
-    # Settings for voucher payment
+    # The settings for creating a voucher payment
     # @return [CreateVoucherPaymentRequest]
     attr_accessor :voucher
 
@@ -34,7 +34,7 @@ module PagarmeCoreApi
     # @return [List of CreateSplitRequest]
     attr_accessor :split
 
-    # Settings for bank transfer payment
+    # Request for creating a bank transfer payment
     # @return [CreateBankTransferPaymentRequest]
     attr_accessor :bank_transfer
 
@@ -46,7 +46,7 @@ module PagarmeCoreApi
     # @return [Integer]
     attr_accessor :amount
 
-    # Settings for checkout payment
+    # Checkout payment request
     # @return [CreateCheckoutPaymentRequest]
     attr_accessor :checkout
 
@@ -54,7 +54,7 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :customer_id
 
-    # Customer
+    # Request for creating a new customer
     # @return [CreateCustomerRequest]
     attr_accessor :customer
 
@@ -62,15 +62,15 @@ module PagarmeCoreApi
     # @return [Array<String, String>]
     attr_accessor :metadata
 
-    # Settings for cash payment
+    # Metadata
     # @return [CreateCashPaymentRequest]
     attr_accessor :cash
 
-    # Settings for private label payment
+    # The settings for creating a private label payment
     # @return [CreatePrivateLabelPaymentRequest]
     attr_accessor :private_label
 
-    # Settings for pix payment
+    # Contains information to create a pix payment
     # @return [CreatePixPaymentRequest]
     attr_accessor :pix
 

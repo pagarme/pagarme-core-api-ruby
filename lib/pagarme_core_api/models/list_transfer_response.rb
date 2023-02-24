@@ -10,7 +10,7 @@ module PagarmeCoreApi
     # @return [List of GetTransferResponse]
     attr_accessor :data
 
-    # Paging
+    # Object used for returning lists of objects with pagination
     # @return [PagingResponse]
     attr_accessor :paging
 

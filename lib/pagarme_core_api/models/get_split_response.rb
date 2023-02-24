@@ -14,7 +14,7 @@ module PagarmeCoreApi
     # @return [Integer]
     attr_accessor :amount
 
-    # Recipient
+    # Recipient response
     # @return [GetRecipientResponse]
     attr_accessor :recipient
 

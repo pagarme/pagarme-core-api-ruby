@@ -27,7 +27,7 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :address_id
 
-    # Address data
+    # Request for creating a new Address
     # @return [CreateAddressRequest]
     attr_accessor :address
 

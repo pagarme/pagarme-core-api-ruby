@@ -14,15 +14,15 @@ module PagarmeCoreApi
     # @return [Long]
     attr_accessor :available_amount
 
-    # Recipient
+    # Recipient response
     # @return [GetRecipientResponse]
     attr_accessor :recipient
 
-    # Recipient
+    # Recipient response
     # @return [Long]
     attr_accessor :transferred_amount
 
-    # Recipient
+    # Recipient response
     # @return [Long]
     attr_accessor :waiting_funds_amount
 

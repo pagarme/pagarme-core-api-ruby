@@ -10,7 +10,7 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :type
 
-    # Card data
+    # Card token data
     # @return [CreateCardTokenRequest]
     attr_accessor :card
 
@@ -22,7 +22,7 @@ module PagarmeCoreApi
       @_hash
     end
 
-    def initialize(type = 'card',
+    def initialize(type = nil,
                    card = nil)
       @type = type
       @card = card
@@ -33,7 +33,7 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      type = hash['type'] ||= 'card'
+      type = hash['type']
       card = CreateCardTokenRequest.from_hash(hash['card']) if hash['card']
 
       # Create object from extracted values.

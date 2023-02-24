@@ -10,7 +10,7 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :name
 
-    # Item's pricing scheme
+    # Request for creating a pricing scheme
     # @return [CreatePricingSchemeRequest]
     attr_accessor :pricing_scheme
 

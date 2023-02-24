@@ -59,7 +59,7 @@ module PagarmeCoreApi
     # @return [DateTime]
     attr_accessor :deleted_at
 
-    # Recipient
+    # Recipient response
     # @return [GetRecipientResponse]
     attr_accessor :recipient
 

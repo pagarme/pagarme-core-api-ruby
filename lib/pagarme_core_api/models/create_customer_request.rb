@@ -22,7 +22,7 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :type
 
-    # The customer's address
+    # Request for creating a new Address
     # @return [CreateAddressRequest]
     attr_accessor :address
 

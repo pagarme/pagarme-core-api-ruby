@@ -23,7 +23,7 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :expires_at
 
-    # TODO: Write general description for this method
+    # Card token data
     # @return [GetCardTokenResponse]
     attr_accessor :card
 

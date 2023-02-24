@@ -6,7 +6,7 @@
 module PagarmeCoreApi
   # Updates the default bank account for a recipient
   class UpdateRecipientBankAccountRequest < BaseModel
-    # Bank account
+    # Request for creating a bank account
     # @return [CreateBankAccountRequest]
     attr_accessor :bank_account
 
@@ -23,7 +23,7 @@ module PagarmeCoreApi
     end
 
     def initialize(bank_account = nil,
-                   payment_mode = 'bank_transfer')
+                   payment_mode = nil)
       @bank_account = bank_account
       @payment_mode = payment_mode
     end
@@ -35,7 +35,7 @@ module PagarmeCoreApi
       # Extract variables from the hash.
       bank_account = CreateBankAccountRequest.from_hash(hash['bank_account']) if
         hash['bank_account']
-      payment_mode = hash['payment_mode'] ||= 'bank_transfer'
+      payment_mode = hash['payment_mode']
 
       # Create object from extracted values.
       UpdateRecipientBankAccountRequest.new(bank_account,

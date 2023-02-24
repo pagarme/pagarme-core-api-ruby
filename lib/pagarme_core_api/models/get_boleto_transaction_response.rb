@@ -33,43 +33,43 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :instructions
 
-    # TODO: Write general description for this method
+    # Response object for getting a billing address
     # @return [GetBillingAddressResponse]
     attr_accessor :billing_address
 
-    # TODO: Write general description for this method
+    # Response object for getting a billing address
     # @return [DateTime]
     attr_accessor :due_at
 
-    # TODO: Write general description for this method
+    # Response object for getting a billing address
     # @return [String]
     attr_accessor :qr_code
 
-    # TODO: Write general description for this method
+    # Response object for getting a billing address
     # @return [String]
     attr_accessor :line
 
-    # TODO: Write general description for this method
+    # Response object for getting a billing address
     # @return [String]
     attr_accessor :pdf_password
 
-    # TODO: Write general description for this method
+    # Response object for getting a billing address
     # @return [String]
     attr_accessor :pdf
 
-    # TODO: Write general description for this method
+    # Response object for getting a billing address
     # @return [DateTime]
     attr_accessor :paid_at
 
-    # TODO: Write general description for this method
+    # Response object for getting a billing address
     # @return [String]
     attr_accessor :paid_amount
 
-    # TODO: Write general description for this method
+    # Response object for getting a billing address
     # @return [String]
     attr_accessor :type
 
-    # TODO: Write general description for this method
+    # Response object for getting a billing address
     # @return [DateTime]
     attr_accessor :credit_at
 

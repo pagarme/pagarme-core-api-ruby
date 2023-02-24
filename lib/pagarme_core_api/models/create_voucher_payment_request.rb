@@ -18,7 +18,7 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :card_token
 
-    # Card info
+    # Card data
     # @return [CreateCardRequest]
     attr_accessor :card
 

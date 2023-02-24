@@ -43,15 +43,15 @@ module PagarmeCoreApi
     # @return [DateTime]
     attr_accessor :updated_at
 
-    # TODO: Write general description for this method
+    # Response object for getting a billing address
     # @return [GetBillingAddressResponse]
     attr_accessor :billing_address
 
-    # TODO: Write general description for this method
+    # Response object for getting a customer
     # @return [GetCustomerResponse]
     attr_accessor :customer
 
-    # TODO: Write general description for this method
+    # Response object for getting a customer
     # @return [Array<String, String>]
     attr_accessor :metadata
 

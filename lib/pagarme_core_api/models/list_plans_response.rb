@@ -10,7 +10,7 @@ module PagarmeCoreApi
     # @return [List of GetPlanResponse]
     attr_accessor :data
 
-    # Paging object
+    # Object used for returning lists of objects with pagination
     # @return [PagingResponse]
     attr_accessor :paging
 

@@ -26,15 +26,15 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :gateway_affiliation_id
 
-    # Credit Card payment request
+    # Checkout card payment request
     # @return [CreateCheckoutCreditCardPaymentRequest]
     attr_accessor :credit_card
 
-    # Debit Card payment request
+    # Checkout credit card payment request
     # @return [CreateCheckoutDebitCardPaymentRequest]
     attr_accessor :debit_card
 
-    # Boleto payment request
+    # Checkout credit card payment request
     # @return [CreateCheckoutBoletoPaymentRequest]
     attr_accessor :boleto
 
@@ -54,11 +54,11 @@ module PagarmeCoreApi
     # @return [Boolean]
     attr_accessor :billing_address_editable
 
-    # Billing Address
+    # Request for creating a new Address
     # @return [CreateAddressRequest]
     attr_accessor :billing_address
 
-    # Bank Transfer payment request
+    # Checkout bank transfer payment request
     # @return [CreateCheckoutBankTransferRequest]
     attr_accessor :bank_transfer
 
@@ -66,7 +66,7 @@ module PagarmeCoreApi
     # @return [List of String]
     attr_accessor :accepted_brands
 
-    # Pix payment request
+    # Checkout pix payment request
     # @return [CreateCheckoutPixPaymentRequest]
     attr_accessor :pix
 

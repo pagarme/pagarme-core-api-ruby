@@ -31,55 +31,55 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :billing_type
 
-    # TODO: Write general description for this method
+    # Response object for getting a period
     # @return [GetPeriodResponse]
     attr_accessor :current_cycle
 
-    # TODO: Write general description for this method
+    # Response object for getting a period
     # @return [String]
     attr_accessor :payment_method
 
-    # TODO: Write general description for this method
+    # Response object for getting a period
     # @return [String]
     attr_accessor :currency
 
-    # TODO: Write general description for this method
+    # Response object for getting a period
     # @return [Integer]
     attr_accessor :installments
 
-    # TODO: Write general description for this method
+    # Response object for getting a period
     # @return [String]
     attr_accessor :status
 
-    # TODO: Write general description for this method
+    # Response object for getting a period
     # @return [DateTime]
     attr_accessor :created_at
 
-    # TODO: Write general description for this method
+    # Response object for getting a period
     # @return [DateTime]
     attr_accessor :updated_at
 
-    # TODO: Write general description for this method
+    # Response object for getting a customer
     # @return [GetCustomerResponse]
     attr_accessor :customer
 
-    # TODO: Write general description for this method
+    # Response object for getting a credit card
     # @return [GetCardResponse]
     attr_accessor :card
 
-    # TODO: Write general description for this method
+    # Response object for getting a credit card
     # @return [List of GetSubscriptionItemResponse]
     attr_accessor :items
 
-    # TODO: Write general description for this method
+    # Response object for getting a credit card
     # @return [String]
     attr_accessor :statement_descriptor
 
-    # TODO: Write general description for this method
+    # Response object for getting a credit card
     # @return [Array<String, String>]
     attr_accessor :metadata
 
-    # TODO: Write general description for this method
+    # Response object for getting the setup from a subscription
     # @return [GetSetupResponse]
     attr_accessor :setup
 
@@ -115,7 +115,7 @@ module PagarmeCoreApi
     # @return [Integer]
     attr_accessor :boleto_due_days
 
-    # Subscription's split responde
+    # Days until boleto expires
     # @return [GetSubscriptionSplitResponse]
     attr_accessor :split
 

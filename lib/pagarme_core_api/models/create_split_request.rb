@@ -18,7 +18,7 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :recipient_id
 
-    # The split options request
+    # The Split Options Request
     # @return [CreateSplitOptionsRequest]
     attr_accessor :options
 

@@ -10,7 +10,7 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :statement_descriptor
 
-    # Debit card data
+    # Card data
     # @return [CreateCardRequest]
     attr_accessor :card
 
@@ -30,7 +30,7 @@ module PagarmeCoreApi
     # @return [CreatePaymentAuthenticationRequest]
     attr_accessor :authentication
 
-    # The Debit card payment token request
+    # The card payment contactless request
     # @return [CreateCardPaymentContactlessRequest]
     attr_accessor :token
 

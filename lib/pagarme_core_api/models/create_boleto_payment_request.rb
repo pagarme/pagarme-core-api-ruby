@@ -24,7 +24,7 @@ module PagarmeCoreApi
     # @return [DateTime]
     attr_accessor :due_at
 
-    # Card's billing address
+    # Request for creating a new Address
     # @return [CreateAddressRequest]
     attr_accessor :billing_address
 
@@ -44,15 +44,15 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :statement_descriptor
 
-    # Soft Descriptor
+    # Interest Request
     # @return [CreateInterestRequest]
     attr_accessor :interest
 
-    # Soft Descriptor
+    # Fine Request
     # @return [CreateFineRequest]
     attr_accessor :fine
 
-    # Soft Descriptor
+    # Fine Request
     # @return [Integer]
     attr_accessor :max_days_to_pay_past_due
 

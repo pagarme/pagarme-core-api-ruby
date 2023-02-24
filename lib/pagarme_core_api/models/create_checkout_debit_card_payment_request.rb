@@ -10,7 +10,7 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :statement_descriptor
 
-    # Creates payment authentication
+    # The payment authentication request
     # @return [CreatePaymentAuthenticationRequest]
     attr_accessor :authentication
 

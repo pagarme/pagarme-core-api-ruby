@@ -47,31 +47,31 @@ module PagarmeCoreApi
     # @return [DateTime]
     attr_accessor :updated_at
 
-    # TODO: Write general description for this method
+    # Generic response object for getting a transaction.
     # @return [GetTransactionResponse]
     attr_accessor :last_transaction
 
-    # TODO: Write general description for this method
+    # Response object for getting an invoice
     # @return [GetInvoiceResponse]
     attr_accessor :invoice
 
-    # TODO: Write general description for this method
+    # Response object for getting an Order
     # @return [GetOrderResponse]
     attr_accessor :order
 
-    # TODO: Write general description for this method
+    # Response object for getting a customer
     # @return [GetCustomerResponse]
     attr_accessor :customer
 
-    # TODO: Write general description for this method
+    # Response object for getting a customer
     # @return [Array<String, String>]
     attr_accessor :metadata
 
-    # TODO: Write general description for this method
+    # Response object for getting a customer
     # @return [DateTime]
     attr_accessor :paid_at
 
-    # TODO: Write general description for this method
+    # Response object for getting a customer
     # @return [DateTime]
     attr_accessor :canceled_at
 

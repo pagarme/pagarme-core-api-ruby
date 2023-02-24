@@ -6,7 +6,7 @@
 module PagarmeCoreApi
   # Request for updating the card from a subscription
   class UpdateSubscriptionCardRequest < BaseModel
-    # Credit card data
+    # Card data
     # @return [CreateCardRequest]
     attr_accessor :card
 

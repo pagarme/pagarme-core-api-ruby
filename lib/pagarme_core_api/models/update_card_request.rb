@@ -22,7 +22,7 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :billing_address_id
 
-    # Billing address
+    # Request for creating a new Address
     # @return [CreateAddressRequest]
     attr_accessor :billing_address
 

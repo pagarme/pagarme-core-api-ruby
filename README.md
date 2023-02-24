@@ -99,348 +99,16 @@ The added initlization code can be debugged by putting a breakpoint in the ``` I
 
 ## <a name="list_of_controllers"></a>List of Controllers
 
-* [PlansController](#plans_controller)
 * [SubscriptionsController](#subscriptions_controller)
-* [InvoicesController](#invoices_controller)
 * [OrdersController](#orders_controller)
+* [PlansController](#plans_controller)
+* [InvoicesController](#invoices_controller)
 * [CustomersController](#customers_controller)
-* [RecipientsController](#recipients_controller)
 * [ChargesController](#charges_controller)
-* [TransfersController](#transfers_controller)
+* [RecipientsController](#recipients_controller)
 * [TokensController](#tokens_controller)
 * [TransactionsController](#transactions_controller)
-
-## <a name="plans_controller"></a>![Class: ](https://apidocs.io/img/class.png ".PlansController") PlansController
-
-### Get singleton instance
-
-The singleton instance of the ``` PlansController ``` class can be accessed from the API Client.
-
-```ruby
-plans_controller = client.plans
-```
-
-### <a name="get_plan"></a>![Method: ](https://apidocs.io/img/method.png ".PlansController.get_plan") get_plan
-
-> Gets a plan
-
-
-```ruby
-def get_plan(plan_id); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| plan_id |  ``` Required ```  | Plan id |
-
-
-#### Example Usage
-
-```ruby
-plan_id = 'plan_id'
-
-result = plans_controller.get_plan(plan_id)
-
-```
-
-
-### <a name="delete_plan"></a>![Method: ](https://apidocs.io/img/method.png ".PlansController.delete_plan") delete_plan
-
-> Deletes a plan
-
-
-```ruby
-def delete_plan(plan_id,
-                    idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| plan_id |  ``` Required ```  | Plan id |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-plan_id = 'plan_id'
-idempotency_key = 'idempotency-key'
-
-result = plans_controller.delete_plan(plan_id, idempotency_key)
-
-```
-
-
-### <a name="update_plan_metadata"></a>![Method: ](https://apidocs.io/img/method.png ".PlansController.update_plan_metadata") update_plan_metadata
-
-> Updates the metadata from a plan
-
-
-```ruby
-def update_plan_metadata(plan_id,
-                             request,
-                             idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| plan_id |  ``` Required ```  | The plan id |
-| request |  ``` Required ```  | Request for updating the plan metadata |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-plan_id = 'plan_id'
-request = UpdateMetadataRequest.new
-idempotency_key = 'idempotency-key'
-
-result = plans_controller.update_plan_metadata(plan_id, request, idempotency_key)
-
-```
-
-
-### <a name="update_plan_item"></a>![Method: ](https://apidocs.io/img/method.png ".PlansController.update_plan_item") update_plan_item
-
-> Updates a plan item
-
-
-```ruby
-def update_plan_item(plan_id,
-                         plan_item_id,
-                         body,
-                         idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| plan_id |  ``` Required ```  | Plan id |
-| plan_item_id |  ``` Required ```  | Plan item id |
-| body |  ``` Required ```  | Request for updating the plan item |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-plan_id = 'plan_id'
-plan_item_id = 'plan_item_id'
-body = UpdatePlanItemRequest.new
-idempotency_key = 'idempotency-key'
-
-result = plans_controller.update_plan_item(plan_id, plan_item_id, body, idempotency_key)
-
-```
-
-
-### <a name="create_plan_item"></a>![Method: ](https://apidocs.io/img/method.png ".PlansController.create_plan_item") create_plan_item
-
-> Adds a new item to a plan
-
-
-```ruby
-def create_plan_item(plan_id,
-                         request,
-                         idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| plan_id |  ``` Required ```  | Plan id |
-| request |  ``` Required ```  | Request for creating a plan item |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-plan_id = 'plan_id'
-request = CreatePlanItemRequest.new
-idempotency_key = 'idempotency-key'
-
-result = plans_controller.create_plan_item(plan_id, request, idempotency_key)
-
-```
-
-
-### <a name="get_plan_item"></a>![Method: ](https://apidocs.io/img/method.png ".PlansController.get_plan_item") get_plan_item
-
-> Gets a plan item
-
-
-```ruby
-def get_plan_item(plan_id,
-                      plan_item_id); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| plan_id |  ``` Required ```  | Plan id |
-| plan_item_id |  ``` Required ```  | Plan item id |
-
-
-#### Example Usage
-
-```ruby
-plan_id = 'plan_id'
-plan_item_id = 'plan_item_id'
-
-result = plans_controller.get_plan_item(plan_id, plan_item_id)
-
-```
-
-
-### <a name="create_plan"></a>![Method: ](https://apidocs.io/img/method.png ".PlansController.create_plan") create_plan
-
-> Creates a new plan
-
-
-```ruby
-def create_plan(body,
-                    idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| body |  ``` Required ```  | Request for creating a plan |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-body = CreatePlanRequest.new
-idempotency_key = 'idempotency-key'
-
-result = plans_controller.create_plan(body, idempotency_key)
-
-```
-
-
-### <a name="delete_plan_item"></a>![Method: ](https://apidocs.io/img/method.png ".PlansController.delete_plan_item") delete_plan_item
-
-> Removes an item from a plan
-
-
-```ruby
-def delete_plan_item(plan_id,
-                         plan_item_id,
-                         idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| plan_id |  ``` Required ```  | Plan id |
-| plan_item_id |  ``` Required ```  | Plan item id |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-plan_id = 'plan_id'
-plan_item_id = 'plan_item_id'
-idempotency_key = 'idempotency-key'
-
-result = plans_controller.delete_plan_item(plan_id, plan_item_id, idempotency_key)
-
-```
-
-
-### <a name="get_plans"></a>![Method: ](https://apidocs.io/img/method.png ".PlansController.get_plans") get_plans
-
-> Gets all plans
-
-
-```ruby
-def get_plans(page = nil,
-                  size = nil,
-                  name = nil,
-                  status = nil,
-                  billing_type = nil,
-                  created_since = nil,
-                  created_until = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| page |  ``` Optional ```  | Page number |
-| size |  ``` Optional ```  | Page size |
-| name |  ``` Optional ```  | Filter for Plan's name |
-| status |  ``` Optional ```  | Filter for Plan's status |
-| billing_type |  ``` Optional ```  | Filter for plan's billing type |
-| created_since |  ``` Optional ```  | Filter for plan's creation date start range |
-| created_until |  ``` Optional ```  | Filter for plan's creation date end range |
-
-
-#### Example Usage
-
-```ruby
-page = 172
-size = 172
-name = 'name'
-status = 'status'
-billing_type = 'billing_type'
-created_since = DateTime.now
-created_until = DateTime.now
-
-result = plans_controller.get_plans(page, size, name, status, billing_type, created_since, created_until)
-
-```
-
-
-### <a name="update_plan"></a>![Method: ](https://apidocs.io/img/method.png ".PlansController.update_plan") update_plan
-
-> Updates a plan
-
-
-```ruby
-def update_plan(plan_id,
-                    request,
-                    idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| plan_id |  ``` Required ```  | Plan id |
-| request |  ``` Required ```  | Request for updating a plan |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-plan_id = 'plan_id'
-request = UpdatePlanRequest.new
-idempotency_key = 'idempotency-key'
-
-result = plans_controller.update_plan(plan_id, request, idempotency_key)
-
-```
-
-
-[Back to List of Controllers](#list_of_controllers)
+* [TransfersController](#transfers_controller)
 
 ## <a name="subscriptions_controller"></a>![Class: ](https://apidocs.io/img/class.png ".SubscriptionsController") SubscriptionsController
 
@@ -452,35 +120,6 @@ The singleton instance of the ``` SubscriptionsController ``` class can be acces
 subscriptions_controller = client.subscriptions
 ```
 
-### <a name="renew_subscription"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.renew_subscription") renew_subscription
-
-> TODO: Add a method description
-
-
-```ruby
-def renew_subscription(subscription_id,
-                           idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| subscription_id |  ``` Required ```  | TODO: Add a parameter description |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-subscription_id = 'subscription_id'
-idempotency_key = 'idempotency-key'
-
-result = subscriptions_controller.renew_subscription(subscription_id, idempotency_key)
-
-```
-
-
 ### <a name="update_subscription_card"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.update_subscription_card") update_subscription_card
 
 > Updates the credit card from a subscription
@@ -488,7 +127,7 @@ result = subscriptions_controller.renew_subscription(subscription_id, idempotenc
 
 ```ruby
 def update_subscription_card(subscription_id,
-                                 request,
+                                 body,
                                  idempotency_key = nil); end
 ```
 
@@ -497,7 +136,7 @@ def update_subscription_card(subscription_id,
 | Parameter | Tags | Description |
 |-----------|------|-------------|
 | subscription_id |  ``` Required ```  | Subscription id |
-| request |  ``` Required ```  | Request for updating a card |
+| body |  ``` Required ```  | Request for updating a card |
 | idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
 
 
@@ -505,12 +144,24 @@ def update_subscription_card(subscription_id,
 
 ```ruby
 subscription_id = 'subscription_id'
-request = UpdateSubscriptionCardRequest.new
+body = UpdateSubscriptionCardRequest.new
 idempotency_key = 'idempotency-key'
 
-result = subscriptions_controller.update_subscription_card(subscription_id, request, idempotency_key)
+result = subscriptions_controller.update_subscription_card(subscription_id, body, idempotency_key)
 
 ```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
 
 
 ### <a name="delete_usage"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.delete_usage") delete_usage
@@ -547,6 +198,18 @@ result = subscriptions_controller.delete_usage(subscription_id, item_id, usage_i
 
 ```
 
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
 
 ### <a name="create_discount"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.create_discount") create_discount
 
@@ -555,7 +218,7 @@ result = subscriptions_controller.delete_usage(subscription_id, item_id, usage_i
 
 ```ruby
 def create_discount(subscription_id,
-                        request,
+                        body,
                         idempotency_key = nil); end
 ```
 
@@ -564,7 +227,7 @@ def create_discount(subscription_id,
 | Parameter | Tags | Description |
 |-----------|------|-------------|
 | subscription_id |  ``` Required ```  | Subscription id |
-| request |  ``` Required ```  | Request for creating a discount |
+| body |  ``` Required ```  | Request for creating a discount |
 | idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
 
 
@@ -572,12 +235,24 @@ def create_discount(subscription_id,
 
 ```ruby
 subscription_id = 'subscription_id'
-request = CreateDiscountRequest.new
+body = CreateDiscountRequest.new
 idempotency_key = 'idempotency-key'
 
-result = subscriptions_controller.create_discount(subscription_id, request, idempotency_key)
+result = subscriptions_controller.create_discount(subscription_id, body, idempotency_key)
 
 ```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
 
 
 ### <a name="create_an_usage"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.create_an_usage") create_an_usage
@@ -611,15 +286,86 @@ result = subscriptions_controller.create_an_usage(subscription_id, item_id, idem
 
 ```
 
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="get_usages"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.get_usages") get_usages
+
+> Lists all usages from a subscription item
+
+
+```ruby
+def get_usages(subscription_id,
+                   item_id,
+                   page = nil,
+                   size = nil,
+                   code = nil,
+                   group = nil,
+                   used_since = nil,
+                   used_until = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| subscription_id |  ``` Required ```  | The subscription id |
+| item_id |  ``` Required ```  | The subscription item id |
+| page |  ``` Optional ```  | Page number |
+| size |  ``` Optional ```  | Page size |
+| code |  ``` Optional ```  | Identification code in the client system |
+| group |  ``` Optional ```  | Identification group in the client system |
+| used_since |  ``` Optional ```  | TODO: Add a parameter description |
+| used_until |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+subscription_id = 'subscription_id'
+item_id = 'item_id'
+page = 81
+size = 81
+code = 'code'
+group = 'group'
+used_since = DateTime.now
+used_until = DateTime.now
+
+result = subscriptions_controller.get_usages(subscription_id, item_id, page, size, code, group, used_since, used_until)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
 
 ### <a name="update_current_cycle_status"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.update_current_cycle_status") update_current_cycle_status
 
-> TODO: Add a method description
+> UpdateCurrentCycleStatus
 
 
 ```ruby
 def update_current_cycle_status(subscription_id,
-                                    request,
+                                    body,
                                     idempotency_key = nil); end
 ```
 
@@ -628,7 +374,7 @@ def update_current_cycle_status(subscription_id,
 | Parameter | Tags | Description |
 |-----------|------|-------------|
 | subscription_id |  ``` Required ```  | Subscription Id |
-| request |  ``` Required ```  | Request for updating the end date of the subscription current status |
+| body |  ``` Required ```  | Request for updating the end date of the subscription current status |
 | idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
 
 
@@ -636,12 +382,68 @@ def update_current_cycle_status(subscription_id,
 
 ```ruby
 subscription_id = 'subscription_id'
-request = UpdateCurrentCycleStatusRequest.new
+body = UpdateCurrentCycleStatusRequest.new
 idempotency_key = 'idempotency-key'
 
-subscriptions_controller.update_current_cycle_status(subscription_id, request, idempotency_key)
+subscriptions_controller.update_current_cycle_status(subscription_id, body, idempotency_key)
 
 ```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="update_subscription_payment_method"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.update_subscription_payment_method") update_subscription_payment_method
+
+> Updates the payment method from a subscription
+
+
+```ruby
+def update_subscription_payment_method(subscription_id,
+                                           body,
+                                           idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| subscription_id |  ``` Required ```  | Subscription id |
+| body |  ``` Required ```  | Request for updating the paymentmethod from a subscription |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+subscription_id = 'subscription_id'
+body = UpdateSubscriptionPaymentMethodRequest.new
+idempotency_key = 'idempotency-key'
+
+result = subscriptions_controller.update_subscription_payment_method(subscription_id, body, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
 
 
 ### <a name="delete_discount"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.delete_discount") delete_discount
@@ -674,6 +476,18 @@ idempotency_key = 'idempotency-key'
 result = subscriptions_controller.delete_discount(subscription_id, discount_id, idempotency_key)
 
 ```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
 
 
 ### <a name="get_subscription_items"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.get_subscription_items") get_subscription_items
@@ -712,8 +526,8 @@ def get_subscription_items(subscription_id,
 
 ```ruby
 subscription_id = 'subscription_id'
-page = 172
-size = 172
+page = 81
+size = 81
 name = 'name'
 code = 'code'
 status = 'status'
@@ -725,16 +539,28 @@ result = subscriptions_controller.get_subscription_items(subscription_id, page, 
 
 ```
 
+#### Errors
 
-### <a name="update_subscription_payment_method"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.update_subscription_payment_method") update_subscription_payment_method
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
 
-> Updates the payment method from a subscription
+
+
+### <a name="create_subscription_item"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.create_subscription_item") create_subscription_item
+
+> Creates a new Subscription item
 
 
 ```ruby
-def update_subscription_payment_method(subscription_id,
-                                           request,
-                                           idempotency_key = nil); end
+def create_subscription_item(subscription_id,
+                                 body,
+                                 idempotency_key = nil); end
 ```
 
 #### Parameters
@@ -742,7 +568,7 @@ def update_subscription_payment_method(subscription_id,
 | Parameter | Tags | Description |
 |-----------|------|-------------|
 | subscription_id |  ``` Required ```  | Subscription id |
-| request |  ``` Required ```  | Request for updating the paymentmethod from a subscription |
+| body |  ``` Required ```  | Request for creating a subscription item |
 | idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
 
 
@@ -750,12 +576,24 @@ def update_subscription_payment_method(subscription_id,
 
 ```ruby
 subscription_id = 'subscription_id'
-request = UpdateSubscriptionPaymentMethodRequest.new
+body = CreateSubscriptionItemRequest.new
 idempotency_key = 'idempotency-key'
 
-result = subscriptions_controller.update_subscription_payment_method(subscription_id, request, idempotency_key)
+result = subscriptions_controller.create_subscription_item(subscription_id, body, idempotency_key)
 
 ```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
 
 
 ### <a name="get_subscription_item"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.get_subscription_item") get_subscription_item
@@ -785,6 +623,65 @@ item_id = 'item_id'
 result = subscriptions_controller.get_subscription_item(subscription_id, item_id)
 
 ```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="update_subscription_item"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.update_subscription_item") update_subscription_item
+
+> Updates a subscription item
+
+
+```ruby
+def update_subscription_item(subscription_id,
+                                 item_id,
+                                 body,
+                                 idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| subscription_id |  ``` Required ```  | Subscription Id |
+| item_id |  ``` Required ```  | Item id |
+| body |  ``` Required ```  | Request for updating a subscription item |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+subscription_id = 'subscription_id'
+item_id = 'item_id'
+body = UpdateSubscriptionItemRequest.new
+idempotency_key = 'idempotency-key'
+
+result = subscriptions_controller.update_subscription_item(subscription_id, item_id, body, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
 
 
 ### <a name="get_subscriptions"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.get_subscriptions") get_subscriptions
@@ -828,8 +725,8 @@ def get_subscriptions(page = nil,
 #### Example Usage
 
 ```ruby
-page = 172
-size = 172
+page = 81
+size = 81
 code = 'code'
 billing_type = 'billing_type'
 customer_id = 'customer_id'
@@ -845,133 +742,17 @@ result = subscriptions_controller.get_subscriptions(page, size, code, billing_ty
 
 ```
 
+#### Errors
 
-### <a name="cancel_subscription"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.cancel_subscription") cancel_subscription
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
 
-> Cancels a subscription
-
-
-```ruby
-def cancel_subscription(subscription_id,
-                            request = nil,
-                            idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| subscription_id |  ``` Required ```  | Subscription id |
-| request |  ``` Optional ```  | Request for cancelling a subscription |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-subscription_id = 'subscription_id'
-request = CreateCancelSubscriptionRequest.new
-idempotency_key = 'idempotency-key'
-
-result = subscriptions_controller.cancel_subscription(subscription_id, request, idempotency_key)
-
-```
-
-
-### <a name="create_increment"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.create_increment") create_increment
-
-> Creates a increment
-
-
-```ruby
-def create_increment(subscription_id,
-                         request,
-                         idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| subscription_id |  ``` Required ```  | Subscription id |
-| request |  ``` Required ```  | Request for creating a increment |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-subscription_id = 'subscription_id'
-request = CreateIncrementRequest.new
-idempotency_key = 'idempotency-key'
-
-result = subscriptions_controller.create_increment(subscription_id, request, idempotency_key)
-
-```
-
-
-### <a name="create_usage"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.create_usage") create_usage
-
-> Creates a usage
-
-
-```ruby
-def create_usage(subscription_id,
-                     item_id,
-                     body,
-                     idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| subscription_id |  ``` Required ```  | Subscription Id |
-| item_id |  ``` Required ```  | Item id |
-| body |  ``` Required ```  | Request for creating a usage |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-subscription_id = 'subscription_id'
-item_id = 'item_id'
-body = CreateUsageRequest.new
-idempotency_key = 'idempotency-key'
-
-result = subscriptions_controller.create_usage(subscription_id, item_id, body, idempotency_key)
-
-```
-
-
-### <a name="get_discount_by_id"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.get_discount_by_id") get_discount_by_id
-
-> TODO: Add a method description
-
-
-```ruby
-def get_discount_by_id(subscription_id,
-                           discount_id); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| subscription_id |  ``` Required ```  | The subscription id |
-| discount_id |  ``` Required ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-subscription_id = 'subscription_id'
-discount_id = 'discountId'
-
-result = subscriptions_controller.get_discount_by_id(subscription_id, discount_id)
-
-```
 
 
 ### <a name="create_subscription"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.create_subscription") create_subscription
@@ -1002,44 +783,191 @@ result = subscriptions_controller.create_subscription(body, idempotency_key)
 
 ```
 
+#### Errors
 
-### <a name="get_increment_by_id"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.get_increment_by_id") get_increment_by_id
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
 
-> TODO: Add a method description
+
+
+### <a name="cancel_subscription"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.cancel_subscription") cancel_subscription
+
+> Cancels a subscription
 
 
 ```ruby
-def get_increment_by_id(subscription_id,
-                            increment_id); end
+def cancel_subscription(subscription_id,
+                            idempotency_key = nil); end
 ```
 
 #### Parameters
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| subscription_id |  ``` Required ```  | The subscription Id |
-| increment_id |  ``` Required ```  | The increment Id |
+| subscription_id |  ``` Required ```  | Subscription id |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
 
 
 #### Example Usage
 
 ```ruby
 subscription_id = 'subscription_id'
-increment_id = 'increment_id'
+idempotency_key = 'idempotency-key'
 
-result = subscriptions_controller.get_increment_by_id(subscription_id, increment_id)
+result = subscriptions_controller.cancel_subscription(subscription_id, idempotency_key)
 
 ```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="get_subscription"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.get_subscription") get_subscription
+
+> Gets a subscription
+
+
+```ruby
+def get_subscription(subscription_id); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| subscription_id |  ``` Required ```  | Subscription id |
+
+
+#### Example Usage
+
+```ruby
+subscription_id = 'subscription_id'
+
+result = subscriptions_controller.get_subscription(subscription_id)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="create_increment"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.create_increment") create_increment
+
+> Creates a increment
+
+
+```ruby
+def create_increment(subscription_id,
+                         body,
+                         idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| subscription_id |  ``` Required ```  | Subscription id |
+| body |  ``` Required ```  | Request for creating a increment |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+subscription_id = 'subscription_id'
+body = CreateIncrementRequest.new
+idempotency_key = 'idempotency-key'
+
+result = subscriptions_controller.create_increment(subscription_id, body, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="get_discount_by_id"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.get_discount_by_id") get_discount_by_id
+
+> GetDiscountById
+
+
+```ruby
+def get_discount_by_id(subscription_id,
+                           discount_id); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| subscription_id |  ``` Required ```  | The subscription id |
+| discount_id |  ``` Required ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+subscription_id = 'subscription_id'
+discount_id = 'discountId'
+
+result = subscriptions_controller.get_discount_by_id(subscription_id, discount_id)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
 
 
 ### <a name="update_subscription_affiliation_id"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.update_subscription_affiliation_id") update_subscription_affiliation_id
 
-> TODO: Add a method description
+> UpdateSubscriptionAffiliationId
 
 
 ```ruby
 def update_subscription_affiliation_id(subscription_id,
-                                           request,
+                                           body,
                                            idempotency_key = nil); end
 ```
 
@@ -1048,7 +976,7 @@ def update_subscription_affiliation_id(subscription_id,
 | Parameter | Tags | Description |
 |-----------|------|-------------|
 | subscription_id |  ``` Required ```  | TODO: Add a parameter description |
-| request |  ``` Required ```  | Request for updating a subscription affiliation id |
+| body |  ``` Required ```  | Request for updating a subscription affiliation id |
 | idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
 
 
@@ -1056,12 +984,24 @@ def update_subscription_affiliation_id(subscription_id,
 
 ```ruby
 subscription_id = 'subscription_id'
-request = UpdateSubscriptionAffiliationIdRequest.new
+body = UpdateSubscriptionAffiliationIdRequest.new
 idempotency_key = 'idempotency-key'
 
-result = subscriptions_controller.update_subscription_affiliation_id(subscription_id, request, idempotency_key)
+result = subscriptions_controller.update_subscription_affiliation_id(subscription_id, body, idempotency_key)
 
 ```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
 
 
 ### <a name="update_subscription_metadata"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.update_subscription_metadata") update_subscription_metadata
@@ -1071,7 +1011,7 @@ result = subscriptions_controller.update_subscription_affiliation_id(subscriptio
 
 ```ruby
 def update_subscription_metadata(subscription_id,
-                                     request,
+                                     body,
                                      idempotency_key = nil); end
 ```
 
@@ -1080,7 +1020,7 @@ def update_subscription_metadata(subscription_id,
 | Parameter | Tags | Description |
 |-----------|------|-------------|
 | subscription_id |  ``` Required ```  | The subscription id |
-| request |  ``` Required ```  | Request for updating the subscrption metadata |
+| body |  ``` Required ```  | Request for updating the subscrption metadata |
 | idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
 
 
@@ -1088,12 +1028,24 @@ def update_subscription_metadata(subscription_id,
 
 ```ruby
 subscription_id = 'subscription_id'
-request = UpdateMetadataRequest.new
+body = UpdateMetadataRequest.new
 idempotency_key = 'idempotency-key'
 
-result = subscriptions_controller.update_subscription_metadata(subscription_id, request, idempotency_key)
+result = subscriptions_controller.update_subscription_metadata(subscription_id, body, idempotency_key)
 
 ```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
 
 
 ### <a name="delete_increment"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.delete_increment") delete_increment
@@ -1127,10 +1079,63 @@ result = subscriptions_controller.delete_increment(subscription_id, increment_id
 
 ```
 
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="get_increment_by_id"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.get_increment_by_id") get_increment_by_id
+
+> GetIncrementById
+
+
+```ruby
+def get_increment_by_id(subscription_id,
+                            increment_id); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| subscription_id |  ``` Required ```  | The subscription Id |
+| increment_id |  ``` Required ```  | The increment Id |
+
+
+#### Example Usage
+
+```ruby
+subscription_id = 'subscription_id'
+increment_id = 'increment_id'
+
+result = subscriptions_controller.get_increment_by_id(subscription_id, increment_id)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
 
 ### <a name="get_subscription_cycles"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.get_subscription_cycles") get_subscription_cycles
 
-> TODO: Add a method description
+> GetSubscriptionCycles
 
 
 ```ruby
@@ -1159,10 +1164,63 @@ result = subscriptions_controller.get_subscription_cycles(subscription_id, page,
 
 ```
 
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="renew_subscription"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.renew_subscription") renew_subscription
+
+> RenewSubscription
+
+
+```ruby
+def renew_subscription(subscription_id,
+                           idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| subscription_id |  ``` Required ```  | TODO: Add a parameter description |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+subscription_id = 'subscription_id'
+idempotency_key = 'idempotency-key'
+
+result = subscriptions_controller.renew_subscription(subscription_id, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
 
 ### <a name="get_discounts"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.get_discounts") get_discounts
 
-> TODO: Add a method description
+> GetDiscounts
 
 
 ```ruby
@@ -1184,12 +1242,24 @@ def get_discounts(subscription_id,
 
 ```ruby
 subscription_id = 'subscription_id'
-page = 130
-size = 130
+page = 81
+size = 81
 
 result = subscriptions_controller.get_discounts(subscription_id, page, size)
 
 ```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
 
 
 ### <a name="update_subscription_billing_date"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.update_subscription_billing_date") update_subscription_billing_date
@@ -1199,7 +1269,7 @@ result = subscriptions_controller.get_discounts(subscription_id, page, size)
 
 ```ruby
 def update_subscription_billing_date(subscription_id,
-                                         request,
+                                         body,
                                          idempotency_key = nil); end
 ```
 
@@ -1208,7 +1278,7 @@ def update_subscription_billing_date(subscription_id,
 | Parameter | Tags | Description |
 |-----------|------|-------------|
 | subscription_id |  ``` Required ```  | The subscription id |
-| request |  ``` Required ```  | Request for updating the subscription billing date |
+| body |  ``` Required ```  | Request for updating the subscription billing date |
 | idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
 
 
@@ -1216,12 +1286,24 @@ def update_subscription_billing_date(subscription_id,
 
 ```ruby
 subscription_id = 'subscription_id'
-request = UpdateSubscriptionBillingDateRequest.new
+body = UpdateSubscriptionBillingDateRequest.new
 idempotency_key = 'idempotency-key'
 
-result = subscriptions_controller.update_subscription_billing_date(subscription_id, request, idempotency_key)
+result = subscriptions_controller.update_subscription_billing_date(subscription_id, body, idempotency_key)
 
 ```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
 
 
 ### <a name="delete_subscription_item"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.delete_subscription_item") delete_subscription_item
@@ -1255,10 +1337,22 @@ result = subscriptions_controller.delete_subscription_item(subscription_id, subs
 
 ```
 
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
 
 ### <a name="get_increments"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.get_increments") get_increments
 
-> TODO: Add a method description
+> GetIncrements
 
 
 ```ruby
@@ -1280,12 +1374,24 @@ def get_increments(subscription_id,
 
 ```ruby
 subscription_id = 'subscription_id'
-page = 130
-size = 130
+page = 81
+size = 81
 
 result = subscriptions_controller.get_increments(subscription_id, page, size)
 
 ```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
 
 
 ### <a name="update_subscription_due_days"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.update_subscription_due_days") update_subscription_due_days
@@ -1295,7 +1401,7 @@ result = subscriptions_controller.get_increments(subscription_id, page, size)
 
 ```ruby
 def update_subscription_due_days(subscription_id,
-                                     request,
+                                     body,
                                      idempotency_key = nil); end
 ```
 
@@ -1304,7 +1410,7 @@ def update_subscription_due_days(subscription_id,
 | Parameter | Tags | Description |
 |-----------|------|-------------|
 | subscription_id |  ``` Required ```  | Subscription Id |
-| request |  ``` Required ```  | TODO: Add a parameter description |
+| body |  ``` Required ```  | TODO: Add a parameter description |
 | idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
 
 
@@ -1312,12 +1418,24 @@ def update_subscription_due_days(subscription_id,
 
 ```ruby
 subscription_id = 'subscription_id'
-request = UpdateSubscriptionDueDaysRequest.new
+body = UpdateSubscriptionDueDaysRequest.new
 idempotency_key = 'idempotency-key'
 
-result = subscriptions_controller.update_subscription_due_days(subscription_id, request, idempotency_key)
+result = subscriptions_controller.update_subscription_due_days(subscription_id, body, idempotency_key)
 
 ```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
 
 
 ### <a name="update_subscription_start_at"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.update_subscription_start_at") update_subscription_start_at
@@ -1327,7 +1445,7 @@ result = subscriptions_controller.update_subscription_due_days(subscription_id, 
 
 ```ruby
 def update_subscription_start_at(subscription_id,
-                                     request,
+                                     body,
                                      idempotency_key = nil); end
 ```
 
@@ -1336,7 +1454,7 @@ def update_subscription_start_at(subscription_id,
 | Parameter | Tags | Description |
 |-----------|------|-------------|
 | subscription_id |  ``` Required ```  | The subscription id |
-| request |  ``` Required ```  | Request for updating the subscription start date |
+| body |  ``` Required ```  | Request for updating the subscription start date |
 | idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
 
 
@@ -1344,162 +1462,34 @@ def update_subscription_start_at(subscription_id,
 
 ```ruby
 subscription_id = 'subscription_id'
-request = UpdateSubscriptionStartAtRequest.new
+body = UpdateSubscriptionStartAtRequest.new
 idempotency_key = 'idempotency-key'
 
-result = subscriptions_controller.update_subscription_start_at(subscription_id, request, idempotency_key)
+result = subscriptions_controller.update_subscription_start_at(subscription_id, body, idempotency_key)
 
 ```
 
+#### Errors
 
-### <a name="update_subscription_item"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.update_subscription_item") update_subscription_item
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
 
-> Updates a subscription item
-
-
-```ruby
-def update_subscription_item(subscription_id,
-                                 item_id,
-                                 body,
-                                 idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| subscription_id |  ``` Required ```  | Subscription Id |
-| item_id |  ``` Required ```  | Item id |
-| body |  ``` Required ```  | Request for updating a subscription item |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-subscription_id = 'subscription_id'
-item_id = 'item_id'
-body = UpdateSubscriptionItemRequest.new
-idempotency_key = 'idempotency-key'
-
-result = subscriptions_controller.update_subscription_item(subscription_id, item_id, body, idempotency_key)
-
-```
-
-
-### <a name="create_subscription_item"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.create_subscription_item") create_subscription_item
-
-> Creates a new Subscription item
-
-
-```ruby
-def create_subscription_item(subscription_id,
-                                 request,
-                                 idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| subscription_id |  ``` Required ```  | Subscription id |
-| request |  ``` Required ```  | Request for creating a subscription item |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-subscription_id = 'subscription_id'
-request = CreateSubscriptionItemRequest.new
-idempotency_key = 'idempotency-key'
-
-result = subscriptions_controller.create_subscription_item(subscription_id, request, idempotency_key)
-
-```
-
-
-### <a name="get_subscription"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.get_subscription") get_subscription
-
-> Gets a subscription
-
-
-```ruby
-def get_subscription(subscription_id); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| subscription_id |  ``` Required ```  | Subscription id |
-
-
-#### Example Usage
-
-```ruby
-subscription_id = 'subscription_id'
-
-result = subscriptions_controller.get_subscription(subscription_id)
-
-```
-
-
-### <a name="get_usages"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.get_usages") get_usages
-
-> Lists all usages from a subscription item
-
-
-```ruby
-def get_usages(subscription_id,
-                   item_id,
-                   page = nil,
-                   size = nil,
-                   code = nil,
-                   group = nil,
-                   used_since = nil,
-                   used_until = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| subscription_id |  ``` Required ```  | The subscription id |
-| item_id |  ``` Required ```  | The subscription item id |
-| page |  ``` Optional ```  | Page number |
-| size |  ``` Optional ```  | Page size |
-| code |  ``` Optional ```  | Identification code in the client system |
-| group |  ``` Optional ```  | Identification group in the client system |
-| used_since |  ``` Optional ```  | TODO: Add a parameter description |
-| used_until |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-subscription_id = 'subscription_id'
-item_id = 'item_id'
-page = 130
-size = 130
-code = 'code'
-group = 'group'
-used_since = DateTime.now
-used_until = DateTime.now
-
-result = subscriptions_controller.get_usages(subscription_id, item_id, page, size, code, group, used_since, used_until)
-
-```
 
 
 ### <a name="update_latest_period_end_at"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.update_latest_period_end_at") update_latest_period_end_at
 
-> TODO: Add a method description
+> UpdateLatestPeriodEndAt
 
 
 ```ruby
 def update_latest_period_end_at(subscription_id,
-                                    request,
+                                    body,
                                     idempotency_key = nil); end
 ```
 
@@ -1508,7 +1498,7 @@ def update_latest_period_end_at(subscription_id,
 | Parameter | Tags | Description |
 |-----------|------|-------------|
 | subscription_id |  ``` Required ```  | TODO: Add a parameter description |
-| request |  ``` Required ```  | Request for updating the end date of the current signature cycle |
+| body |  ``` Required ```  | Request for updating the end date of the current signature cycle |
 | idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
 
 
@@ -1516,12 +1506,24 @@ def update_latest_period_end_at(subscription_id,
 
 ```ruby
 subscription_id = 'subscription_id'
-request = UpdateCurrentCycleEndDateRequest.new
+body = UpdateCurrentCycleEndDateRequest.new
 idempotency_key = 'idempotency-key'
 
-result = subscriptions_controller.update_latest_period_end_at(subscription_id, request, idempotency_key)
+result = subscriptions_controller.update_latest_period_end_at(subscription_id, body, idempotency_key)
 
 ```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
 
 
 ### <a name="update_subscription_minium_price"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.update_subscription_minium_price") update_subscription_minium_price
@@ -1531,7 +1533,7 @@ result = subscriptions_controller.update_latest_period_end_at(subscription_id, r
 
 ```ruby
 def update_subscription_minium_price(subscription_id,
-                                         request,
+                                         body,
                                          idempotency_key = nil); end
 ```
 
@@ -1540,7 +1542,7 @@ def update_subscription_minium_price(subscription_id,
 | Parameter | Tags | Description |
 |-----------|------|-------------|
 | subscription_id |  ``` Required ```  | Subscription Id |
-| request |  ``` Required ```  | Request da requisição com o valor mínimo que será configurado |
+| body |  ``` Required ```  | Request da requisição com o valor mínimo que será configurado |
 | idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
 
 
@@ -1548,17 +1550,29 @@ def update_subscription_minium_price(subscription_id,
 
 ```ruby
 subscription_id = 'subscription_id'
-request = UpdateSubscriptionMinimumPriceRequest.new
+body = UpdateSubscriptionMinimumPriceRequest.new
 idempotency_key = 'idempotency-key'
 
-result = subscriptions_controller.update_subscription_minium_price(subscription_id, request, idempotency_key)
+result = subscriptions_controller.update_subscription_minium_price(subscription_id, body, idempotency_key)
 
 ```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
 
 
 ### <a name="get_subscription_cycle_by_id"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.get_subscription_cycle_by_id") get_subscription_cycle_by_id
 
-> TODO: Add a method description
+> GetSubscriptionCycleById
 
 
 ```ruby
@@ -1584,10 +1598,22 @@ result = subscriptions_controller.get_subscription_cycle_by_id(subscription_id, 
 
 ```
 
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
 
 ### <a name="get_usage_report"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.get_usage_report") get_usage_report
 
-> TODO: Add a method description
+> GetUsageReport
 
 
 ```ruby
@@ -1613,15 +1639,27 @@ result = subscriptions_controller.get_usage_report(subscription_id, period_id)
 
 ```
 
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
 
 ### <a name="update_split_subscription"></a>![Method: ](https://apidocs.io/img/method.png ".SubscriptionsController.update_split_subscription") update_split_subscription
 
-> TODO: Add a method description
+> UpdateSplitSubscription
 
 
 ```ruby
 def update_split_subscription(id,
-                                  request); end
+                                  body); end
 ```
 
 #### Parameters
@@ -1629,266 +1667,30 @@ def update_split_subscription(id,
 | Parameter | Tags | Description |
 |-----------|------|-------------|
 | id |  ``` Required ```  | Subscription's id |
-| request |  ``` Required ```  | TODO: Add a parameter description |
+| body |  ``` Required ```  | TODO: Add a parameter description |
 
 
 #### Example Usage
 
 ```ruby
 id = 'id'
-request = UpdateSubscriptionSplitRequest.new
+body = UpdateSubscriptionSplitRequest.new
 
-result = subscriptions_controller.update_split_subscription(id, request)
-
-```
-
-
-[Back to List of Controllers](#list_of_controllers)
-
-## <a name="invoices_controller"></a>![Class: ](https://apidocs.io/img/class.png ".InvoicesController") InvoicesController
-
-### Get singleton instance
-
-The singleton instance of the ``` InvoicesController ``` class can be accessed from the API Client.
-
-```ruby
-invoices_controller = client.invoices
-```
-
-### <a name="update_invoice_metadata"></a>![Method: ](https://apidocs.io/img/method.png ".InvoicesController.update_invoice_metadata") update_invoice_metadata
-
-> Updates the metadata from an invoice
-
-
-```ruby
-def update_invoice_metadata(invoice_id,
-                                request,
-                                idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| invoice_id |  ``` Required ```  | The invoice id |
-| request |  ``` Required ```  | Request for updating the invoice metadata |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-invoice_id = 'invoice_id'
-request = UpdateMetadataRequest.new
-idempotency_key = 'idempotency-key'
-
-result = invoices_controller.update_invoice_metadata(invoice_id, request, idempotency_key)
+result = subscriptions_controller.update_split_subscription(id, body)
 
 ```
 
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
 
-### <a name="get_partial_invoice"></a>![Method: ](https://apidocs.io/img/method.png ".InvoicesController.get_partial_invoice") get_partial_invoice
-
-> TODO: Add a method description
-
-
-```ruby
-def get_partial_invoice(subscription_id); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| subscription_id |  ``` Required ```  | Subscription Id |
-
-
-#### Example Usage
-
-```ruby
-subscription_id = 'subscription_id'
-
-result = invoices_controller.get_partial_invoice(subscription_id)
-
-```
-
-
-### <a name="cancel_invoice"></a>![Method: ](https://apidocs.io/img/method.png ".InvoicesController.cancel_invoice") cancel_invoice
-
-> Cancels an invoice
-
-
-```ruby
-def cancel_invoice(invoice_id,
-                       idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| invoice_id |  ``` Required ```  | Invoice id |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-invoice_id = 'invoice_id'
-idempotency_key = 'idempotency-key'
-
-result = invoices_controller.cancel_invoice(invoice_id, idempotency_key)
-
-```
-
-
-### <a name="create_invoice"></a>![Method: ](https://apidocs.io/img/method.png ".InvoicesController.create_invoice") create_invoice
-
-> Create an Invoice
-
-
-```ruby
-def create_invoice(subscription_id,
-                       cycle_id,
-                       request = nil,
-                       idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| subscription_id |  ``` Required ```  | Subscription Id |
-| cycle_id |  ``` Required ```  | Cycle Id |
-| request |  ``` Optional ```  | TODO: Add a parameter description |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-subscription_id = 'subscription_id'
-cycle_id = 'cycle_id'
-request = CreateInvoiceRequest.new
-idempotency_key = 'idempotency-key'
-
-result = invoices_controller.create_invoice(subscription_id, cycle_id, request, idempotency_key)
-
-```
-
-
-### <a name="get_invoices"></a>![Method: ](https://apidocs.io/img/method.png ".InvoicesController.get_invoices") get_invoices
-
-> Gets all invoices
-
-
-```ruby
-def get_invoices(page = nil,
-                     size = nil,
-                     code = nil,
-                     customer_id = nil,
-                     subscription_id = nil,
-                     created_since = nil,
-                     created_until = nil,
-                     status = nil,
-                     due_since = nil,
-                     due_until = nil,
-                     customer_document = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| page |  ``` Optional ```  | Page number |
-| size |  ``` Optional ```  | Page size |
-| code |  ``` Optional ```  | Filter for Invoice's code |
-| customer_id |  ``` Optional ```  | Filter for Invoice's customer id |
-| subscription_id |  ``` Optional ```  | Filter for Invoice's subscription id |
-| created_since |  ``` Optional ```  | Filter for Invoice's creation date start range |
-| created_until |  ``` Optional ```  | Filter for Invoices creation date end range |
-| status |  ``` Optional ```  | Filter for Invoice's status |
-| due_since |  ``` Optional ```  | Filter for Invoice's due date start range |
-| due_until |  ``` Optional ```  | Filter for Invoice's due date end range |
-| customer_document |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-page = 130
-size = 130
-code = 'code'
-customer_id = 'customer_id'
-subscription_id = 'subscription_id'
-created_since = DateTime.now
-created_until = DateTime.now
-status = 'status'
-due_since = DateTime.now
-due_until = DateTime.now
-customer_document = 'customer_document'
-
-result = invoices_controller.get_invoices(page, size, code, customer_id, subscription_id, created_since, created_until, status, due_since, due_until, customer_document)
-
-```
-
-
-### <a name="get_invoice"></a>![Method: ](https://apidocs.io/img/method.png ".InvoicesController.get_invoice") get_invoice
-
-> Gets an invoice
-
-
-```ruby
-def get_invoice(invoice_id); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| invoice_id |  ``` Required ```  | Invoice Id |
-
-
-#### Example Usage
-
-```ruby
-invoice_id = 'invoice_id'
-
-result = invoices_controller.get_invoice(invoice_id)
-
-```
-
-
-### <a name="update_invoice_status"></a>![Method: ](https://apidocs.io/img/method.png ".InvoicesController.update_invoice_status") update_invoice_status
-
-> Updates the status from an invoice
-
-
-```ruby
-def update_invoice_status(invoice_id,
-                              request,
-                              idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| invoice_id |  ``` Required ```  | Invoice Id |
-| request |  ``` Required ```  | Request for updating an invoice's status |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-invoice_id = 'invoice_id'
-request = UpdateInvoiceStatusRequest.new
-idempotency_key = 'idempotency-key'
-
-result = invoices_controller.update_invoice_status(invoice_id, request, idempotency_key)
-
-```
 
 
 [Back to List of Controllers](#list_of_controllers)
@@ -1934,8 +1736,8 @@ def get_orders(page = nil,
 #### Example Usage
 
 ```ruby
-page = 130
-size = 130
+page = 81
+size = 81
 code = 'code'
 status = 'status'
 created_since = DateTime.now
@@ -1946,133 +1748,17 @@ result = orders_controller.get_orders(page, size, code, status, created_since, c
 
 ```
 
+#### Errors
 
-### <a name="update_order_item"></a>![Method: ](https://apidocs.io/img/method.png ".OrdersController.update_order_item") update_order_item
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
 
-> TODO: Add a method description
-
-
-```ruby
-def update_order_item(order_id,
-                          item_id,
-                          request,
-                          idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| order_id |  ``` Required ```  | Order Id |
-| item_id |  ``` Required ```  | Item Id |
-| request |  ``` Required ```  | Item Model |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-order_id = 'orderId'
-item_id = 'itemId'
-request = UpdateOrderItemRequest.new
-idempotency_key = 'idempotency-key'
-
-result = orders_controller.update_order_item(order_id, item_id, request, idempotency_key)
-
-```
-
-
-### <a name="delete_all_order_items"></a>![Method: ](https://apidocs.io/img/method.png ".OrdersController.delete_all_order_items") delete_all_order_items
-
-> TODO: Add a method description
-
-
-```ruby
-def delete_all_order_items(order_id,
-                               idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| order_id |  ``` Required ```  | Order Id |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-order_id = 'orderId'
-idempotency_key = 'idempotency-key'
-
-result = orders_controller.delete_all_order_items(order_id, idempotency_key)
-
-```
-
-
-### <a name="delete_order_item"></a>![Method: ](https://apidocs.io/img/method.png ".OrdersController.delete_order_item") delete_order_item
-
-> TODO: Add a method description
-
-
-```ruby
-def delete_order_item(order_id,
-                          item_id,
-                          idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| order_id |  ``` Required ```  | Order Id |
-| item_id |  ``` Required ```  | Item Id |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-order_id = 'orderId'
-item_id = 'itemId'
-idempotency_key = 'idempotency-key'
-
-result = orders_controller.delete_order_item(order_id, item_id, idempotency_key)
-
-```
-
-
-### <a name="close_order"></a>![Method: ](https://apidocs.io/img/method.png ".OrdersController.close_order") close_order
-
-> TODO: Add a method description
-
-
-```ruby
-def close_order(id,
-                    request,
-                    idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| id |  ``` Required ```  | Order Id |
-| request |  ``` Required ```  | Update Order Model |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-id = 'id'
-request = UpdateOrderStatusRequest.new
-idempotency_key = 'idempotency-key'
-
-result = orders_controller.close_order(id, request, idempotency_key)
-
-```
 
 
 ### <a name="create_order"></a>![Method: ](https://apidocs.io/img/method.png ".OrdersController.create_order") create_order
@@ -2103,15 +1789,68 @@ result = orders_controller.create_order(body, idempotency_key)
 
 ```
 
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="delete_all_order_items"></a>![Method: ](https://apidocs.io/img/method.png ".OrdersController.delete_all_order_items") delete_all_order_items
+
+> DeleteAllOrderItems
+
+
+```ruby
+def delete_all_order_items(order_id,
+                               idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| order_id |  ``` Required ```  | Order Id |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+order_id = 'orderId'
+idempotency_key = 'idempotency-key'
+
+result = orders_controller.delete_all_order_items(order_id, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
 
 ### <a name="create_order_item"></a>![Method: ](https://apidocs.io/img/method.png ".OrdersController.create_order_item") create_order_item
 
-> TODO: Add a method description
+> CreateOrderItem
 
 
 ```ruby
 def create_order_item(order_id,
-                          request,
+                          body,
                           idempotency_key = nil); end
 ```
 
@@ -2120,7 +1859,7 @@ def create_order_item(order_id,
 | Parameter | Tags | Description |
 |-----------|------|-------------|
 | order_id |  ``` Required ```  | Order Id |
-| request |  ``` Required ```  | Order Item Model |
+| body |  ``` Required ```  | Order Item Model |
 | idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
 
 
@@ -2128,17 +1867,120 @@ def create_order_item(order_id,
 
 ```ruby
 order_id = 'orderId'
-request = CreateOrderItemRequest.new
+body = CreateOrderItemRequest.new
 idempotency_key = 'idempotency-key'
 
-result = orders_controller.create_order_item(order_id, request, idempotency_key)
+result = orders_controller.create_order_item(order_id, body, idempotency_key)
 
 ```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="update_order_item"></a>![Method: ](https://apidocs.io/img/method.png ".OrdersController.update_order_item") update_order_item
+
+> UpdateOrderItem
+
+
+```ruby
+def update_order_item(order_id,
+                          item_id,
+                          body,
+                          idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| order_id |  ``` Required ```  | Order Id |
+| item_id |  ``` Required ```  | Item Id |
+| body |  ``` Required ```  | Item Model |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+order_id = 'orderId'
+item_id = 'itemId'
+body = UpdateOrderItemRequest.new
+idempotency_key = 'idempotency-key'
+
+result = orders_controller.update_order_item(order_id, item_id, body, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="delete_order_item"></a>![Method: ](https://apidocs.io/img/method.png ".OrdersController.delete_order_item") delete_order_item
+
+> DeleteOrderItem
+
+
+```ruby
+def delete_order_item(order_id,
+                          item_id,
+                          idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| order_id |  ``` Required ```  | Order Id |
+| item_id |  ``` Required ```  | Item Id |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+order_id = 'orderId'
+item_id = 'itemId'
+idempotency_key = 'idempotency-key'
+
+result = orders_controller.delete_order_item(order_id, item_id, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
 
 
 ### <a name="get_order_item"></a>![Method: ](https://apidocs.io/img/method.png ".OrdersController.get_order_item") get_order_item
 
-> TODO: Add a method description
+> GetOrderItem
 
 
 ```ruby
@@ -2164,6 +2006,62 @@ result = orders_controller.get_order_item(order_id, item_id)
 
 ```
 
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="close_order"></a>![Method: ](https://apidocs.io/img/method.png ".OrdersController.close_order") close_order
+
+> CloseOrder
+
+
+```ruby
+def close_order(id,
+                    body,
+                    idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| id |  ``` Required ```  | Order Id |
+| body |  ``` Required ```  | Update Order Model |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+id = 'id'
+body = UpdateOrderStatusRequest.new
+idempotency_key = 'idempotency-key'
+
+result = orders_controller.close_order(id, body, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
 
 ### <a name="update_order_metadata"></a>![Method: ](https://apidocs.io/img/method.png ".OrdersController.update_order_metadata") update_order_metadata
 
@@ -2172,7 +2070,7 @@ result = orders_controller.get_order_item(order_id, item_id)
 
 ```ruby
 def update_order_metadata(order_id,
-                              request,
+                              body,
                               idempotency_key = nil); end
 ```
 
@@ -2181,7 +2079,7 @@ def update_order_metadata(order_id,
 | Parameter | Tags | Description |
 |-----------|------|-------------|
 | order_id |  ``` Required ```  | The order id |
-| request |  ``` Required ```  | Request for updating the order metadata |
+| body |  ``` Required ```  | Request for updating the order metadata |
 | idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
 
 
@@ -2189,12 +2087,24 @@ def update_order_metadata(order_id,
 
 ```ruby
 order_id = 'order_id'
-request = UpdateMetadataRequest.new
+body = UpdateMetadataRequest.new
 idempotency_key = 'idempotency-key'
 
-result = orders_controller.update_order_metadata(order_id, request, idempotency_key)
+result = orders_controller.update_order_metadata(order_id, body, idempotency_key)
 
 ```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
 
 
 ### <a name="get_order"></a>![Method: ](https://apidocs.io/img/method.png ".OrdersController.get_order") get_order
@@ -2222,6 +2132,802 @@ result = orders_controller.get_order(order_id)
 
 ```
 
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+[Back to List of Controllers](#list_of_controllers)
+
+## <a name="plans_controller"></a>![Class: ](https://apidocs.io/img/class.png ".PlansController") PlansController
+
+### Get singleton instance
+
+The singleton instance of the ``` PlansController ``` class can be accessed from the API Client.
+
+```ruby
+plans_controller = client.plans
+```
+
+### <a name="get_plan"></a>![Method: ](https://apidocs.io/img/method.png ".PlansController.get_plan") get_plan
+
+> Gets a plan
+
+
+```ruby
+def get_plan(plan_id); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| plan_id |  ``` Required ```  | Plan id |
+
+
+#### Example Usage
+
+```ruby
+plan_id = 'plan_id'
+
+result = plans_controller.get_plan(plan_id)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="update_plan"></a>![Method: ](https://apidocs.io/img/method.png ".PlansController.update_plan") update_plan
+
+> Updates a plan
+
+
+```ruby
+def update_plan(plan_id,
+                    body,
+                    idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| plan_id |  ``` Required ```  | Plan id |
+| body |  ``` Required ```  | Request for updating a plan |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+plan_id = 'plan_id'
+body = UpdatePlanRequest.new
+idempotency_key = 'idempotency-key'
+
+result = plans_controller.update_plan(plan_id, body, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="delete_plan"></a>![Method: ](https://apidocs.io/img/method.png ".PlansController.delete_plan") delete_plan
+
+> Deletes a plan
+
+
+```ruby
+def delete_plan(plan_id,
+                    idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| plan_id |  ``` Required ```  | Plan id |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+plan_id = 'plan_id'
+idempotency_key = 'idempotency-key'
+
+result = plans_controller.delete_plan(plan_id, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="update_plan_metadata"></a>![Method: ](https://apidocs.io/img/method.png ".PlansController.update_plan_metadata") update_plan_metadata
+
+> Updates the metadata from a plan
+
+
+```ruby
+def update_plan_metadata(plan_id,
+                             body,
+                             idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| plan_id |  ``` Required ```  | The plan id |
+| body |  ``` Required ```  | Request for updating the plan metadata |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+plan_id = 'plan_id'
+body = UpdateMetadataRequest.new
+idempotency_key = 'idempotency-key'
+
+result = plans_controller.update_plan_metadata(plan_id, body, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="update_plan_item"></a>![Method: ](https://apidocs.io/img/method.png ".PlansController.update_plan_item") update_plan_item
+
+> Updates a plan item
+
+
+```ruby
+def update_plan_item(plan_id,
+                         plan_item_id,
+                         body,
+                         idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| plan_id |  ``` Required ```  | Plan id |
+| plan_item_id |  ``` Required ```  | Plan item id |
+| body |  ``` Required ```  | Request for updating the plan item |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+plan_id = 'plan_id'
+plan_item_id = 'plan_item_id'
+body = UpdatePlanItemRequest.new
+idempotency_key = 'idempotency-key'
+
+result = plans_controller.update_plan_item(plan_id, plan_item_id, body, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="get_plan_item"></a>![Method: ](https://apidocs.io/img/method.png ".PlansController.get_plan_item") get_plan_item
+
+> Gets a plan item
+
+
+```ruby
+def get_plan_item(plan_id,
+                      plan_item_id); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| plan_id |  ``` Required ```  | Plan id |
+| plan_item_id |  ``` Required ```  | Plan item id |
+
+
+#### Example Usage
+
+```ruby
+plan_id = 'plan_id'
+plan_item_id = 'plan_item_id'
+
+result = plans_controller.get_plan_item(plan_id, plan_item_id)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="delete_plan_item"></a>![Method: ](https://apidocs.io/img/method.png ".PlansController.delete_plan_item") delete_plan_item
+
+> Removes an item from a plan
+
+
+```ruby
+def delete_plan_item(plan_id,
+                         plan_item_id,
+                         idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| plan_id |  ``` Required ```  | Plan id |
+| plan_item_id |  ``` Required ```  | Plan item id |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+plan_id = 'plan_id'
+plan_item_id = 'plan_item_id'
+idempotency_key = 'idempotency-key'
+
+result = plans_controller.delete_plan_item(plan_id, plan_item_id, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="create_plan_item"></a>![Method: ](https://apidocs.io/img/method.png ".PlansController.create_plan_item") create_plan_item
+
+> Adds a new item to a plan
+
+
+```ruby
+def create_plan_item(plan_id,
+                         body,
+                         idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| plan_id |  ``` Required ```  | Plan id |
+| body |  ``` Required ```  | Request for creating a plan item |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+plan_id = 'plan_id'
+body = CreatePlanItemRequest.new
+idempotency_key = 'idempotency-key'
+
+result = plans_controller.create_plan_item(plan_id, body, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="create_plan"></a>![Method: ](https://apidocs.io/img/method.png ".PlansController.create_plan") create_plan
+
+> Creates a new plan
+
+
+```ruby
+def create_plan(body,
+                    idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| body |  ``` Required ```  | Request for creating a plan |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+body = CreatePlanRequest.new
+idempotency_key = 'idempotency-key'
+
+result = plans_controller.create_plan(body, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="get_plans"></a>![Method: ](https://apidocs.io/img/method.png ".PlansController.get_plans") get_plans
+
+> Gets all plans
+
+
+```ruby
+def get_plans(page = nil,
+                  size = nil,
+                  name = nil,
+                  status = nil,
+                  billing_type = nil,
+                  created_since = nil,
+                  created_until = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| page |  ``` Optional ```  | Page number |
+| size |  ``` Optional ```  | Page size |
+| name |  ``` Optional ```  | Filter for Plan's name |
+| status |  ``` Optional ```  | Filter for Plan's status |
+| billing_type |  ``` Optional ```  | Filter for plan's billing type |
+| created_since |  ``` Optional ```  | Filter for plan's creation date start range |
+| created_until |  ``` Optional ```  | Filter for plan's creation date end range |
+
+
+#### Example Usage
+
+```ruby
+page = 81
+size = 81
+name = 'name'
+status = 'status'
+billing_type = 'billing_type'
+created_since = DateTime.now
+created_until = DateTime.now
+
+result = plans_controller.get_plans(page, size, name, status, billing_type, created_since, created_until)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+[Back to List of Controllers](#list_of_controllers)
+
+## <a name="invoices_controller"></a>![Class: ](https://apidocs.io/img/class.png ".InvoicesController") InvoicesController
+
+### Get singleton instance
+
+The singleton instance of the ``` InvoicesController ``` class can be accessed from the API Client.
+
+```ruby
+invoices_controller = client.invoices
+```
+
+### <a name="get_partial_invoice"></a>![Method: ](https://apidocs.io/img/method.png ".InvoicesController.get_partial_invoice") get_partial_invoice
+
+> GetPartialInvoice
+
+
+```ruby
+def get_partial_invoice(subscription_id); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| subscription_id |  ``` Required ```  | Subscription Id |
+
+
+#### Example Usage
+
+```ruby
+subscription_id = 'subscription_id'
+
+result = invoices_controller.get_partial_invoice(subscription_id)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="cancel_invoice"></a>![Method: ](https://apidocs.io/img/method.png ".InvoicesController.cancel_invoice") cancel_invoice
+
+> Cancels an invoice
+
+
+```ruby
+def cancel_invoice(invoice_id,
+                       idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| invoice_id |  ``` Required ```  | Invoice id |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+invoice_id = 'invoice_id'
+idempotency_key = 'idempotency-key'
+
+result = invoices_controller.cancel_invoice(invoice_id, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="get_invoice"></a>![Method: ](https://apidocs.io/img/method.png ".InvoicesController.get_invoice") get_invoice
+
+> Gets an invoice
+
+
+```ruby
+def get_invoice(invoice_id); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| invoice_id |  ``` Required ```  | Invoice Id |
+
+
+#### Example Usage
+
+```ruby
+invoice_id = 'invoice_id'
+
+result = invoices_controller.get_invoice(invoice_id)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="create_invoice"></a>![Method: ](https://apidocs.io/img/method.png ".InvoicesController.create_invoice") create_invoice
+
+> Create an Invoice
+
+
+```ruby
+def create_invoice(subscription_id,
+                       cycle_id,
+                       idempotency_key = nil,
+                       body = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| subscription_id |  ``` Required ```  | Subscription Id |
+| cycle_id |  ``` Required ```  | Cycle Id |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+| body |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+subscription_id = 'subscription_id'
+cycle_id = 'cycle_id'
+idempotency_key = 'idempotency-key'
+body = CreateInvoiceRequest.new
+
+result = invoices_controller.create_invoice(subscription_id, cycle_id, idempotency_key, body)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="update_invoice_metadata"></a>![Method: ](https://apidocs.io/img/method.png ".InvoicesController.update_invoice_metadata") update_invoice_metadata
+
+> Updates the metadata from an invoice
+
+
+```ruby
+def update_invoice_metadata(invoice_id,
+                                body,
+                                idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| invoice_id |  ``` Required ```  | The invoice id |
+| body |  ``` Required ```  | Request for updating the invoice metadata |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+invoice_id = 'invoice_id'
+body = UpdateMetadataRequest.new
+idempotency_key = 'idempotency-key'
+
+result = invoices_controller.update_invoice_metadata(invoice_id, body, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="get_invoices"></a>![Method: ](https://apidocs.io/img/method.png ".InvoicesController.get_invoices") get_invoices
+
+> Gets all invoices
+
+
+```ruby
+def get_invoices(page = nil,
+                     size = nil,
+                     code = nil,
+                     customer_id = nil,
+                     subscription_id = nil,
+                     created_since = nil,
+                     created_until = nil,
+                     status = nil,
+                     due_since = nil,
+                     due_until = nil,
+                     customer_document = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| page |  ``` Optional ```  | Page number |
+| size |  ``` Optional ```  | Page size |
+| code |  ``` Optional ```  | Filter for Invoice's code |
+| customer_id |  ``` Optional ```  | Filter for Invoice's customer id |
+| subscription_id |  ``` Optional ```  | Filter for Invoice's subscription id |
+| created_since |  ``` Optional ```  | Filter for Invoice's creation date start range |
+| created_until |  ``` Optional ```  | Filter for Invoices creation date end range |
+| status |  ``` Optional ```  | Filter for Invoice's status |
+| due_since |  ``` Optional ```  | Filter for Invoice's due date start range |
+| due_until |  ``` Optional ```  | Filter for Invoice's due date end range |
+| customer_document |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+page = 81
+size = 81
+code = 'code'
+customer_id = 'customer_id'
+subscription_id = 'subscription_id'
+created_since = DateTime.now
+created_until = DateTime.now
+status = 'status'
+due_since = DateTime.now
+due_until = DateTime.now
+customer_document = 'customer_document'
+
+result = invoices_controller.get_invoices(page, size, code, customer_id, subscription_id, created_since, created_until, status, due_since, due_until, customer_document)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="update_invoice_status"></a>![Method: ](https://apidocs.io/img/method.png ".InvoicesController.update_invoice_status") update_invoice_status
+
+> Updates the status from an invoice
+
+
+```ruby
+def update_invoice_status(invoice_id,
+                              body,
+                              idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| invoice_id |  ``` Required ```  | Invoice Id |
+| body |  ``` Required ```  | Request for updating an invoice's status |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+invoice_id = 'invoice_id'
+body = UpdateInvoiceStatusRequest.new
+idempotency_key = 'idempotency-key'
+
+result = invoices_controller.update_invoice_status(invoice_id, body, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
 
 [Back to List of Controllers](#list_of_controllers)
 
@@ -2243,7 +2949,7 @@ customers_controller = client.customers
 ```ruby
 def update_card(customer_id,
                     card_id,
-                    request,
+                    body,
                     idempotency_key = nil); end
 ```
 
@@ -2253,7 +2959,7 @@ def update_card(customer_id,
 |-----------|------|-------------|
 | customer_id |  ``` Required ```  | Customer Id |
 | card_id |  ``` Required ```  | Card id |
-| request |  ``` Required ```  | Request for updating a card |
+| body |  ``` Required ```  | Request for updating a card |
 | idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
 
 
@@ -2262,12 +2968,109 @@ def update_card(customer_id,
 ```ruby
 customer_id = 'customer_id'
 card_id = 'card_id'
-request = UpdateCardRequest.new
+body = UpdateCardRequest.new
 idempotency_key = 'idempotency-key'
 
-result = customers_controller.update_card(customer_id, card_id, request, idempotency_key)
+result = customers_controller.update_card(customer_id, card_id, body, idempotency_key)
 
 ```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="delete_card"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.delete_card") delete_card
+
+> Delete a customer's card
+
+
+```ruby
+def delete_card(customer_id,
+                    card_id,
+                    idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| customer_id |  ``` Required ```  | Customer Id |
+| card_id |  ``` Required ```  | Card Id |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+customer_id = 'customer_id'
+card_id = 'card_id'
+idempotency_key = 'idempotency-key'
+
+result = customers_controller.delete_card(customer_id, card_id, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="get_card"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.get_card") get_card
+
+> Get a customer's card
+
+
+```ruby
+def get_card(customer_id,
+                 card_id); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| customer_id |  ``` Required ```  | Customer id |
+| card_id |  ``` Required ```  | Card id |
+
+
+#### Example Usage
+
+```ruby
+customer_id = 'customer_id'
+card_id = 'card_id'
+
+result = customers_controller.get_card(customer_id, card_id)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
 
 
 ### <a name="update_address"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.update_address") update_address
@@ -2278,7 +3081,7 @@ result = customers_controller.update_card(customer_id, card_id, request, idempot
 ```ruby
 def update_address(customer_id,
                        address_id,
-                       request,
+                       body,
                        idempotency_key = nil); end
 ```
 
@@ -2288,7 +3091,7 @@ def update_address(customer_id,
 |-----------|------|-------------|
 | customer_id |  ``` Required ```  | Customer Id |
 | address_id |  ``` Required ```  | Address Id |
-| request |  ``` Required ```  | Request for updating an address |
+| body |  ``` Required ```  | Request for updating an address |
 | idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
 
 
@@ -2297,131 +3100,24 @@ def update_address(customer_id,
 ```ruby
 customer_id = 'customer_id'
 address_id = 'address_id'
-request = UpdateAddressRequest.new
+body = UpdateAddressRequest.new
 idempotency_key = 'idempotency-key'
 
-result = customers_controller.update_address(customer_id, address_id, request, idempotency_key)
+result = customers_controller.update_address(customer_id, address_id, body, idempotency_key)
 
 ```
 
+#### Errors
 
-### <a name="delete_access_token"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.delete_access_token") delete_access_token
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
 
-> Delete a customer's access token
-
-
-```ruby
-def delete_access_token(customer_id,
-                            token_id,
-                            idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| customer_id |  ``` Required ```  | Customer Id |
-| token_id |  ``` Required ```  | Token Id |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-customer_id = 'customer_id'
-token_id = 'token_id'
-idempotency_key = 'idempotency-key'
-
-result = customers_controller.delete_access_token(customer_id, token_id, idempotency_key)
-
-```
-
-
-### <a name="create_customer"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.create_customer") create_customer
-
-> Creates a new customer
-
-
-```ruby
-def create_customer(request,
-                        idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| request |  ``` Required ```  | Request for creating a customer |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-request = CreateCustomerRequest.new
-idempotency_key = 'idempotency-key'
-
-result = customers_controller.create_customer(request, idempotency_key)
-
-```
-
-
-### <a name="create_address"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.create_address") create_address
-
-> Creates a new address for a customer
-
-
-```ruby
-def create_address(customer_id,
-                       request,
-                       idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| customer_id |  ``` Required ```  | Customer Id |
-| request |  ``` Required ```  | Request for creating an address |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-customer_id = 'customer_id'
-request = CreateAddressRequest.new
-idempotency_key = 'idempotency-key'
-
-result = customers_controller.create_address(customer_id, request, idempotency_key)
-
-```
-
-
-### <a name="delete_access_tokens"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.delete_access_tokens") delete_access_tokens
-
-> Delete a Customer's access tokens
-
-
-```ruby
-def delete_access_tokens(customer_id); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| customer_id |  ``` Required ```  | Customer Id |
-
-
-#### Example Usage
-
-```ruby
-customer_id = 'customer_id'
-
-result = customers_controller.delete_access_tokens(customer_id)
-
-```
 
 
 ### <a name="get_address"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.get_address") get_address
@@ -2451,6 +3147,18 @@ address_id = 'address_id'
 result = customers_controller.get_address(customer_id, address_id)
 
 ```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
 
 
 ### <a name="delete_address"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.delete_address") delete_address
@@ -2484,24 +3192,36 @@ result = customers_controller.delete_address(customer_id, address_id, idempotenc
 
 ```
 
+#### Errors
 
-### <a name="create_card"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.create_card") create_card
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
 
-> Creates a new card for a customer
+
+
+### <a name="delete_access_token"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.delete_access_token") delete_access_token
+
+> Delete a customer's access token
 
 
 ```ruby
-def create_card(customer_id,
-                    request,
-                    idempotency_key = nil); end
+def delete_access_token(customer_id,
+                            token_id,
+                            idempotency_key = nil); end
 ```
 
 #### Parameters
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| customer_id |  ``` Required ```  | Customer id |
-| request |  ``` Required ```  | Request for creating a card |
+| customer_id |  ``` Required ```  | Customer Id |
+| token_id |  ``` Required ```  | Token Id |
 | idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
 
 
@@ -2509,12 +3229,282 @@ def create_card(customer_id,
 
 ```ruby
 customer_id = 'customer_id'
-request = CreateCardRequest.new
+token_id = 'token_id'
 idempotency_key = 'idempotency-key'
 
-result = customers_controller.create_card(customer_id, request, idempotency_key)
+result = customers_controller.delete_access_token(customer_id, token_id, idempotency_key)
 
 ```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="get_access_token"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.get_access_token") get_access_token
+
+> Get a Customer's access token
+
+
+```ruby
+def get_access_token(customer_id,
+                         token_id); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| customer_id |  ``` Required ```  | Customer Id |
+| token_id |  ``` Required ```  | Token Id |
+
+
+#### Example Usage
+
+```ruby
+customer_id = 'customer_id'
+token_id = 'token_id'
+
+result = customers_controller.get_access_token(customer_id, token_id)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="create_access_token"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.create_access_token") create_access_token
+
+> Creates a access token for a customer
+
+
+```ruby
+def create_access_token(customer_id,
+                            body,
+                            idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| customer_id |  ``` Required ```  | Customer Id |
+| body |  ``` Required ```  | Request for creating a access token |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+customer_id = 'customer_id'
+body = CreateAccessTokenRequest.new
+idempotency_key = 'idempotency-key'
+
+result = customers_controller.create_access_token(customer_id, body, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="get_access_tokens"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.get_access_tokens") get_access_tokens
+
+> Get all access tokens from a customer
+
+
+```ruby
+def get_access_tokens(customer_id,
+                          page = nil,
+                          size = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| customer_id |  ``` Required ```  | Customer Id |
+| page |  ``` Optional ```  | Page number |
+| size |  ``` Optional ```  | Page size |
+
+
+#### Example Usage
+
+```ruby
+customer_id = 'customer_id'
+page = 173
+size = 173
+
+result = customers_controller.get_access_tokens(customer_id, page, size)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="create_address"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.create_address") create_address
+
+> Creates a new address for a customer
+
+
+```ruby
+def create_address(customer_id,
+                       body,
+                       idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| customer_id |  ``` Required ```  | Customer Id |
+| body |  ``` Required ```  | Request for creating an address |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+customer_id = 'customer_id'
+body = CreateAddressRequest.new
+idempotency_key = 'idempotency-key'
+
+result = customers_controller.create_address(customer_id, body, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="get_addresses"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.get_addresses") get_addresses
+
+> Gets all adressess from a customer
+
+
+```ruby
+def get_addresses(customer_id,
+                      page = nil,
+                      size = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| customer_id |  ``` Required ```  | Customer id |
+| page |  ``` Optional ```  | Page number |
+| size |  ``` Optional ```  | Page size |
+
+
+#### Example Usage
+
+```ruby
+customer_id = 'customer_id'
+page = 173
+size = 173
+
+result = customers_controller.get_addresses(customer_id, page, size)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="create_customer"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.create_customer") create_customer
+
+> Creates a new customer
+
+
+```ruby
+def create_customer(body,
+                        idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| body |  ``` Required ```  | Request for creating a customer |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+body = CreateCustomerRequest.new
+idempotency_key = 'idempotency-key'
+
+result = customers_controller.create_customer(body, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
 
 
 ### <a name="get_customers"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.get_customers") get_customers
@@ -2557,16 +3547,66 @@ result = customers_controller.get_customers(name, document, page, size, email, c
 
 ```
 
+#### Errors
 
-### <a name="update_customer"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.update_customer") update_customer
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
 
-> Updates a customer
+
+
+### <a name="delete_access_tokens"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.delete_access_tokens") delete_access_tokens
+
+> Delete a Customer's access tokens
 
 
 ```ruby
-def update_customer(customer_id,
-                        request,
-                        idempotency_key = nil); end
+def delete_access_tokens(customer_id); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| customer_id |  ``` Required ```  | Customer Id |
+
+
+#### Example Usage
+
+```ruby
+customer_id = 'customer_id'
+
+result = customers_controller.delete_access_tokens(customer_id)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="create_card"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.create_card") create_card
+
+> Creates a new card for a customer
+
+
+```ruby
+def create_card(customer_id,
+                    body,
+                    idempotency_key = nil); end
 ```
 
 #### Parameters
@@ -2574,7 +3614,7 @@ def update_customer(customer_id,
 | Parameter | Tags | Description |
 |-----------|------|-------------|
 | customer_id |  ``` Required ```  | Customer id |
-| request |  ``` Required ```  | Request for updating a customer |
+| body |  ``` Required ```  | Request for creating a card |
 | idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
 
 
@@ -2582,76 +3622,24 @@ def update_customer(customer_id,
 
 ```ruby
 customer_id = 'customer_id'
-request = UpdateCustomerRequest.new
+body = CreateCardRequest.new
 idempotency_key = 'idempotency-key'
 
-result = customers_controller.update_customer(customer_id, request, idempotency_key)
+result = customers_controller.create_card(customer_id, body, idempotency_key)
 
 ```
 
+#### Errors
 
-### <a name="create_access_token"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.create_access_token") create_access_token
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
 
-> Creates a access token for a customer
-
-
-```ruby
-def create_access_token(customer_id,
-                            request,
-                            idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| customer_id |  ``` Required ```  | Customer Id |
-| request |  ``` Required ```  | Request for creating a access token |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-customer_id = 'customer_id'
-request = CreateAccessTokenRequest.new
-idempotency_key = 'idempotency-key'
-
-result = customers_controller.create_access_token(customer_id, request, idempotency_key)
-
-```
-
-
-### <a name="get_access_tokens"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.get_access_tokens") get_access_tokens
-
-> Get all access tokens from a customer
-
-
-```ruby
-def get_access_tokens(customer_id,
-                          page = nil,
-                          size = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| customer_id |  ``` Required ```  | Customer Id |
-| page |  ``` Optional ```  | Page number |
-| size |  ``` Optional ```  | Page size |
-
-
-#### Example Usage
-
-```ruby
-customer_id = 'customer_id'
-page = 130
-size = 130
-
-result = customers_controller.get_access_tokens(customer_id, page, size)
-
-```
 
 
 ### <a name="get_cards"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.get_cards") get_cards
@@ -2678,12 +3666,106 @@ def get_cards(customer_id,
 
 ```ruby
 customer_id = 'customer_id'
-page = 130
-size = 130
+page = 173
+size = 173
 
 result = customers_controller.get_cards(customer_id, page, size)
 
 ```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="update_customer"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.update_customer") update_customer
+
+> Updates a customer
+
+
+```ruby
+def update_customer(customer_id,
+                        body,
+                        idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| customer_id |  ``` Required ```  | Customer id |
+| body |  ``` Required ```  | Request for updating a customer |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+customer_id = 'customer_id'
+body = UpdateCustomerRequest.new
+idempotency_key = 'idempotency-key'
+
+result = customers_controller.update_customer(customer_id, body, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="get_customer"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.get_customer") get_customer
+
+> Get a customer
+
+
+```ruby
+def get_customer(customer_id); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| customer_id |  ``` Required ```  | Customer Id |
+
+
+#### Example Usage
+
+```ruby
+customer_id = 'customer_id'
+
+result = customers_controller.get_customer(customer_id)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
 
 
 ### <a name="renew_card"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.renew_card") renew_card
@@ -2717,34 +3799,17 @@ result = customers_controller.renew_card(customer_id, card_id, idempotency_key)
 
 ```
 
+#### Errors
 
-### <a name="get_access_token"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.get_access_token") get_access_token
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
 
-> Get a Customer's access token
-
-
-```ruby
-def get_access_token(customer_id,
-                         token_id); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| customer_id |  ``` Required ```  | Customer Id |
-| token_id |  ``` Required ```  | Token Id |
-
-
-#### Example Usage
-
-```ruby
-customer_id = 'customer_id'
-token_id = 'token_id'
-
-result = customers_controller.get_access_token(customer_id, token_id)
-
-```
 
 
 ### <a name="update_customer_metadata"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.update_customer_metadata") update_customer_metadata
@@ -2754,7 +3819,7 @@ result = customers_controller.get_access_token(customer_id, token_id)
 
 ```ruby
 def update_customer_metadata(customer_id,
-                                 request,
+                                 body,
                                  idempotency_key = nil); end
 ```
 
@@ -2763,7 +3828,7 @@ def update_customer_metadata(customer_id,
 | Parameter | Tags | Description |
 |-----------|------|-------------|
 | customer_id |  ``` Required ```  | The customer id |
-| request |  ``` Required ```  | Request for updating the customer metadata |
+| body |  ``` Required ```  | Request for updating the customer metadata |
 | idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
 
 
@@ -2771,62 +3836,186 @@ def update_customer_metadata(customer_id,
 
 ```ruby
 customer_id = 'customer_id'
-request = UpdateMetadataRequest.new
+body = UpdateMetadataRequest.new
 idempotency_key = 'idempotency-key'
 
-result = customers_controller.update_customer_metadata(customer_id, request, idempotency_key)
+result = customers_controller.update_customer_metadata(customer_id, body, idempotency_key)
 
 ```
 
+#### Errors
 
-### <a name="delete_card"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.delete_card") delete_card
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
 
-> Delete a customer's card
+
+
+[Back to List of Controllers](#list_of_controllers)
+
+## <a name="charges_controller"></a>![Class: ](https://apidocs.io/img/class.png ".ChargesController") ChargesController
+
+### Get singleton instance
+
+The singleton instance of the ``` ChargesController ``` class can be accessed from the API Client.
+
+```ruby
+charges_controller = client.charges
+```
+
+### <a name="update_charge_metadata"></a>![Method: ](https://apidocs.io/img/method.png ".ChargesController.update_charge_metadata") update_charge_metadata
+
+> Updates the metadata from a charge
 
 
 ```ruby
-def delete_card(customer_id,
-                    card_id,
-                    idempotency_key = nil); end
+def update_charge_metadata(charge_id,
+                               body,
+                               idempotency_key = nil); end
 ```
 
 #### Parameters
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| customer_id |  ``` Required ```  | Customer Id |
-| card_id |  ``` Required ```  | Card Id |
+| charge_id |  ``` Required ```  | The charge id |
+| body |  ``` Required ```  | Request for updating the charge metadata |
 | idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
 
 
 #### Example Usage
 
 ```ruby
-customer_id = 'customer_id'
-card_id = 'card_id'
+charge_id = 'charge_id'
+body = UpdateMetadataRequest.new
 idempotency_key = 'idempotency-key'
 
-result = customers_controller.delete_card(customer_id, card_id, idempotency_key)
+result = charges_controller.update_charge_metadata(charge_id, body, idempotency_key)
 
 ```
 
+#### Errors
 
-### <a name="get_addresses"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.get_addresses") get_addresses
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
 
-> Gets all adressess from a customer
+
+
+### <a name="capture_charge"></a>![Method: ](https://apidocs.io/img/method.png ".ChargesController.capture_charge") capture_charge
+
+> Captures a charge
 
 
 ```ruby
-def get_addresses(customer_id,
-                      page = nil,
-                      size = nil); end
+def capture_charge(charge_id,
+                       idempotency_key = nil,
+                       body = nil); end
 ```
 
 #### Parameters
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| customer_id |  ``` Required ```  | Customer id |
+| charge_id |  ``` Required ```  | Charge id |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+| body |  ``` Optional ```  | Request for capturing a charge |
+
+
+#### Example Usage
+
+```ruby
+charge_id = 'charge_id'
+idempotency_key = 'idempotency-key'
+body = CreateCaptureChargeRequest.new
+
+result = charges_controller.capture_charge(charge_id, idempotency_key, body)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="update_charge_payment_method"></a>![Method: ](https://apidocs.io/img/method.png ".ChargesController.update_charge_payment_method") update_charge_payment_method
+
+> Updates a charge's payment method
+
+
+```ruby
+def update_charge_payment_method(charge_id,
+                                     body,
+                                     idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| charge_id |  ``` Required ```  | Charge id |
+| body |  ``` Required ```  | Request for updating the payment method from a charge |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+charge_id = 'charge_id'
+body = UpdateChargePaymentMethodRequest.new
+idempotency_key = 'idempotency-key'
+
+result = charges_controller.update_charge_payment_method(charge_id, body, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="get_charge_transactions"></a>![Method: ](https://apidocs.io/img/method.png ".ChargesController.get_charge_transactions") get_charge_transactions
+
+> GetChargeTransactions
+
+
+```ruby
+def get_charge_transactions(charge_id,
+                                page = nil,
+                                size = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| charge_id |  ``` Required ```  | Charge Id |
 | page |  ``` Optional ```  | Page number |
 | size |  ``` Optional ```  | Page size |
 
@@ -2834,68 +4023,424 @@ def get_addresses(customer_id,
 #### Example Usage
 
 ```ruby
-customer_id = 'customer_id'
-page = 130
-size = 130
+charge_id = 'charge_id'
+page = 173
+size = 173
 
-result = customers_controller.get_addresses(customer_id, page, size)
+result = charges_controller.get_charge_transactions(charge_id, page, size)
 
 ```
 
+#### Errors
 
-### <a name="get_customer"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.get_customer") get_customer
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
 
-> Get a customer
+
+
+### <a name="update_charge_due_date"></a>![Method: ](https://apidocs.io/img/method.png ".ChargesController.update_charge_due_date") update_charge_due_date
+
+> Updates the due date from a charge
 
 
 ```ruby
-def get_customer(customer_id); end
+def update_charge_due_date(charge_id,
+                               body,
+                               idempotency_key = nil); end
 ```
 
 #### Parameters
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| customer_id |  ``` Required ```  | Customer Id |
+| charge_id |  ``` Required ```  | Charge Id |
+| body |  ``` Required ```  | Request for updating the due date |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
 
 
 #### Example Usage
 
 ```ruby
-customer_id = 'customer_id'
+charge_id = 'charge_id'
+body = UpdateChargeDueDateRequest.new
+idempotency_key = 'idempotency-key'
 
-result = customers_controller.get_customer(customer_id)
+result = charges_controller.update_charge_due_date(charge_id, body, idempotency_key)
 
 ```
 
+#### Errors
 
-### <a name="get_card"></a>![Method: ](https://apidocs.io/img/method.png ".CustomersController.get_card") get_card
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
 
-> Get a customer's card
+
+
+### <a name="get_charges"></a>![Method: ](https://apidocs.io/img/method.png ".ChargesController.get_charges") get_charges
+
+> Lists all charges
 
 
 ```ruby
-def get_card(customer_id,
-                 card_id); end
+def get_charges(page = nil,
+                    size = nil,
+                    code = nil,
+                    status = nil,
+                    payment_method = nil,
+                    customer_id = nil,
+                    order_id = nil,
+                    created_since = nil,
+                    created_until = nil); end
 ```
 
 #### Parameters
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| customer_id |  ``` Required ```  | Customer id |
-| card_id |  ``` Required ```  | Card id |
+| page |  ``` Optional ```  | Page number |
+| size |  ``` Optional ```  | Page size |
+| code |  ``` Optional ```  | Filter for charge's code |
+| status |  ``` Optional ```  | Filter for charge's status |
+| payment_method |  ``` Optional ```  | Filter for charge's payment method |
+| customer_id |  ``` Optional ```  | Filter for charge's customer id |
+| order_id |  ``` Optional ```  | Filter for charge's order id |
+| created_since |  ``` Optional ```  | Filter for the beginning of the range for charge's creation |
+| created_until |  ``` Optional ```  | Filter for the end of the range for charge's creation |
 
 
 #### Example Usage
 
 ```ruby
+page = 173
+size = 173
+code = 'code'
+status = 'status'
+payment_method = 'payment_method'
 customer_id = 'customer_id'
-card_id = 'card_id'
+order_id = 'order_id'
+created_since = DateTime.now
+created_until = DateTime.now
 
-result = customers_controller.get_card(customer_id, card_id)
+result = charges_controller.get_charges(page, size, code, status, payment_method, customer_id, order_id, created_since, created_until)
 
 ```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="update_charge_card"></a>![Method: ](https://apidocs.io/img/method.png ".ChargesController.update_charge_card") update_charge_card
+
+> Updates the card from a charge
+
+
+```ruby
+def update_charge_card(charge_id,
+                           body,
+                           idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| charge_id |  ``` Required ```  | Charge id |
+| body |  ``` Required ```  | Request for updating a charge's card |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+charge_id = 'charge_id'
+body = UpdateChargeCardRequest.new
+idempotency_key = 'idempotency-key'
+
+result = charges_controller.update_charge_card(charge_id, body, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="get_charge"></a>![Method: ](https://apidocs.io/img/method.png ".ChargesController.get_charge") get_charge
+
+> Get a charge from its id
+
+
+```ruby
+def get_charge(charge_id); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| charge_id |  ``` Required ```  | Charge id |
+
+
+#### Example Usage
+
+```ruby
+charge_id = 'charge_id'
+
+result = charges_controller.get_charge(charge_id)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="cancel_charge"></a>![Method: ](https://apidocs.io/img/method.png ".ChargesController.cancel_charge") cancel_charge
+
+> Cancel a charge
+
+
+```ruby
+def cancel_charge(charge_id,
+                      idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| charge_id |  ``` Required ```  | Charge id |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+charge_id = 'charge_id'
+idempotency_key = 'idempotency-key'
+
+result = charges_controller.cancel_charge(charge_id, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="get_charges_summary"></a>![Method: ](https://apidocs.io/img/method.png ".ChargesController.get_charges_summary") get_charges_summary
+
+> GetChargesSummary
+
+
+```ruby
+def get_charges_summary(status,
+                            created_since = nil,
+                            created_until = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| status |  ``` Required ```  | TODO: Add a parameter description |
+| created_since |  ``` Optional ```  | TODO: Add a parameter description |
+| created_until |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+status = 'status'
+created_since = DateTime.now
+created_until = DateTime.now
+
+result = charges_controller.get_charges_summary(status, created_since, created_until)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="retry_charge"></a>![Method: ](https://apidocs.io/img/method.png ".ChargesController.retry_charge") retry_charge
+
+> Retries a charge
+
+
+```ruby
+def retry_charge(charge_id,
+                     idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| charge_id |  ``` Required ```  | Charge id |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+charge_id = 'charge_id'
+idempotency_key = 'idempotency-key'
+
+result = charges_controller.retry_charge(charge_id, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="create_charge"></a>![Method: ](https://apidocs.io/img/method.png ".ChargesController.create_charge") create_charge
+
+> Creates a new charge
+
+
+```ruby
+def create_charge(body,
+                      idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| body |  ``` Required ```  | Request for creating a charge |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+body = CreateChargeRequest.new
+idempotency_key = 'idempotency-key'
+
+result = charges_controller.create_charge(body, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="confirm_payment"></a>![Method: ](https://apidocs.io/img/method.png ".ChargesController.confirm_payment") confirm_payment
+
+> ConfirmPayment
+
+
+```ruby
+def confirm_payment(charge_id,
+                        idempotency_key = nil,
+                        body = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| charge_id |  ``` Required ```  | TODO: Add a parameter description |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+| body |  ``` Optional ```  | Request for confirm payment |
+
+
+#### Example Usage
+
+```ruby
+charge_id = 'charge_id'
+idempotency_key = 'idempotency-key'
+body = CreateConfirmPaymentRequest.new
+
+result = charges_controller.confirm_payment(charge_id, idempotency_key, body)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
 
 
 [Back to List of Controllers](#list_of_controllers)
@@ -2909,265 +4454,6 @@ The singleton instance of the ``` RecipientsController ``` class can be accessed
 ```ruby
 recipients_controller = client.recipients
 ```
-
-### <a name="update_recipient"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.update_recipient") update_recipient
-
-> Updates a recipient
-
-
-```ruby
-def update_recipient(recipient_id,
-                         request,
-                         idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| recipient_id |  ``` Required ```  | Recipient id |
-| request |  ``` Required ```  | Recipient data |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-recipient_id = 'recipient_id'
-request = UpdateRecipientRequest.new
-idempotency_key = 'idempotency-key'
-
-result = recipients_controller.update_recipient(recipient_id, request, idempotency_key)
-
-```
-
-
-### <a name="create_anticipation"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.create_anticipation") create_anticipation
-
-> Creates an anticipation
-
-
-```ruby
-def create_anticipation(recipient_id,
-                            request,
-                            idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| recipient_id |  ``` Required ```  | Recipient id |
-| request |  ``` Required ```  | Anticipation data |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-recipient_id = 'recipient_id'
-request = CreateAnticipationRequest.new
-idempotency_key = 'idempotency-key'
-
-result = recipients_controller.create_anticipation(recipient_id, request, idempotency_key)
-
-```
-
-
-### <a name="get_anticipation_limits"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_anticipation_limits") get_anticipation_limits
-
-> Gets the anticipation limits for a recipient
-
-
-```ruby
-def get_anticipation_limits(recipient_id,
-                                timeframe,
-                                payment_date); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| recipient_id |  ``` Required ```  | Recipient id |
-| timeframe |  ``` Required ```  | Timeframe |
-| payment_date |  ``` Required ```  | Anticipation payment date |
-
-
-#### Example Usage
-
-```ruby
-recipient_id = 'recipient_id'
-timeframe = 'timeframe'
-payment_date = DateTime.now
-
-result = recipients_controller.get_anticipation_limits(recipient_id, timeframe, payment_date)
-
-```
-
-
-### <a name="get_recipients"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_recipients") get_recipients
-
-> Retrieves paginated recipients information
-
-
-```ruby
-def get_recipients(page = nil,
-                       size = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| page |  ``` Optional ```  | Page number |
-| size |  ``` Optional ```  | Page size |
-
-
-#### Example Usage
-
-```ruby
-page = 222
-size = 222
-
-result = recipients_controller.get_recipients(page, size)
-
-```
-
-
-### <a name="get_withdraw_by_id"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_withdraw_by_id") get_withdraw_by_id
-
-> TODO: Add a method description
-
-
-```ruby
-def get_withdraw_by_id(recipient_id,
-                           withdrawal_id); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| recipient_id |  ``` Required ```  | TODO: Add a parameter description |
-| withdrawal_id |  ``` Required ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-recipient_id = 'recipient_id'
-withdrawal_id = 'withdrawal_id'
-
-result = recipients_controller.get_withdraw_by_id(recipient_id, withdrawal_id)
-
-```
-
-
-### <a name="update_recipient_default_bank_account"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.update_recipient_default_bank_account") update_recipient_default_bank_account
-
-> Updates the default bank account from a recipient
-
-
-```ruby
-def update_recipient_default_bank_account(recipient_id,
-                                              request,
-                                              idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| recipient_id |  ``` Required ```  | Recipient id |
-| request |  ``` Required ```  | Bank account data |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-recipient_id = 'recipient_id'
-request = UpdateRecipientBankAccountRequest.new
-idempotency_key = 'idempotency-key'
-
-result = recipients_controller.update_recipient_default_bank_account(recipient_id, request, idempotency_key)
-
-```
-
-
-### <a name="update_recipient_metadata"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.update_recipient_metadata") update_recipient_metadata
-
-> Updates recipient metadata
-
-
-```ruby
-def update_recipient_metadata(recipient_id,
-                                  request,
-                                  idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| recipient_id |  ``` Required ```  | Recipient id |
-| request |  ``` Required ```  | Metadata |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-recipient_id = 'recipient_id'
-request = UpdateMetadataRequest.new
-idempotency_key = 'idempotency-key'
-
-result = recipients_controller.update_recipient_metadata(recipient_id, request, idempotency_key)
-
-```
-
-
-### <a name="get_transfers"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_transfers") get_transfers
-
-> Gets a paginated list of transfers for the recipient
-
-
-```ruby
-def get_transfers(recipient_id,
-                      page = nil,
-                      size = nil,
-                      status = nil,
-                      created_since = nil,
-                      created_until = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| recipient_id |  ``` Required ```  | Recipient id |
-| page |  ``` Optional ```  | Page number |
-| size |  ``` Optional ```  | Page size |
-| status |  ``` Optional ```  | Filter for transfer status |
-| created_since |  ``` Optional ```  | Filter for start range of transfer creation date |
-| created_until |  ``` Optional ```  | Filter for end range of transfer creation date |
-
-
-#### Example Usage
-
-```ruby
-recipient_id = 'recipient_id'
-page = 222
-size = 222
-status = 'status'
-created_since = DateTime.now
-created_until = DateTime.now
-
-result = recipients_controller.get_transfers(recipient_id, page, size, status, created_since, created_until)
-
-```
-
 
 ### <a name="get_transfer"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_transfer") get_transfer
 
@@ -3197,45 +4483,28 @@ result = recipients_controller.get_transfer(recipient_id, transfer_id)
 
 ```
 
+#### Errors
 
-### <a name="create_withdraw"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.create_withdraw") create_withdraw
-
-> TODO: Add a method description
-
-
-```ruby
-def create_withdraw(recipient_id,
-                        request); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| recipient_id |  ``` Required ```  | TODO: Add a parameter description |
-| request |  ``` Required ```  | TODO: Add a parameter description |
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
 
 
-#### Example Usage
 
-```ruby
-recipient_id = 'recipient_id'
-request = CreateWithdrawRequest.new
+### <a name="update_recipient"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.update_recipient") update_recipient
 
-result = recipients_controller.create_withdraw(recipient_id, request)
-
-```
-
-
-### <a name="update_automatic_anticipation_settings"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.update_automatic_anticipation_settings") update_automatic_anticipation_settings
-
-> Updates recipient metadata
+> Updates a recipient
 
 
 ```ruby
-def update_automatic_anticipation_settings(recipient_id,
-                                               request,
-                                               idempotency_key = nil); end
+def update_recipient(recipient_id,
+                         body,
+                         idempotency_key = nil); end
 ```
 
 #### Parameters
@@ -3243,7 +4512,7 @@ def update_automatic_anticipation_settings(recipient_id,
 | Parameter | Tags | Description |
 |-----------|------|-------------|
 | recipient_id |  ``` Required ```  | Recipient id |
-| request |  ``` Required ```  | Metadata |
+| body |  ``` Required ```  | Recipient data |
 | idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
 
 
@@ -3251,22 +4520,73 @@ def update_automatic_anticipation_settings(recipient_id,
 
 ```ruby
 recipient_id = 'recipient_id'
-request = UpdateAutomaticAnticipationSettingsRequest.new
+body = UpdateRecipientRequest.new
 idempotency_key = 'idempotency-key'
 
-result = recipients_controller.update_automatic_anticipation_settings(recipient_id, request, idempotency_key)
+result = recipients_controller.update_recipient(recipient_id, body, idempotency_key)
 
 ```
 
+#### Errors
 
-### <a name="get_anticipation"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_anticipation") get_anticipation
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
 
-> Gets an anticipation
+
+
+### <a name="get_recipient"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_recipient") get_recipient
+
+> Retrieves recipient information
 
 
 ```ruby
-def get_anticipation(recipient_id,
-                         anticipation_id); end
+def get_recipient(recipient_id); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| recipient_id |  ``` Required ```  | Recipiend id |
+
+
+#### Example Usage
+
+```ruby
+recipient_id = 'recipient_id'
+
+result = recipients_controller.get_recipient(recipient_id)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="create_anticipation"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.create_anticipation") create_anticipation
+
+> Creates an anticipation
+
+
+```ruby
+def create_anticipation(recipient_id,
+                            body,
+                            idempotency_key = nil); end
 ```
 
 #### Parameters
@@ -3274,37 +4594,7 @@ def get_anticipation(recipient_id,
 | Parameter | Tags | Description |
 |-----------|------|-------------|
 | recipient_id |  ``` Required ```  | Recipient id |
-| anticipation_id |  ``` Required ```  | Anticipation id |
-
-
-#### Example Usage
-
-```ruby
-recipient_id = 'recipient_id'
-anticipation_id = 'anticipation_id'
-
-result = recipients_controller.get_anticipation(recipient_id, anticipation_id)
-
-```
-
-
-### <a name="update_recipient_transfer_settings"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.update_recipient_transfer_settings") update_recipient_transfer_settings
-
-> TODO: Add a method description
-
-
-```ruby
-def update_recipient_transfer_settings(recipient_id,
-                                           request,
-                                           idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| recipient_id |  ``` Required ```  | Recipient Identificator |
-| request |  ``` Required ```  | TODO: Add a parameter description |
+| body |  ``` Required ```  | Anticipation data |
 | idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
 
 
@@ -3312,12 +4602,24 @@ def update_recipient_transfer_settings(recipient_id,
 
 ```ruby
 recipient_id = 'recipient_id'
-request = UpdateTransferSettingsRequest.new
+body = CreateAnticipationRequest.new
 idempotency_key = 'idempotency-key'
 
-result = recipients_controller.update_recipient_transfer_settings(recipient_id, request, idempotency_key)
+result = recipients_controller.create_anticipation(recipient_id, body, idempotency_key)
 
 ```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
 
 
 ### <a name="get_anticipations"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_anticipations") get_anticipations
@@ -3356,8 +4658,8 @@ def get_anticipations(recipient_id,
 
 ```ruby
 recipient_id = 'recipient_id'
-page = 222
-size = 222
+page = 173
+size = 173
 status = 'status'
 timeframe = 'timeframe'
 payment_date_since = DateTime.now
@@ -3369,40 +4671,28 @@ result = recipients_controller.get_anticipations(recipient_id, page, size, statu
 
 ```
 
+#### Errors
 
-### <a name="get_recipient"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_recipient") get_recipient
-
-> Retrieves recipient information
-
-
-```ruby
-def get_recipient(recipient_id); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| recipient_id |  ``` Required ```  | Recipiend id |
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
 
 
-#### Example Usage
 
-```ruby
-recipient_id = 'recipient_id'
+### <a name="get_anticipation_limits"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_anticipation_limits") get_anticipation_limits
 
-result = recipients_controller.get_recipient(recipient_id)
-
-```
-
-
-### <a name="get_balance"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_balance") get_balance
-
-> Get balance information for a recipient
+> Gets the anticipation limits for a recipient
 
 
 ```ruby
-def get_balance(recipient_id); end
+def get_anticipation_limits(recipient_id,
+                                timeframe,
+                                payment_date); end
 ```
 
 #### Parameters
@@ -3410,16 +4700,381 @@ def get_balance(recipient_id); end
 | Parameter | Tags | Description |
 |-----------|------|-------------|
 | recipient_id |  ``` Required ```  | Recipient id |
+| timeframe |  ``` Required ```  | Timeframe |
+| payment_date |  ``` Required ```  | Anticipation payment date |
 
 
 #### Example Usage
 
 ```ruby
 recipient_id = 'recipient_id'
+timeframe = 'timeframe'
+payment_date = DateTime.now
 
-result = recipients_controller.get_balance(recipient_id)
+result = recipients_controller.get_anticipation_limits(recipient_id, timeframe, payment_date)
 
 ```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="get_recipients"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_recipients") get_recipients
+
+> Retrieves paginated recipients information
+
+
+```ruby
+def get_recipients(page = nil,
+                       size = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| page |  ``` Optional ```  | Page number |
+| size |  ``` Optional ```  | Page size |
+
+
+#### Example Usage
+
+```ruby
+page = 173
+size = 173
+
+result = recipients_controller.get_recipients(page, size)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="create_recipient"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.create_recipient") create_recipient
+
+> Creates a new recipient
+
+
+```ruby
+def create_recipient(body,
+                         idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| body |  ``` Required ```  | Recipient data |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+body = CreateRecipientRequest.new
+idempotency_key = 'idempotency-key'
+
+result = recipients_controller.create_recipient(body, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="get_withdraw_by_id"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_withdraw_by_id") get_withdraw_by_id
+
+> GetWithdrawById
+
+
+```ruby
+def get_withdraw_by_id(recipient_id,
+                           withdrawal_id); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| recipient_id |  ``` Required ```  | TODO: Add a parameter description |
+| withdrawal_id |  ``` Required ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+recipient_id = 'recipient_id'
+withdrawal_id = 'withdrawal_id'
+
+result = recipients_controller.get_withdraw_by_id(recipient_id, withdrawal_id)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="update_recipient_default_bank_account"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.update_recipient_default_bank_account") update_recipient_default_bank_account
+
+> Updates the default bank account from a recipient
+
+
+```ruby
+def update_recipient_default_bank_account(recipient_id,
+                                              body,
+                                              idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| recipient_id |  ``` Required ```  | Recipient id |
+| body |  ``` Required ```  | Bank account data |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+recipient_id = 'recipient_id'
+body = UpdateRecipientBankAccountRequest.new
+idempotency_key = 'idempotency-key'
+
+result = recipients_controller.update_recipient_default_bank_account(recipient_id, body, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="update_recipient_metadata"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.update_recipient_metadata") update_recipient_metadata
+
+> Updates recipient metadata
+
+
+```ruby
+def update_recipient_metadata(recipient_id,
+                                  body,
+                                  idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| recipient_id |  ``` Required ```  | Recipient id |
+| body |  ``` Required ```  | Metadata |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+recipient_id = 'recipient_id'
+body = UpdateMetadataRequest.new
+idempotency_key = 'idempotency-key'
+
+result = recipients_controller.update_recipient_metadata(recipient_id, body, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="get_transfers"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_transfers") get_transfers
+
+> Gets a paginated list of transfers for the recipient
+
+
+```ruby
+def get_transfers(recipient_id,
+                      page = nil,
+                      size = nil,
+                      status = nil,
+                      created_since = nil,
+                      created_until = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| recipient_id |  ``` Required ```  | Recipient id |
+| page |  ``` Optional ```  | Page number |
+| size |  ``` Optional ```  | Page size |
+| status |  ``` Optional ```  | Filter for transfer status |
+| created_since |  ``` Optional ```  | Filter for start range of transfer creation date |
+| created_until |  ``` Optional ```  | Filter for end range of transfer creation date |
+
+
+#### Example Usage
+
+```ruby
+recipient_id = 'recipient_id'
+page = 173
+size = 173
+status = 'status'
+created_since = DateTime.now
+created_until = DateTime.now
+
+result = recipients_controller.get_transfers(recipient_id, page, size, status, created_since, created_until)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="create_transfer"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.create_transfer") create_transfer
+
+> Creates a transfer for a recipient
+
+
+```ruby
+def create_transfer(recipient_id,
+                        body,
+                        idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| recipient_id |  ``` Required ```  | Recipient Id |
+| body |  ``` Required ```  | Transfer data |
+| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+recipient_id = 'recipient_id'
+body = CreateTransferRequest.new
+idempotency_key = 'idempotency-key'
+
+result = recipients_controller.create_transfer(recipient_id, body, idempotency_key)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="create_withdraw"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.create_withdraw") create_withdraw
+
+> CreateWithdraw
+
+
+```ruby
+def create_withdraw(recipient_id,
+                        body); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| recipient_id |  ``` Required ```  | TODO: Add a parameter description |
+| body |  ``` Required ```  | TODO: Add a parameter description |
+
+
+#### Example Usage
+
+```ruby
+recipient_id = 'recipient_id'
+body = CreateWithdrawRequest.new
+
+result = recipients_controller.create_withdraw(recipient_id, body)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
 
 
 ### <a name="get_withdrawals"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_withdrawals") get_withdrawals
@@ -3452,8 +5107,8 @@ def get_withdrawals(recipient_id,
 
 ```ruby
 recipient_id = 'recipient_id'
-page = 222
-size = 222
+page = 173
+size = 173
 status = 'status'
 created_since = DateTime.now
 created_until = DateTime.now
@@ -3462,24 +5117,36 @@ result = recipients_controller.get_withdrawals(recipient_id, page, size, status,
 
 ```
 
+#### Errors
 
-### <a name="create_transfer"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.create_transfer") create_transfer
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
 
-> Creates a transfer for a recipient
+
+
+### <a name="update_automatic_anticipation_settings"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.update_automatic_anticipation_settings") update_automatic_anticipation_settings
+
+> Updates recipient metadata
 
 
 ```ruby
-def create_transfer(recipient_id,
-                        request,
-                        idempotency_key = nil); end
+def update_automatic_anticipation_settings(recipient_id,
+                                               body,
+                                               idempotency_key = nil); end
 ```
 
 #### Parameters
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| recipient_id |  ``` Required ```  | Recipient Id |
-| request |  ``` Required ```  | Transfer data |
+| recipient_id |  ``` Required ```  | Recipient id |
+| body |  ``` Required ```  | Metadata |
 | idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
 
 
@@ -3487,41 +5154,147 @@ def create_transfer(recipient_id,
 
 ```ruby
 recipient_id = 'recipient_id'
-request = CreateTransferRequest.new
+body = UpdateAutomaticAnticipationSettingsRequest.new
 idempotency_key = 'idempotency-key'
 
-result = recipients_controller.create_transfer(recipient_id, request, idempotency_key)
+result = recipients_controller.update_automatic_anticipation_settings(recipient_id, body, idempotency_key)
 
 ```
 
+#### Errors
 
-### <a name="create_recipient"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.create_recipient") create_recipient
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
 
-> Creates a new recipient
+
+
+### <a name="get_anticipation"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_anticipation") get_anticipation
+
+> Gets an anticipation
 
 
 ```ruby
-def create_recipient(request,
-                         idempotency_key = nil); end
+def get_anticipation(recipient_id,
+                         anticipation_id); end
 ```
 
 #### Parameters
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| request |  ``` Required ```  | Recipient data |
+| recipient_id |  ``` Required ```  | Recipient id |
+| anticipation_id |  ``` Required ```  | Anticipation id |
+
+
+#### Example Usage
+
+```ruby
+recipient_id = 'recipient_id'
+anticipation_id = 'anticipation_id'
+
+result = recipients_controller.get_anticipation(recipient_id, anticipation_id)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="update_recipient_transfer_settings"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.update_recipient_transfer_settings") update_recipient_transfer_settings
+
+> UpdateRecipientTransferSettings
+
+
+```ruby
+def update_recipient_transfer_settings(recipient_id,
+                                           body,
+                                           idempotency_key = nil); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| recipient_id |  ``` Required ```  | Recipient Identificator |
+| body |  ``` Required ```  | TODO: Add a parameter description |
 | idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
 
 
 #### Example Usage
 
 ```ruby
-request = CreateRecipientRequest.new
+recipient_id = 'recipient_id'
+body = UpdateTransferSettingsRequest.new
 idempotency_key = 'idempotency-key'
 
-result = recipients_controller.create_recipient(request, idempotency_key)
+result = recipients_controller.update_recipient_transfer_settings(recipient_id, body, idempotency_key)
 
 ```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="get_balance"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_balance") get_balance
+
+> Get balance information for a recipient
+
+
+```ruby
+def get_balance(recipient_id); end
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| recipient_id |  ``` Required ```  | Recipient id |
+
+
+#### Example Usage
+
+```ruby
+recipient_id = 'recipient_id'
+
+result = recipients_controller.get_balance(recipient_id)
+
+```
+
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
 
 
 ### <a name="get_recipient_by_code"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_recipient_by_code") get_recipient_by_code
@@ -3549,10 +5322,22 @@ result = recipients_controller.get_recipient_by_code(code)
 
 ```
 
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
 
 ### <a name="get_default_recipient"></a>![Method: ](https://apidocs.io/img/method.png ".RecipientsController.get_default_recipient") get_default_recipient
 
-> TODO: Add a method description
+> GetDefaultRecipient
 
 
 ```ruby
@@ -3567,439 +5352,174 @@ result = recipients_controller.get_default_recipient()
 
 ```
 
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
 
 [Back to List of Controllers](#list_of_controllers)
 
-## <a name="charges_controller"></a>![Class: ](https://apidocs.io/img/class.png ".ChargesController") ChargesController
+## <a name="tokens_controller"></a>![Class: ](https://apidocs.io/img/class.png ".TokensController") TokensController
 
 ### Get singleton instance
 
-The singleton instance of the ``` ChargesController ``` class can be accessed from the API Client.
+The singleton instance of the ``` TokensController ``` class can be accessed from the API Client.
 
 ```ruby
-charges_controller = client.charges
+tokens_controller = client.tokens
 ```
 
-### <a name="update_charge_metadata"></a>![Method: ](https://apidocs.io/img/method.png ".ChargesController.update_charge_metadata") update_charge_metadata
+### <a name="create_token"></a>![Method: ](https://apidocs.io/img/method.png ".TokensController.create_token") create_token
 
-> Updates the metadata from a charge
+> *Tags:*  ``` Skips Authentication ``` 
+
+> CreateToken
 
 
 ```ruby
-def update_charge_metadata(charge_id,
-                               request,
-                               idempotency_key = nil); end
+def create_token(public_key,
+                     body,
+                     idempotency_key = nil,
+                     app_id = nil); end
 ```
 
 #### Parameters
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| charge_id |  ``` Required ```  | The charge id |
-| request |  ``` Required ```  | Request for updating the charge metadata |
+| public_key |  ``` Required ```  | Public key |
+| body |  ``` Required ```  | Request for creating a token |
 | idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+| app_id |  ``` Optional ```  | TODO: Add a parameter description |
 
 
 #### Example Usage
 
 ```ruby
-charge_id = 'charge_id'
-request = UpdateMetadataRequest.new
+public_key = 'public_key'
+body = CreateTokenRequest.new
 idempotency_key = 'idempotency-key'
+app_id = 'appId'
 
-result = charges_controller.update_charge_metadata(charge_id, request, idempotency_key)
+result = tokens_controller.create_token(public_key, body, idempotency_key, app_id)
 
 ```
 
+#### Errors
 
-### <a name="update_charge_payment_method"></a>![Method: ](https://apidocs.io/img/method.png ".ChargesController.update_charge_payment_method") update_charge_payment_method
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
 
-> Updates a charge's payment method
+
+
+### <a name="get_token"></a>![Method: ](https://apidocs.io/img/method.png ".TokensController.get_token") get_token
+
+> *Tags:*  ``` Skips Authentication ``` 
+
+> Gets a token from its id
 
 
 ```ruby
-def update_charge_payment_method(charge_id,
-                                     request,
-                                     idempotency_key = nil); end
+def get_token(id,
+                  public_key,
+                  app_id = nil); end
 ```
 
 #### Parameters
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| charge_id |  ``` Required ```  | Charge id |
-| request |  ``` Required ```  | Request for updating the payment method from a charge |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
+| id |  ``` Required ```  | Token id |
+| public_key |  ``` Required ```  | Public key |
+| app_id |  ``` Optional ```  | TODO: Add a parameter description |
 
 
 #### Example Usage
 
 ```ruby
-charge_id = 'charge_id'
-request = UpdateChargePaymentMethodRequest.new
-idempotency_key = 'idempotency-key'
+id = 'id'
+public_key = 'public_key'
+app_id = 'appId'
 
-result = charges_controller.update_charge_payment_method(charge_id, request, idempotency_key)
+result = tokens_controller.get_token(id, public_key, app_id)
 
 ```
 
+#### Errors
 
-### <a name="get_charge_transactions"></a>![Method: ](https://apidocs.io/img/method.png ".ChargesController.get_charge_transactions") get_charge_transactions
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
 
-> TODO: Add a method description
+
+
+[Back to List of Controllers](#list_of_controllers)
+
+## <a name="transactions_controller"></a>![Class: ](https://apidocs.io/img/class.png ".TransactionsController") TransactionsController
+
+### Get singleton instance
+
+The singleton instance of the ``` TransactionsController ``` class can be accessed from the API Client.
+
+```ruby
+transactions_controller = client.transactions
+```
+
+### <a name="get_transaction"></a>![Method: ](https://apidocs.io/img/method.png ".TransactionsController.get_transaction") get_transaction
+
+> GetTransaction
 
 
 ```ruby
-def get_charge_transactions(charge_id,
-                                page = nil,
-                                size = nil); end
+def get_transaction(transaction_id); end
 ```
 
 #### Parameters
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| charge_id |  ``` Required ```  | Charge Id |
-| page |  ``` Optional ```  | Page number |
-| size |  ``` Optional ```  | Page size |
+| transaction_id |  ``` Required ```  | TODO: Add a parameter description |
 
 
 #### Example Usage
 
 ```ruby
-charge_id = 'charge_id'
-page = 222
-size = 222
+transaction_id = 'transaction_id'
 
-result = charges_controller.get_charge_transactions(charge_id, page, size)
+result = transactions_controller.get_transaction(transaction_id)
 
 ```
 
+#### Errors
+
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
 
-### <a name="update_charge_due_date"></a>![Method: ](https://apidocs.io/img/method.png ".ChargesController.update_charge_due_date") update_charge_due_date
-
-> Updates the due date from a charge
-
-
-```ruby
-def update_charge_due_date(charge_id,
-                               request,
-                               idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| charge_id |  ``` Required ```  | Charge Id |
-| request |  ``` Required ```  | Request for updating the due date |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-charge_id = 'charge_id'
-request = UpdateChargeDueDateRequest.new
-idempotency_key = 'idempotency-key'
-
-result = charges_controller.update_charge_due_date(charge_id, request, idempotency_key)
-
-```
-
-
-### <a name="get_charges"></a>![Method: ](https://apidocs.io/img/method.png ".ChargesController.get_charges") get_charges
-
-> Lists all charges
-
-
-```ruby
-def get_charges(page = nil,
-                    size = nil,
-                    code = nil,
-                    status = nil,
-                    payment_method = nil,
-                    customer_id = nil,
-                    order_id = nil,
-                    created_since = nil,
-                    created_until = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| page |  ``` Optional ```  | Page number |
-| size |  ``` Optional ```  | Page size |
-| code |  ``` Optional ```  | Filter for charge's code |
-| status |  ``` Optional ```  | Filter for charge's status |
-| payment_method |  ``` Optional ```  | Filter for charge's payment method |
-| customer_id |  ``` Optional ```  | Filter for charge's customer id |
-| order_id |  ``` Optional ```  | Filter for charge's order id |
-| created_since |  ``` Optional ```  | Filter for the beginning of the range for charge's creation |
-| created_until |  ``` Optional ```  | Filter for the end of the range for charge's creation |
-
-
-#### Example Usage
-
-```ruby
-page = 222
-size = 222
-code = 'code'
-status = 'status'
-payment_method = 'payment_method'
-customer_id = 'customer_id'
-order_id = 'order_id'
-created_since = DateTime.now
-created_until = DateTime.now
-
-result = charges_controller.get_charges(page, size, code, status, payment_method, customer_id, order_id, created_since, created_until)
-
-```
-
-
-### <a name="capture_charge"></a>![Method: ](https://apidocs.io/img/method.png ".ChargesController.capture_charge") capture_charge
-
-> Captures a charge
-
-
-```ruby
-def capture_charge(charge_id,
-                       request = nil,
-                       idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| charge_id |  ``` Required ```  | Charge id |
-| request |  ``` Optional ```  | Request for capturing a charge |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-charge_id = 'charge_id'
-request = CreateCaptureChargeRequest.new
-idempotency_key = 'idempotency-key'
-
-result = charges_controller.capture_charge(charge_id, request, idempotency_key)
-
-```
-
-
-### <a name="update_charge_card"></a>![Method: ](https://apidocs.io/img/method.png ".ChargesController.update_charge_card") update_charge_card
-
-> Updates the card from a charge
-
-
-```ruby
-def update_charge_card(charge_id,
-                           request,
-                           idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| charge_id |  ``` Required ```  | Charge id |
-| request |  ``` Required ```  | Request for updating a charge's card |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-charge_id = 'charge_id'
-request = UpdateChargeCardRequest.new
-idempotency_key = 'idempotency-key'
-
-result = charges_controller.update_charge_card(charge_id, request, idempotency_key)
-
-```
-
-
-### <a name="get_charge"></a>![Method: ](https://apidocs.io/img/method.png ".ChargesController.get_charge") get_charge
-
-> Get a charge from its id
-
-
-```ruby
-def get_charge(charge_id); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| charge_id |  ``` Required ```  | Charge id |
-
-
-#### Example Usage
-
-```ruby
-charge_id = 'charge_id'
-
-result = charges_controller.get_charge(charge_id)
-
-```
-
-
-### <a name="get_charges_summary"></a>![Method: ](https://apidocs.io/img/method.png ".ChargesController.get_charges_summary") get_charges_summary
-
-> TODO: Add a method description
-
-
-```ruby
-def get_charges_summary(status,
-                            created_since = nil,
-                            created_until = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| status |  ``` Required ```  | TODO: Add a parameter description |
-| created_since |  ``` Optional ```  | TODO: Add a parameter description |
-| created_until |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-status = 'status'
-created_since = DateTime.now
-created_until = DateTime.now
-
-result = charges_controller.get_charges_summary(status, created_since, created_until)
-
-```
-
-
-### <a name="retry_charge"></a>![Method: ](https://apidocs.io/img/method.png ".ChargesController.retry_charge") retry_charge
-
-> Retries a charge
-
-
-```ruby
-def retry_charge(charge_id,
-                     idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| charge_id |  ``` Required ```  | Charge id |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-charge_id = 'charge_id'
-idempotency_key = 'idempotency-key'
-
-result = charges_controller.retry_charge(charge_id, idempotency_key)
-
-```
-
-
-### <a name="cancel_charge"></a>![Method: ](https://apidocs.io/img/method.png ".ChargesController.cancel_charge") cancel_charge
-
-> Cancel a charge
-
-
-```ruby
-def cancel_charge(charge_id,
-                      request = nil,
-                      idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| charge_id |  ``` Required ```  | Charge id |
-| request |  ``` Optional ```  | Request for cancelling a charge |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-charge_id = 'charge_id'
-request = CreateCancelChargeRequest.new
-idempotency_key = 'idempotency-key'
-
-result = charges_controller.cancel_charge(charge_id, request, idempotency_key)
-
-```
-
-
-### <a name="create_charge"></a>![Method: ](https://apidocs.io/img/method.png ".ChargesController.create_charge") create_charge
-
-> Creates a new charge
-
-
-```ruby
-def create_charge(request,
-                      idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| request |  ``` Required ```  | Request for creating a charge |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-request = CreateChargeRequest.new
-idempotency_key = 'idempotency-key'
-
-result = charges_controller.create_charge(request, idempotency_key)
-
-```
-
-
-### <a name="confirm_payment"></a>![Method: ](https://apidocs.io/img/method.png ".ChargesController.confirm_payment") confirm_payment
-
-> TODO: Add a method description
-
-
-```ruby
-def confirm_payment(charge_id,
-                        request = nil,
-                        idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| charge_id |  ``` Required ```  | TODO: Add a parameter description |
-| request |  ``` Optional ```  | Request for confirm payment |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-charge_id = 'charge_id'
-request = CreateConfirmPaymentRequest.new
-idempotency_key = 'idempotency-key'
-
-result = charges_controller.confirm_payment(charge_id, request, idempotency_key)
-
-```
 
 
 [Back to List of Controllers](#list_of_controllers)
@@ -4016,7 +5536,7 @@ transfers_controller = client.transfers
 
 ### <a name="get_transfer_by_id"></a>![Method: ](https://apidocs.io/img/method.png ".TransfersController.get_transfer_by_id") get_transfer_by_id
 
-> TODO: Add a method description
+> GetTransferById
 
 
 ```ruby
@@ -4039,164 +5559,85 @@ result = transfers_controller.get_transfer_by_id(transfer_id)
 
 ```
 
+#### Errors
 
-### <a name="create_transfer"></a>![Method: ](https://apidocs.io/img/method.png ".TransfersController.create_transfer") create_transfer
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
 
-> TODO: Add a method description
+
+
+### <a name="post_create_transfer"></a>![Method: ](https://apidocs.io/img/method.png ".TransfersController.post_create_transfer") post_create_transfer
+
+> CreateTransfer
 
 
 ```ruby
-def create_transfer(request); end
+def post_create_transfer(body); end
 ```
 
 #### Parameters
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| request |  ``` Required ```  | TODO: Add a parameter description |
+| body |  ``` Required ```  | TODO: Add a parameter description |
 
 
 #### Example Usage
 
 ```ruby
-request = CreateTransfer.new
+body = CreateTransfer.new
 
-result = transfers_controller.create_transfer(request)
+result = transfers_controller.post_create_transfer(body)
 
 ```
 
+#### Errors
 
-### <a name="get_transfers"></a>![Method: ](https://apidocs.io/img/method.png ".TransfersController.get_transfers") get_transfers
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
+
+
+
+### <a name="get_transfers1"></a>![Method: ](https://apidocs.io/img/method.png ".TransfersController.get_transfers1") get_transfers1
 
 > Gets all transfers
 
 
 ```ruby
-def get_transfers; end
+def get_transfers1; end
 ```
 
 #### Example Usage
 
 ```ruby
 
-result = transfers_controller.get_transfers()
+result = transfers_controller.get_transfers1()
 
 ```
 
+#### Errors
 
-[Back to List of Controllers](#list_of_controllers)
+| Error Code | Error Description |
+|------------|-------------------|
+| 400 | Invalid request |
+| 401 | Invalid API key |
+| 404 | An informed resource was not found |
+| 412 | Business validation error |
+| 422 | Contract validation error |
+| 500 | Internal server error |
 
-## <a name="tokens_controller"></a>![Class: ](https://apidocs.io/img/class.png ".TokensController") TokensController
-
-### Get singleton instance
-
-The singleton instance of the ``` TokensController ``` class can be accessed from the API Client.
-
-```ruby
-tokens_controller = client.tokens
-```
-
-### <a name="create_token"></a>![Method: ](https://apidocs.io/img/method.png ".TokensController.create_token") create_token
-
-> *Tags:*  ``` Skips Authentication ``` 
-
-> TODO: Add a method description
-
-
-```ruby
-def create_token(public_key,
-                     request,
-                     idempotency_key = nil); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| public_key |  ``` Required ```  | Public key |
-| request |  ``` Required ```  | Request for creating a token |
-| idempotency_key |  ``` Optional ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-public_key = 'public_key'
-request = CreateTokenRequest.new
-idempotency_key = 'idempotency-key'
-
-result = tokens_controller.create_token(public_key, request, idempotency_key)
-
-```
-
-
-### <a name="get_token"></a>![Method: ](https://apidocs.io/img/method.png ".TokensController.get_token") get_token
-
-> *Tags:*  ``` Skips Authentication ``` 
-
-> Gets a token from its id
-
-
-```ruby
-def get_token(id,
-                  public_key); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| id |  ``` Required ```  | Token id |
-| public_key |  ``` Required ```  | Public key |
-
-
-#### Example Usage
-
-```ruby
-id = 'id'
-public_key = 'public_key'
-
-result = tokens_controller.get_token(id, public_key)
-
-```
-
-
-[Back to List of Controllers](#list_of_controllers)
-
-## <a name="transactions_controller"></a>![Class: ](https://apidocs.io/img/class.png ".TransactionsController") TransactionsController
-
-### Get singleton instance
-
-The singleton instance of the ``` TransactionsController ``` class can be accessed from the API Client.
-
-```ruby
-transactions_controller = client.transactions
-```
-
-### <a name="get_transaction"></a>![Method: ](https://apidocs.io/img/method.png ".TransactionsController.get_transaction") get_transaction
-
-> TODO: Add a method description
-
-
-```ruby
-def get_transaction(transaction_id); end
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| transaction_id |  ``` Required ```  | TODO: Add a parameter description |
-
-
-#### Example Usage
-
-```ruby
-transaction_id = 'transaction_id'
-
-result = transactions_controller.get_transaction(transaction_id)
-
-```
 
 
 [Back to List of Controllers](#list_of_controllers)

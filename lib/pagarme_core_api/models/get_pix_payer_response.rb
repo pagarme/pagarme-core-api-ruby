@@ -18,7 +18,7 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :document_type
 
-    # TODO: Write general description for this method
+    # Payer's bank details.
     # @return [GetPixBankAccountResponse]
     attr_accessor :bank_account
 
@@ -32,10 +32,10 @@ module PagarmeCoreApi
       @_hash
     end
 
-    def initialize(name = nil,
+    def initialize(bank_account = nil,
+                   name = nil,
                    document = nil,
-                   document_type = nil,
-                   bank_account = nil)
+                   document_type = nil)
       @name = name
       @document = document
       @document_type = document_type
@@ -47,18 +47,18 @@ module PagarmeCoreApi
       return nil unless hash
 
       # Extract variables from the hash.
-      name = hash['name']
-      document = hash['document']
-      document_type = hash['document_type']
       if hash['bank_account']
         bank_account = GetPixBankAccountResponse.from_hash(hash['bank_account'])
       end
+      name = hash['name']
+      document = hash['document']
+      document_type = hash['document_type']
 
       # Create object from extracted values.
-      GetPixPayerResponse.new(name,
+      GetPixPayerResponse.new(bank_account,
+                              name,
                               document,
-                              document_type,
-                              bank_account)
+                              document_type)
     end
   end
 end

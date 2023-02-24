@@ -10,7 +10,7 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :cipher
 
-    # Dukpt data request
+    # Emv Decrypt cipher type
     # @return [CreateEmvDataDukptDecryptRequest]
     attr_accessor :dukpt
 

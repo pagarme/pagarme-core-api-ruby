@@ -7,11 +7,11 @@ require 'date'
 module PagarmeCoreApi
   # Request for creating a subcription
   class CreateSubscriptionRequest < BaseModel
-    # Customer
+    # Request for creating a new customer
     # @return [CreateCustomerRequest]
     attr_accessor :customer
 
-    # Card
+    # Card data
     # @return [CreateCardRequest]
     attr_accessor :card
 
@@ -47,7 +47,7 @@ module PagarmeCoreApi
     # @return [Integer]
     attr_accessor :interval_count
 
-    # Subscription pricing scheme
+    # Request for creating a pricing scheme
     # @return [CreatePricingSchemeRequest]
     attr_accessor :pricing_scheme
 
@@ -55,7 +55,7 @@ module PagarmeCoreApi
     # @return [List of CreateSubscriptionItemRequest]
     attr_accessor :items
 
-    # Shipping
+    # Shipping data
     # @return [CreateShippingRequest]
     attr_accessor :shipping
 
@@ -67,7 +67,8 @@ module PagarmeCoreApi
     # @return [Array<String, String>]
     attr_accessor :metadata
 
-    # Setup data
+    # Request for creating a Setup for a subscription. The setup is an order
+    # that will be created at the subscription creation.
     # @return [CreateSetupRequest]
     attr_accessor :setup
 
@@ -131,7 +132,7 @@ module PagarmeCoreApi
     # @return [CreateSubMerchantRequest]
     attr_accessor :submerchant
 
-    # Subscription's split
+    # SubMerchant
     # @return [CreateSubscriptionSplitRequest]
     attr_accessor :split
 

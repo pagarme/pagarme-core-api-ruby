@@ -55,31 +55,31 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :id
 
-    # The Gateway Response
+    # The Transaction Gateway Response
     # @return [GetGatewayResponseResponse]
     attr_accessor :gateway_response
 
-    # The Gateway Response
+    # The Transaction Gateway Response
     # @return [GetAntifraudResponse]
     attr_accessor :antifraud_response
 
-    # The Gateway Response
+    # The Transaction Gateway Response
     # @return [Array<String, String>]
     attr_accessor :metadata
 
-    # The Gateway Response
+    # The Transaction Gateway Response
     # @return [List of GetSplitResponse]
     attr_accessor :split
 
-    # The Gateway Response
+    # Interest response
     # @return [GetInterestResponse]
     attr_accessor :interest
 
-    # The Gateway Response
+    # Fine Response
     # @return [GetFineResponse]
     attr_accessor :fine
 
-    # The Gateway Response
+    # Fine Response
     # @return [Integer]
     attr_accessor :max_days_to_pay_past_due
 

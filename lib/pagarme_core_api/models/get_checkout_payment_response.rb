@@ -59,19 +59,19 @@ module PagarmeCoreApi
     # @return [Boolean]
     attr_accessor :customer_editable
 
-    # Dados do comprador
+    # Response object for getting a customer
     # @return [GetCustomerResponse]
     attr_accessor :customer
 
-    # Dados do endereço de cobrança
+    # Response object for getting an Address
     # @return [GetAddressResponse]
     attr_accessor :billingaddress
 
-    # Configurações de cartão de crédito
+    # Response object for getting an Address
     # @return [GetCheckoutCreditCardPaymentResponse]
     attr_accessor :credit_card
 
-    # Configurações de boleto
+    # Response object for getting an Address
     # @return [GetCheckoutBoletoPaymentResponse]
     attr_accessor :boleto
 
@@ -79,7 +79,7 @@ module PagarmeCoreApi
     # @return [Boolean]
     attr_accessor :billing_address_editable
 
-    # Configurações  de entrega
+    # Response object for getting the shipping data
     # @return [GetShippingResponse]
     attr_accessor :shipping
 
@@ -99,11 +99,11 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :currency
 
-    # Configurações de cartão de débito
+    # Moeda
     # @return [GetCheckoutDebitCardPaymentResponse]
     attr_accessor :debit_card
 
-    # Bank transfer payment response
+    # Bank transfer checkout response
     # @return [GetCheckoutBankTransferPaymentResponse]
     attr_accessor :bank_transfer
 
@@ -111,7 +111,7 @@ module PagarmeCoreApi
     # @return [List of String]
     attr_accessor :accepted_brands
 
-    # Pix payment response
+    # Checkout pix payment response
     # @return [GetCheckoutPixPaymentResponse]
     attr_accessor :pix
 

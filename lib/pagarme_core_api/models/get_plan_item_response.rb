@@ -27,27 +27,27 @@ module PagarmeCoreApi
     # @return [DateTime]
     attr_accessor :updated_at
 
-    # TODO: Write general description for this method
+    # Response object for getting a pricing scheme
     # @return [GetPricingSchemeResponse]
     attr_accessor :pricing_scheme
 
-    # TODO: Write general description for this method
+    # Response object for getting a pricing scheme
     # @return [String]
     attr_accessor :description
 
-    # TODO: Write general description for this method
+    # Response object for getting a plan
     # @return [GetPlanResponse]
     attr_accessor :plan
 
-    # TODO: Write general description for this method
+    # Response object for getting a plan
     # @return [Integer]
     attr_accessor :quantity
 
-    # TODO: Write general description for this method
+    # Response object for getting a plan
     # @return [Integer]
     attr_accessor :cycles
 
-    # TODO: Write general description for this method
+    # Response object for getting a plan
     # @return [DateTime]
     attr_accessor :deleted_at
 

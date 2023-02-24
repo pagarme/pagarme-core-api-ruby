@@ -10,7 +10,7 @@ module PagarmeCoreApi
     # @return [List of CreateOrderItemRequest]
     attr_accessor :items
 
-    # Customer
+    # Request for creating a new customer
     # @return [CreateCustomerRequest]
     attr_accessor :customer
 
@@ -46,15 +46,15 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :session_id
 
-    # Request's location
+    # Request for creating a location
     # @return [CreateLocationRequest]
     attr_accessor :location
 
-    # Device's informations
+    # Request for creating a device
     # @return [CreateDeviceRequest]
     attr_accessor :device
 
-    # Device's informations
+    # Request for creating a device
     # @return [Boolean]
     attr_accessor :closed
 
@@ -98,7 +98,7 @@ module PagarmeCoreApi
                    code = nil,
                    customer_id = nil,
                    metadata = nil,
-                   closed = true,
+                   closed = nil,
                    shipping = nil,
                    antifraud_enabled = nil,
                    ip = nil,
@@ -152,7 +152,7 @@ module PagarmeCoreApi
       code = hash['code']
       customer_id = hash['customer_id']
       metadata = hash['metadata']
-      closed = hash['closed'] ||= true
+      closed = hash['closed']
       shipping = CreateShippingRequest.from_hash(hash['shipping']) if
         hash['shipping']
       antifraud_enabled = hash['antifraud_enabled']

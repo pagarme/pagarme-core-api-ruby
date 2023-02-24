@@ -23,7 +23,7 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :recipient_phone
 
-    # TODO: Write general description for this method
+    # Response object for getting an Address
     # @return [GetAddressResponse]
     attr_accessor :address
 

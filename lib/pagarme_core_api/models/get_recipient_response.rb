@@ -47,7 +47,7 @@ module PagarmeCoreApi
     # @return [DateTime]
     attr_accessor :deleted_at
 
-    # Default bank account
+    # Deletion date
     # @return [GetBankAccountResponse]
     attr_accessor :default_bank_account
 
@@ -113,7 +113,7 @@ module PagarmeCoreApi
                    gateway_recipients = nil,
                    metadata = nil,
                    code = nil,
-                   payment_mode = 'bank_transfer',
+                   payment_mode = nil,
                    automatic_anticipation_settings = nil,
                    transfer_settings = nil)
       @id = id
@@ -163,7 +163,7 @@ module PagarmeCoreApi
       end
       metadata = hash['metadata']
       code = hash['code']
-      payment_mode = hash['payment_mode'] ||= 'bank_transfer'
+      payment_mode = hash['payment_mode']
       if hash['automatic_anticipation_settings']
         automatic_anticipation_settings = GetAutomaticAnticipationResponse.from_hash(hash['automatic_anticipation_settings'])
       end

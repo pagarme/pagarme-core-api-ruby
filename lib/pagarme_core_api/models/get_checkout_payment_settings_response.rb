@@ -22,7 +22,7 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :status
 
-    # Customer
+    # Response object for getting a customer
     # @return [GetCustomerResponse]
     attr_accessor :customer
 

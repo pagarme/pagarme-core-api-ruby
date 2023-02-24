@@ -14,7 +14,7 @@ module PagarmeCoreApi
     # @return [List of CreateCheckoutCardInstallmentOptionRequest]
     attr_accessor :installments
 
-    # Creates payment authentication
+    # The payment authentication request
     # @return [CreatePaymentAuthenticationRequest]
     attr_accessor :authentication
 

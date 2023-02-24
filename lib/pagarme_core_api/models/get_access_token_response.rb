@@ -23,7 +23,7 @@ module PagarmeCoreApi
     # @return [DateTime]
     attr_accessor :created_at
 
-    # TODO: Write general description for this method
+    # Response object for getting a customer
     # @return [GetCustomerResponse]
     attr_accessor :customer
 

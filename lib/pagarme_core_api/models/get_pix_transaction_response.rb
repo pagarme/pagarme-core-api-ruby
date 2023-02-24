@@ -29,7 +29,7 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :end_to_end_id
 
-    # TODO: Write general description for this method
+    # Pix payer data.
     # @return [GetPixPayerResponse]
     attr_accessor :payer
 
@@ -50,6 +50,7 @@ module PagarmeCoreApi
                    qr_code_url = nil,
                    expires_at = nil,
                    additional_information = nil,
+                   payer = nil,
                    gateway_id = nil,
                    amount = nil,
                    status = nil,
@@ -64,7 +65,6 @@ module PagarmeCoreApi
                    antifraud_response = nil,
                    split = nil,
                    end_to_end_id = nil,
-                   payer = nil,
                    next_attempt = nil,
                    transaction_type = nil,
                    metadata = nil,
@@ -116,6 +116,7 @@ module PagarmeCoreApi
           additional_information << (PixAdditionalInformation.from_hash(structure) if structure)
         end
       end
+      payer = GetPixPayerResponse.from_hash(hash['payer']) if hash['payer']
       gateway_id = hash['gateway_id']
       amount = hash['amount']
       status = hash['status']
@@ -148,7 +149,6 @@ module PagarmeCoreApi
         end
       end
       end_to_end_id = hash['end_to_end_id']
-      payer = GetPixPayerResponse.from_hash(hash['payer']) if hash['payer']
       next_attempt = APIHelper.rfc3339(hash['next_attempt']) if
         hash['next_attempt']
       transaction_type = hash['transaction_type']
@@ -163,6 +163,7 @@ module PagarmeCoreApi
                                     qr_code_url,
                                     expires_at,
                                     additional_information,
+                                    payer,
                                     gateway_id,
                                     amount,
                                     status,
@@ -177,7 +178,6 @@ module PagarmeCoreApi
                                     antifraud_response,
                                     split,
                                     end_to_end_id,
-                                    payer,
                                     next_attempt,
                                     transaction_type,
                                     metadata,

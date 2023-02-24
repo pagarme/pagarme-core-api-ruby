@@ -14,19 +14,19 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :description
 
-    # TODO: Write general description for this method
+    # Response object for getting a pricing scheme
     # @return [GetPricingSchemeResponse]
     attr_accessor :pricing_scheme
 
-    # TODO: Write general description for this method
+    # Response object for getting a price bracket
     # @return [GetPriceBracketResponse]
     attr_accessor :price_bracket
 
-    # TODO: Write general description for this method
+    # Response object for getting a price bracket
     # @return [Integer]
     attr_accessor :quantity
 
-    # TODO: Write general description for this method
+    # Response object for getting a price bracket
     # @return [String]
     attr_accessor :name
 

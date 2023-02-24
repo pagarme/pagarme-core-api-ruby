@@ -26,7 +26,7 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :type
 
-    # Bank account
+    # Request for creating a bank account
     # @return [CreateBankAccountRequest]
     attr_accessor :default_bank_account
 
@@ -34,7 +34,7 @@ module PagarmeCoreApi
     # @return [Array<String, String>]
     attr_accessor :metadata
 
-    # Receiver Transfer Information
+    # Informações de transferência do recebedor
     # @return [CreateTransferSettingsRequest]
     attr_accessor :transfer_settings
 
@@ -70,7 +70,7 @@ module PagarmeCoreApi
                    default_bank_account = nil,
                    metadata = nil,
                    code = nil,
-                   payment_mode = 'bank_transfer',
+                   payment_mode = nil,
                    transfer_settings = nil)
       @name = name
       @email = email
@@ -99,7 +99,7 @@ module PagarmeCoreApi
       end
       metadata = hash['metadata']
       code = hash['code']
-      payment_mode = hash['payment_mode'] ||= 'bank_transfer'
+      payment_mode = hash['payment_mode']
       if hash['transfer_settings']
         transfer_settings = CreateTransferSettingsRequest.from_hash(hash['transfer_settings'])
       end

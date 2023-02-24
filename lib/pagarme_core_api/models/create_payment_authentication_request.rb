@@ -10,7 +10,7 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :type
 
-    # The 3D-S authentication object
+    # Creates a 3D-S authentication payment
     # @return [CreateThreeDSecureRequest]
     attr_accessor :threed_secure
 

@@ -43,7 +43,7 @@ module PagarmeCoreApi
     # @return [GetSubscriptionResponse]
     attr_accessor :subscription
 
-    # The subscription item
+    # TODO: Write general description for this method
     # @return [GetSubscriptionItemResponse]
     attr_accessor :subscription_item
 

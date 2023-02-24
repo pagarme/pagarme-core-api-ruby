@@ -19,7 +19,7 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :customer_id
 
-    # Customer data
+    # Request for creating a new customer
     # @return [CreateCustomerRequest]
     attr_accessor :customer
 

@@ -57,7 +57,7 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :billing_type
 
-    # Plan's pricing scheme
+    # Request for creating a pricing scheme
     # @return [CreatePricingSchemeRequest]
     attr_accessor :pricing_scheme
 

@@ -43,19 +43,19 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :fb_access_token
 
-    # TODO: Write general description for this method
+    # Response object for getting an Address
     # @return [GetAddressResponse]
     attr_accessor :address
 
-    # TODO: Write general description for this method
+    # Response object for getting an Address
     # @return [Array<String, String>]
     attr_accessor :metadata
 
-    # TODO: Write general description for this method
+    # Response object for getting an Address
     # @return [GetPhonesResponse]
     attr_accessor :phones
 
-    # TODO: Write general description for this method
+    # Response object for getting an Address
     # @return [Long]
     attr_accessor :fb_id
 

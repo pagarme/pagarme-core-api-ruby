@@ -23,35 +23,35 @@ module PagarmeCoreApi
     # @return [List of GetOrderItemResponse]
     attr_accessor :items
 
-    # TODO: Write general description for this method
+    # Response object for getting a customer
     # @return [GetCustomerResponse]
     attr_accessor :customer
 
-    # TODO: Write general description for this method
+    # Response object for getting a customer
     # @return [String]
     attr_accessor :status
 
-    # TODO: Write general description for this method
+    # Response object for getting a customer
     # @return [DateTime]
     attr_accessor :created_at
 
-    # TODO: Write general description for this method
+    # Response object for getting a customer
     # @return [DateTime]
     attr_accessor :updated_at
 
-    # TODO: Write general description for this method
+    # Response object for getting a customer
     # @return [List of GetChargeResponse]
     attr_accessor :charges
 
-    # TODO: Write general description for this method
+    # Response object for getting a customer
     # @return [String]
     attr_accessor :invoice_url
 
-    # TODO: Write general description for this method
+    # Response object for getting the shipping data
     # @return [GetShippingResponse]
     attr_accessor :shipping
 
-    # TODO: Write general description for this method
+    # Response object for getting the shipping data
     # @return [Array<String, String>]
     attr_accessor :metadata
 
@@ -67,11 +67,11 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :session_id
 
-    # Location
+    # Response object for geetting an order location request
     # @return [GetLocationResponse]
     attr_accessor :location
 
-    # Device's informations
+    # Response object for geetting an order device
     # @return [GetDeviceResponse]
     attr_accessor :device
 

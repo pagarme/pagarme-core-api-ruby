@@ -18,7 +18,7 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :status
 
-    # Pricing scheme
+    # Request for updating a pricing scheme
     # @return [UpdatePricingSchemeRequest]
     attr_accessor :pricing_scheme
 

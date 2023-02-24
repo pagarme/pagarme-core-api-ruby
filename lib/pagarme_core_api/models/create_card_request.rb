@@ -26,7 +26,7 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :cvv
 
-    # Card's billing address
+    # Request for creating a new Address
     # @return [CreateAddressRequest]
     attr_accessor :billing_address
 
@@ -101,7 +101,7 @@ module PagarmeCoreApi
                    brand = nil,
                    billing_address_id = nil,
                    metadata = nil,
-                   type = 'credit',
+                   type = nil,
                    options = nil,
                    private_label = nil,
                    label = nil,
@@ -142,7 +142,7 @@ module PagarmeCoreApi
       brand = hash['brand']
       billing_address_id = hash['billing_address_id']
       metadata = hash['metadata']
-      type = hash['type'] ||= 'credit'
+      type = hash['type']
       options = CreateCardOptionsRequest.from_hash(hash['options']) if
         hash['options']
       private_label = hash['private_label']
