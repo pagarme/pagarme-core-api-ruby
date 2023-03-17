@@ -599,9 +599,12 @@ module PagarmeCoreApi
     # Cancel a charge
     # @param [String] charge_id Required parameter: Charge id
     # @param [String] idempotency_key Optional parameter: Example:
+    # @param [CreateCancelChargeRequest] body Optional parameter: Request for
+    # cancelling a charge
     # @return GetChargeResponse response from the API call
     def cancel_charge(charge_id,
-                      idempotency_key = nil)
+                      idempotency_key = nil,
+                      body = nil)
       # Prepare query url.
       _path_url = '/charges/{charge_id}'
       _path_url = APIHelper.append_url_with_template_parameters(
@@ -614,12 +617,14 @@ module PagarmeCoreApi
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
+        'Content-Type' => 'application/json',
         'idempotency-key' => idempotency_key
       }
       # Prepare and execute HttpRequest.
       _request = @http_client.delete(
         _query_url,
-        headers: _headers
+        headers: _headers,
+        parameters: body.to_json
       )
       BasicAuth.apply(_request)
       _context = execute_request(_request)
