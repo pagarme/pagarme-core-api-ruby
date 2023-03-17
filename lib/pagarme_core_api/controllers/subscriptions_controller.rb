@@ -1067,9 +1067,12 @@ module PagarmeCoreApi
     # Cancels a subscription
     # @param [String] subscription_id Required parameter: Subscription id
     # @param [String] idempotency_key Optional parameter: Example:
+    # @param [CreateCancelSubscriptionRequest] body Optional parameter: Request
+    # for cancelling a subscription
     # @return GetSubscriptionResponse response from the API call
     def cancel_subscription(subscription_id,
-                            idempotency_key = nil)
+                            idempotency_key = nil,
+                            body = nil)
       # Prepare query url.
       _path_url = '/subscriptions/{subscription_id}'
       _path_url = APIHelper.append_url_with_template_parameters(
@@ -1082,12 +1085,14 @@ module PagarmeCoreApi
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
+        'Content-Type' => 'application/json',
         'idempotency-key' => idempotency_key
       }
       # Prepare and execute HttpRequest.
       _request = @http_client.delete(
         _query_url,
-        headers: _headers
+        headers: _headers,
+        parameters: body.to_json
       )
       BasicAuth.apply(_request)
       _context = execute_request(_request)
