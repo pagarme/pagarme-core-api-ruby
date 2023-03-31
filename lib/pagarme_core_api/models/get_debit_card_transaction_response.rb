@@ -65,6 +65,10 @@ module PagarmeCoreApi
     # @return [String]
     attr_accessor :threed_authentication_url
 
+    # Identify when a card is prepaid, credit or debit.
+    # @return [String]
+    attr_accessor :funding_source
+
     # A mapping from model property names to API property names.
     def self.names
       @_hash = {} if @_hash.nil?
@@ -82,6 +86,7 @@ module PagarmeCoreApi
       @_hash['eci'] = 'eci'
       @_hash['authentication_type'] = 'authentication_type'
       @_hash['threed_authentication_url'] = 'threed_authentication_url'
+      @_hash['funding_source'] = 'funding_source'
       @_hash = super().merge(@_hash)
       @_hash
     end
@@ -113,6 +118,7 @@ module PagarmeCoreApi
                    gateway_response = nil,
                    antifraud_response = nil,
                    split = nil,
+                   funding_source = nil,
                    next_attempt = nil,
                    transaction_type = nil,
                    metadata = nil,
@@ -133,6 +139,7 @@ module PagarmeCoreApi
       @eci = eci
       @authentication_type = authentication_type
       @threed_authentication_url = threed_authentication_url
+      @funding_source = funding_source
 
       # Call the constructor of the base class
       super(gateway_id,
@@ -206,6 +213,7 @@ module PagarmeCoreApi
           split << (GetSplitResponse.from_hash(structure) if structure)
         end
       end
+      funding_source = hash['funding_source']
       next_attempt = APIHelper.rfc3339(hash['next_attempt']) if
         hash['next_attempt']
       transaction_type = hash['transaction_type']
@@ -243,6 +251,7 @@ module PagarmeCoreApi
                                           gateway_response,
                                           antifraud_response,
                                           split,
+                                          funding_source,
                                           next_attempt,
                                           transaction_type,
                                           metadata,
