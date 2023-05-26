@@ -16,6 +16,68 @@ module PagarmeCoreApi
       self.class.instance
     end
 
+    # GetPartialInvoice
+    # @param [String] subscription_id Required parameter: Subscription Id
+    # @return GetInvoiceResponse response from the API call
+    def get_partial_invoice(subscription_id)
+      # Prepare query url.
+      _path_url = '/subscriptions/{subscription_id}/partial-invoice'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'subscription_id' => subscription_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json'
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.get(
+        _query_url,
+        headers: _headers
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      # Validate response against endpoint and global error codes.
+      if _context.response.status_code == 400
+        raise ErrorException.new(
+          'Invalid request',
+          _context
+        )
+      elsif _context.response.status_code == 401
+        raise ErrorException.new(
+          'Invalid API key',
+          _context
+        )
+      elsif _context.response.status_code == 404
+        raise ErrorException.new(
+          'An informed resource was not found',
+          _context
+        )
+      elsif _context.response.status_code == 412
+        raise ErrorException.new(
+          'Business validation error',
+          _context
+        )
+      elsif _context.response.status_code == 422
+        raise ErrorException.new(
+          'Contract validation error',
+          _context
+        )
+      elsif _context.response.status_code == 500
+        raise ErrorException.new(
+          'Internal server error',
+          _context
+        )
+      end
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetInvoiceResponse.from_hash(decoded)
+    end
+
     # Cancels an invoice
     # @param [String] invoice_id Required parameter: Invoice id
     # @param [String] idempotency_key Optional parameter: Example:
@@ -384,68 +446,6 @@ module PagarmeCoreApi
       # Return appropriate response type.
       decoded = APIHelper.json_deserialize(_context.response.raw_body)
       ListInvoicesResponse.from_hash(decoded)
-    end
-
-    # GetPartialInvoice
-    # @param [String] subscription_id Required parameter: Subscription Id
-    # @return GetInvoiceResponse response from the API call
-    def get_partial_invoice(subscription_id)
-      # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/partial-invoice'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json'
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.get(
-        _query_url,
-        headers: _headers
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      # Validate response against endpoint and global error codes.
-      if _context.response.status_code == 400
-        raise ErrorException.new(
-          'Invalid request',
-          _context
-        )
-      elsif _context.response.status_code == 401
-        raise ErrorException.new(
-          'Invalid API key',
-          _context
-        )
-      elsif _context.response.status_code == 404
-        raise ErrorException.new(
-          'An informed resource was not found',
-          _context
-        )
-      elsif _context.response.status_code == 412
-        raise ErrorException.new(
-          'Business validation error',
-          _context
-        )
-      elsif _context.response.status_code == 422
-        raise ErrorException.new(
-          'Contract validation error',
-          _context
-        )
-      elsif _context.response.status_code == 500
-        raise ErrorException.new(
-          'Internal server error',
-          _context
-        )
-      end
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetInvoiceResponse.from_hash(decoded)
     end
 
     # Updates the status from an invoice

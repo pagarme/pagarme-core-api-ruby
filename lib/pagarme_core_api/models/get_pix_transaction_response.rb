@@ -33,6 +33,10 @@ module PagarmeCoreApi
     # @return [GetPixPayerResponse]
     attr_accessor :payer
 
+    # Pix provider TID
+    # @return [String]
+    attr_accessor :pix_provider_tid
+
     # A mapping from model property names to API property names.
     def self.names
       @_hash = {} if @_hash.nil?
@@ -42,6 +46,7 @@ module PagarmeCoreApi
       @_hash['additional_information'] = 'additional_information'
       @_hash['end_to_end_id'] = 'end_to_end_id'
       @_hash['payer'] = 'payer'
+      @_hash['pix_provider_tid'] = 'pix_provider_tid'
       @_hash = super().merge(@_hash)
       @_hash
     end
@@ -51,6 +56,7 @@ module PagarmeCoreApi
                    expires_at = nil,
                    additional_information = nil,
                    payer = nil,
+                   pix_provider_tid = nil,
                    gateway_id = nil,
                    amount = nil,
                    status = nil,
@@ -77,6 +83,7 @@ module PagarmeCoreApi
       @additional_information = additional_information
       @end_to_end_id = end_to_end_id
       @payer = payer
+      @pix_provider_tid = pix_provider_tid
 
       # Call the constructor of the base class
       super(gateway_id,
@@ -117,6 +124,7 @@ module PagarmeCoreApi
         end
       end
       payer = GetPixPayerResponse.from_hash(hash['payer']) if hash['payer']
+      pix_provider_tid = hash['pix_provider_tid']
       gateway_id = hash['gateway_id']
       amount = hash['amount']
       status = hash['status']
@@ -164,6 +172,7 @@ module PagarmeCoreApi
                                     expires_at,
                                     additional_information,
                                     payer,
+                                    pix_provider_tid,
                                     gateway_id,
                                     amount,
                                     status,
