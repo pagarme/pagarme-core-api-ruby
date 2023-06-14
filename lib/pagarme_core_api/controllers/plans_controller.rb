@@ -31,12 +31,78 @@ module PagarmeCoreApi
       _query_url = APIHelper.clean_url _query_builder
       # Prepare headers.
       _headers = {
-        'accept' => 'application/json'
+        'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name
       }
       # Prepare and execute HttpRequest.
       _request = @http_client.get(
         _query_url,
         headers: _headers
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      # Validate response against endpoint and global error codes.
+      if _context.response.status_code == 400
+        raise ErrorException.new(
+          'Invalid request',
+          _context
+        )
+      elsif _context.response.status_code == 401
+        raise ErrorException.new(
+          'Invalid API key',
+          _context
+        )
+      elsif _context.response.status_code == 404
+        raise ErrorException.new(
+          'An informed resource was not found',
+          _context
+        )
+      elsif _context.response.status_code == 412
+        raise ErrorException.new(
+          'Business validation error',
+          _context
+        )
+      elsif _context.response.status_code == 422
+        raise ErrorException.new(
+          'Contract validation error',
+          _context
+        )
+      elsif _context.response.status_code == 500
+        raise ErrorException.new(
+          'Internal server error',
+          _context
+        )
+      end
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetPlanResponse.from_hash(decoded)
+    end
+
+    # Creates a new plan
+    # @param [CreatePlanRequest] body Required parameter: Request for creating a
+    # plan
+    # @param [String] idempotency_key Optional parameter: Example:
+    # @return GetPlanResponse response from the API call
+    def create_plan(body,
+                    idempotency_key = nil)
+      # Prepare query url.
+      _path_url = '/plans'
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
+        'Content-Type' => 'application/json',
+        'idempotency-key' => idempotency_key
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.post(
+        _query_url,
+        headers: _headers,
+        parameters: body.to_json
       )
       BasicAuth.apply(_request)
       _context = execute_request(_request)
@@ -99,6 +165,7 @@ module PagarmeCoreApi
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
         'Content-Type' => 'application/json',
         'idempotency-key' => idempotency_key
       }
@@ -148,6 +215,230 @@ module PagarmeCoreApi
       GetPlanResponse.from_hash(decoded)
     end
 
+    # Gets a plan item
+    # @param [String] plan_id Required parameter: Plan id
+    # @param [String] plan_item_id Required parameter: Plan item id
+    # @return GetPlanItemResponse response from the API call
+    def get_plan_item(plan_id,
+                      plan_item_id)
+      # Prepare query url.
+      _path_url = '/plans/{plan_id}/items/{plan_item_id}'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'plan_id' => plan_id,
+        'plan_item_id' => plan_item_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.get(
+        _query_url,
+        headers: _headers
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      # Validate response against endpoint and global error codes.
+      if _context.response.status_code == 400
+        raise ErrorException.new(
+          'Invalid request',
+          _context
+        )
+      elsif _context.response.status_code == 401
+        raise ErrorException.new(
+          'Invalid API key',
+          _context
+        )
+      elsif _context.response.status_code == 404
+        raise ErrorException.new(
+          'An informed resource was not found',
+          _context
+        )
+      elsif _context.response.status_code == 412
+        raise ErrorException.new(
+          'Business validation error',
+          _context
+        )
+      elsif _context.response.status_code == 422
+        raise ErrorException.new(
+          'Contract validation error',
+          _context
+        )
+      elsif _context.response.status_code == 500
+        raise ErrorException.new(
+          'Internal server error',
+          _context
+        )
+      end
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetPlanItemResponse.from_hash(decoded)
+    end
+
+    # Adds a new item to a plan
+    # @param [String] plan_id Required parameter: Plan id
+    # @param [CreatePlanItemRequest] body Required parameter: Request for
+    # creating a plan item
+    # @param [String] idempotency_key Optional parameter: Example:
+    # @return GetPlanItemResponse response from the API call
+    def create_plan_item(plan_id,
+                         body,
+                         idempotency_key = nil)
+      # Prepare query url.
+      _path_url = '/plans/{plan_id}/items'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'plan_id' => plan_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
+        'Content-Type' => 'application/json',
+        'idempotency-key' => idempotency_key
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.post(
+        _query_url,
+        headers: _headers,
+        parameters: body.to_json
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      # Validate response against endpoint and global error codes.
+      if _context.response.status_code == 400
+        raise ErrorException.new(
+          'Invalid request',
+          _context
+        )
+      elsif _context.response.status_code == 401
+        raise ErrorException.new(
+          'Invalid API key',
+          _context
+        )
+      elsif _context.response.status_code == 404
+        raise ErrorException.new(
+          'An informed resource was not found',
+          _context
+        )
+      elsif _context.response.status_code == 412
+        raise ErrorException.new(
+          'Business validation error',
+          _context
+        )
+      elsif _context.response.status_code == 422
+        raise ErrorException.new(
+          'Contract validation error',
+          _context
+        )
+      elsif _context.response.status_code == 500
+        raise ErrorException.new(
+          'Internal server error',
+          _context
+        )
+      end
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetPlanItemResponse.from_hash(decoded)
+    end
+
+    # Gets all plans
+    # @param [Integer] page Optional parameter: Page number
+    # @param [Integer] size Optional parameter: Page size
+    # @param [String] name Optional parameter: Filter for Plan's name
+    # @param [String] status Optional parameter: Filter for Plan's status
+    # @param [String] billing_type Optional parameter: Filter for plan's billing
+    # type
+    # @param [DateTime] created_since Optional parameter: Filter for plan's
+    # creation date start range
+    # @param [DateTime] created_until Optional parameter: Filter for plan's
+    # creation date end range
+    # @return ListPlansResponse response from the API call
+    def get_plans(page = nil,
+                  size = nil,
+                  name = nil,
+                  status = nil,
+                  billing_type = nil,
+                  created_since = nil,
+                  created_until = nil)
+      # Prepare query url.
+      _path_url = '/plans'
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_builder = APIHelper.append_url_with_query_parameters(
+        _query_builder,
+        {
+          'page' => page,
+          'size' => size,
+          'name' => name,
+          'status' => status,
+          'billing_type' => billing_type,
+          'created_since' => created_since,
+          'created_until' => created_until
+        },
+        array_serialization: Configuration.array_serialization
+      )
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.get(
+        _query_url,
+        headers: _headers
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      # Validate response against endpoint and global error codes.
+      if _context.response.status_code == 400
+        raise ErrorException.new(
+          'Invalid request',
+          _context
+        )
+      elsif _context.response.status_code == 401
+        raise ErrorException.new(
+          'Invalid API key',
+          _context
+        )
+      elsif _context.response.status_code == 404
+        raise ErrorException.new(
+          'An informed resource was not found',
+          _context
+        )
+      elsif _context.response.status_code == 412
+        raise ErrorException.new(
+          'Business validation error',
+          _context
+        )
+      elsif _context.response.status_code == 422
+        raise ErrorException.new(
+          'Contract validation error',
+          _context
+        )
+      elsif _context.response.status_code == 500
+        raise ErrorException.new(
+          'Internal server error',
+          _context
+        )
+      end
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      ListPlansResponse.from_hash(decoded)
+    end
+
     # Deletes a plan
     # @param [String] plan_id Required parameter: Plan id
     # @param [String] idempotency_key Optional parameter: Example:
@@ -166,6 +457,7 @@ module PagarmeCoreApi
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
         'idempotency-key' => idempotency_key
       }
       # Prepare and execute HttpRequest.
@@ -234,6 +526,7 @@ module PagarmeCoreApi
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
         'Content-Type' => 'application/json',
         'idempotency-key' => idempotency_key
       }
@@ -307,6 +600,7 @@ module PagarmeCoreApi
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
         'Content-Type' => 'application/json',
         'idempotency-key' => idempotency_key
       }
@@ -315,71 +609,6 @@ module PagarmeCoreApi
         _query_url,
         headers: _headers,
         parameters: body.to_json
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      # Validate response against endpoint and global error codes.
-      if _context.response.status_code == 400
-        raise ErrorException.new(
-          'Invalid request',
-          _context
-        )
-      elsif _context.response.status_code == 401
-        raise ErrorException.new(
-          'Invalid API key',
-          _context
-        )
-      elsif _context.response.status_code == 404
-        raise ErrorException.new(
-          'An informed resource was not found',
-          _context
-        )
-      elsif _context.response.status_code == 412
-        raise ErrorException.new(
-          'Business validation error',
-          _context
-        )
-      elsif _context.response.status_code == 422
-        raise ErrorException.new(
-          'Contract validation error',
-          _context
-        )
-      elsif _context.response.status_code == 500
-        raise ErrorException.new(
-          'Internal server error',
-          _context
-        )
-      end
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetPlanItemResponse.from_hash(decoded)
-    end
-
-    # Gets a plan item
-    # @param [String] plan_id Required parameter: Plan id
-    # @param [String] plan_item_id Required parameter: Plan item id
-    # @return GetPlanItemResponse response from the API call
-    def get_plan_item(plan_id,
-                      plan_item_id)
-      # Prepare query url.
-      _path_url = '/plans/{plan_id}/items/{plan_item_id}'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'plan_id' => plan_id,
-        'plan_item_id' => plan_item_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json'
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.get(
-        _query_url,
-        headers: _headers
       )
       BasicAuth.apply(_request)
       _context = execute_request(_request)
@@ -442,6 +671,7 @@ module PagarmeCoreApi
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
         'idempotency-key' => idempotency_key
       }
       # Prepare and execute HttpRequest.
@@ -487,226 +717,6 @@ module PagarmeCoreApi
       # Return appropriate response type.
       decoded = APIHelper.json_deserialize(_context.response.raw_body)
       GetPlanItemResponse.from_hash(decoded)
-    end
-
-    # Adds a new item to a plan
-    # @param [String] plan_id Required parameter: Plan id
-    # @param [CreatePlanItemRequest] body Required parameter: Request for
-    # creating a plan item
-    # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetPlanItemResponse response from the API call
-    def create_plan_item(plan_id,
-                         body,
-                         idempotency_key = nil)
-      # Prepare query url.
-      _path_url = '/plans/{plan_id}/items'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'plan_id' => plan_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json',
-        'Content-Type' => 'application/json',
-        'idempotency-key' => idempotency_key
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.post(
-        _query_url,
-        headers: _headers,
-        parameters: body.to_json
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      # Validate response against endpoint and global error codes.
-      if _context.response.status_code == 400
-        raise ErrorException.new(
-          'Invalid request',
-          _context
-        )
-      elsif _context.response.status_code == 401
-        raise ErrorException.new(
-          'Invalid API key',
-          _context
-        )
-      elsif _context.response.status_code == 404
-        raise ErrorException.new(
-          'An informed resource was not found',
-          _context
-        )
-      elsif _context.response.status_code == 412
-        raise ErrorException.new(
-          'Business validation error',
-          _context
-        )
-      elsif _context.response.status_code == 422
-        raise ErrorException.new(
-          'Contract validation error',
-          _context
-        )
-      elsif _context.response.status_code == 500
-        raise ErrorException.new(
-          'Internal server error',
-          _context
-        )
-      end
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetPlanItemResponse.from_hash(decoded)
-    end
-
-    # Creates a new plan
-    # @param [CreatePlanRequest] body Required parameter: Request for creating a
-    # plan
-    # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetPlanResponse response from the API call
-    def create_plan(body,
-                    idempotency_key = nil)
-      # Prepare query url.
-      _path_url = '/plans'
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json',
-        'Content-Type' => 'application/json',
-        'idempotency-key' => idempotency_key
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.post(
-        _query_url,
-        headers: _headers,
-        parameters: body.to_json
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      # Validate response against endpoint and global error codes.
-      if _context.response.status_code == 400
-        raise ErrorException.new(
-          'Invalid request',
-          _context
-        )
-      elsif _context.response.status_code == 401
-        raise ErrorException.new(
-          'Invalid API key',
-          _context
-        )
-      elsif _context.response.status_code == 404
-        raise ErrorException.new(
-          'An informed resource was not found',
-          _context
-        )
-      elsif _context.response.status_code == 412
-        raise ErrorException.new(
-          'Business validation error',
-          _context
-        )
-      elsif _context.response.status_code == 422
-        raise ErrorException.new(
-          'Contract validation error',
-          _context
-        )
-      elsif _context.response.status_code == 500
-        raise ErrorException.new(
-          'Internal server error',
-          _context
-        )
-      end
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetPlanResponse.from_hash(decoded)
-    end
-
-    # Gets all plans
-    # @param [Integer] page Optional parameter: Page number
-    # @param [Integer] size Optional parameter: Page size
-    # @param [String] name Optional parameter: Filter for Plan's name
-    # @param [String] status Optional parameter: Filter for Plan's status
-    # @param [String] billing_type Optional parameter: Filter for plan's billing
-    # type
-    # @param [DateTime] created_since Optional parameter: Filter for plan's
-    # creation date start range
-    # @param [DateTime] created_until Optional parameter: Filter for plan's
-    # creation date end range
-    # @return ListPlansResponse response from the API call
-    def get_plans(page = nil,
-                  size = nil,
-                  name = nil,
-                  status = nil,
-                  billing_type = nil,
-                  created_since = nil,
-                  created_until = nil)
-      # Prepare query url.
-      _path_url = '/plans'
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_builder = APIHelper.append_url_with_query_parameters(
-        _query_builder,
-        {
-          'page' => page,
-          'size' => size,
-          'name' => name,
-          'status' => status,
-          'billing_type' => billing_type,
-          'created_since' => created_since,
-          'created_until' => created_until
-        },
-        array_serialization: Configuration.array_serialization
-      )
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json'
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.get(
-        _query_url,
-        headers: _headers
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      # Validate response against endpoint and global error codes.
-      if _context.response.status_code == 400
-        raise ErrorException.new(
-          'Invalid request',
-          _context
-        )
-      elsif _context.response.status_code == 401
-        raise ErrorException.new(
-          'Invalid API key',
-          _context
-        )
-      elsif _context.response.status_code == 404
-        raise ErrorException.new(
-          'An informed resource was not found',
-          _context
-        )
-      elsif _context.response.status_code == 412
-        raise ErrorException.new(
-          'Business validation error',
-          _context
-        )
-      elsif _context.response.status_code == 422
-        raise ErrorException.new(
-          'Contract validation error',
-          _context
-        )
-      elsif _context.response.status_code == 500
-        raise ErrorException.new(
-          'Internal server error',
-          _context
-        )
-      end
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      ListPlansResponse.from_hash(decoded)
     end
   end
 end

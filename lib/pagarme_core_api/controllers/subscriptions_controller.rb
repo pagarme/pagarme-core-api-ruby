@@ -37,6 +37,7 @@ module PagarmeCoreApi
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
         'Content-Type' => 'application/json',
         'idempotency-key' => idempotency_key
       }
@@ -86,23 +87,20 @@ module PagarmeCoreApi
       GetSubscriptionResponse.from_hash(decoded)
     end
 
-    # Deletes a usage
-    # @param [String] subscription_id Required parameter: The subscription id
-    # @param [String] item_id Required parameter: The subscription item id
-    # @param [String] usage_id Required parameter: The usage id
+    # Create Usage
+    # @param [String] subscription_id Required parameter: Subscription id
+    # @param [String] item_id Required parameter: Item id
     # @param [String] idempotency_key Optional parameter: Example:
     # @return GetUsageResponse response from the API call
-    def delete_usage(subscription_id,
-                     item_id,
-                     usage_id,
-                     idempotency_key = nil)
+    def create_an_usage(subscription_id,
+                        item_id,
+                        idempotency_key = nil)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/items/{item_id}/usages/{usage_id}'
+      _path_url = '/subscriptions/{subscription_id}/items/{item_id}/usages'
       _path_url = APIHelper.append_url_with_template_parameters(
         _path_url,
         'subscription_id' => subscription_id,
-        'item_id' => item_id,
-        'usage_id' => usage_id
+        'item_id' => item_id
       )
       _query_builder = Configuration.base_uri.dup
       _query_builder << _path_url
@@ -110,10 +108,11 @@ module PagarmeCoreApi
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
         'idempotency-key' => idempotency_key
       }
       # Prepare and execute HttpRequest.
-      _request = @http_client.delete(
+      _request = @http_client.post(
         _query_url,
         headers: _headers
       )
@@ -157,17 +156,17 @@ module PagarmeCoreApi
       GetUsageResponse.from_hash(decoded)
     end
 
-    # Creates a discount
+    # Updates the payment method from a subscription
     # @param [String] subscription_id Required parameter: Subscription id
-    # @param [CreateDiscountRequest] body Required parameter: Request for
-    # creating a discount
+    # @param [UpdateSubscriptionPaymentMethodRequest] body Required parameter:
+    # Request for updating the paymentmethod from a subscription
     # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetDiscountResponse response from the API call
-    def create_discount(subscription_id,
-                        body,
-                        idempotency_key = nil)
+    # @return GetSubscriptionResponse response from the API call
+    def update_subscription_payment_method(subscription_id,
+                                           body,
+                                           idempotency_key = nil)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/discounts'
+      _path_url = '/subscriptions/{subscription_id}/payment-method'
       _path_url = APIHelper.append_url_with_template_parameters(
         _path_url,
         'subscription_id' => subscription_id
@@ -178,6 +177,78 @@ module PagarmeCoreApi
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
+        'Content-Type' => 'application/json',
+        'idempotency-key' => idempotency_key
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.patch(
+        _query_url,
+        headers: _headers,
+        parameters: body.to_json
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      # Validate response against endpoint and global error codes.
+      if _context.response.status_code == 400
+        raise ErrorException.new(
+          'Invalid request',
+          _context
+        )
+      elsif _context.response.status_code == 401
+        raise ErrorException.new(
+          'Invalid API key',
+          _context
+        )
+      elsif _context.response.status_code == 404
+        raise ErrorException.new(
+          'An informed resource was not found',
+          _context
+        )
+      elsif _context.response.status_code == 412
+        raise ErrorException.new(
+          'Business validation error',
+          _context
+        )
+      elsif _context.response.status_code == 422
+        raise ErrorException.new(
+          'Contract validation error',
+          _context
+        )
+      elsif _context.response.status_code == 500
+        raise ErrorException.new(
+          'Internal server error',
+          _context
+        )
+      end
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetSubscriptionResponse.from_hash(decoded)
+    end
+
+    # Creates a new Subscription item
+    # @param [String] subscription_id Required parameter: Subscription id
+    # @param [CreateSubscriptionItemRequest] body Required parameter: Request
+    # for creating a subscription item
+    # @param [String] idempotency_key Optional parameter: Example:
+    # @return GetSubscriptionItemResponse response from the API call
+    def create_subscription_item(subscription_id,
+                                 body,
+                                 idempotency_key = nil)
+      # Prepare query url.
+      _path_url = '/subscriptions/{subscription_id}/items'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'subscription_id' => subscription_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
         'Content-Type' => 'application/json',
         'idempotency-key' => idempotency_key
       }
@@ -224,19 +295,17 @@ module PagarmeCoreApi
       validate_response(_context)
       # Return appropriate response type.
       decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetDiscountResponse.from_hash(decoded)
+      GetSubscriptionItemResponse.from_hash(decoded)
     end
 
-    # Create Usage
-    # @param [String] subscription_id Required parameter: Subscription id
+    # Get Subscription Item
+    # @param [String] subscription_id Required parameter: Subscription Id
     # @param [String] item_id Required parameter: Item id
-    # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetUsageResponse response from the API call
-    def create_an_usage(subscription_id,
-                        item_id,
-                        idempotency_key = nil)
+    # @return GetSubscriptionItemResponse response from the API call
+    def get_subscription_item(subscription_id,
+                              item_id)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/items/{item_id}/usages'
+      _path_url = '/subscriptions/{subscription_id}/items/{item_id}'
       _path_url = APIHelper.append_url_with_template_parameters(
         _path_url,
         'subscription_id' => subscription_id,
@@ -248,98 +317,7 @@ module PagarmeCoreApi
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
-        'idempotency-key' => idempotency_key
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.post(
-        _query_url,
-        headers: _headers
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      # Validate response against endpoint and global error codes.
-      if _context.response.status_code == 400
-        raise ErrorException.new(
-          'Invalid request',
-          _context
-        )
-      elsif _context.response.status_code == 401
-        raise ErrorException.new(
-          'Invalid API key',
-          _context
-        )
-      elsif _context.response.status_code == 404
-        raise ErrorException.new(
-          'An informed resource was not found',
-          _context
-        )
-      elsif _context.response.status_code == 412
-        raise ErrorException.new(
-          'Business validation error',
-          _context
-        )
-      elsif _context.response.status_code == 422
-        raise ErrorException.new(
-          'Contract validation error',
-          _context
-        )
-      elsif _context.response.status_code == 500
-        raise ErrorException.new(
-          'Internal server error',
-          _context
-        )
-      end
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetUsageResponse.from_hash(decoded)
-    end
-
-    # Lists all usages from a subscription item
-    # @param [String] subscription_id Required parameter: The subscription id
-    # @param [String] item_id Required parameter: The subscription item id
-    # @param [Integer] page Optional parameter: Page number
-    # @param [Integer] size Optional parameter: Page size
-    # @param [String] code Optional parameter: Identification code in the client
-    # system
-    # @param [String] group Optional parameter: Identification group in the
-    # client system
-    # @param [DateTime] used_since Optional parameter: Example:
-    # @param [DateTime] used_until Optional parameter: Example:
-    # @return ListUsagesResponse response from the API call
-    def get_usages(subscription_id,
-                   item_id,
-                   page = nil,
-                   size = nil,
-                   code = nil,
-                   group = nil,
-                   used_since = nil,
-                   used_until = nil)
-      # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/items/{item_id}/usages'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id,
-        'item_id' => item_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_builder = APIHelper.append_url_with_query_parameters(
-        _query_builder,
-        {
-          'page' => page,
-          'size' => size,
-          'code' => code,
-          'group' => group,
-          'used_since' => used_since,
-          'used_until' => used_until
-        },
-        array_serialization: Configuration.array_serialization
-      )
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json'
+        'ServiceRefererName' => Configuration.service_referer_name
       }
       # Prepare and execute HttpRequest.
       _request = @http_client.get(
@@ -383,86 +361,20 @@ module PagarmeCoreApi
       validate_response(_context)
       # Return appropriate response type.
       decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      ListUsagesResponse.from_hash(decoded)
+      GetSubscriptionItemResponse.from_hash(decoded)
     end
 
-    # UpdateCurrentCycleStatus
-    # @param [String] subscription_id Required parameter: Subscription Id
-    # @param [UpdateCurrentCycleStatusRequest] body Required parameter: Request
-    # for updating the end date of the subscription current status
-    # @param [String] idempotency_key Optional parameter: Example:
-    # @return void response from the API call
-    def update_current_cycle_status(subscription_id,
-                                    body,
-                                    idempotency_key = nil)
-      # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/cycle-status'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'Content-Type' => 'application/json',
-        'idempotency-key' => idempotency_key
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.patch(
-        _query_url,
-        headers: _headers,
-        parameters: body.to_json
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      # Validate response against endpoint and global error codes.
-      if _context.response.status_code == 400
-        raise ErrorException.new(
-          'Invalid request',
-          _context
-        )
-      elsif _context.response.status_code == 401
-        raise ErrorException.new(
-          'Invalid API key',
-          _context
-        )
-      elsif _context.response.status_code == 404
-        raise ErrorException.new(
-          'An informed resource was not found',
-          _context
-        )
-      elsif _context.response.status_code == 412
-        raise ErrorException.new(
-          'Business validation error',
-          _context
-        )
-      elsif _context.response.status_code == 422
-        raise ErrorException.new(
-          'Contract validation error',
-          _context
-        )
-      elsif _context.response.status_code == 500
-        raise ErrorException.new(
-          'Internal server error',
-          _context
-        )
-      end
-      validate_response(_context)
-    end
-
-    # Updates the payment method from a subscription
-    # @param [String] subscription_id Required parameter: Subscription id
-    # @param [UpdateSubscriptionPaymentMethodRequest] body Required parameter:
-    # Request for updating the paymentmethod from a subscription
+    # UpdateSubscriptionAffiliationId
+    # @param [String] subscription_id Required parameter: Example:
+    # @param [UpdateSubscriptionAffiliationIdRequest] body Required parameter:
+    # Request for updating a subscription affiliation id
     # @param [String] idempotency_key Optional parameter: Example:
     # @return GetSubscriptionResponse response from the API call
-    def update_subscription_payment_method(subscription_id,
+    def update_subscription_affiliation_id(subscription_id,
                                            body,
                                            idempotency_key = nil)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/payment-method'
+      _path_url = '/subscriptions/{subscription_id}/gateway-affiliation-id'
       _path_url = APIHelper.append_url_with_template_parameters(
         _path_url,
         'subscription_id' => subscription_id
@@ -473,6 +385,7 @@ module PagarmeCoreApi
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
         'Content-Type' => 'application/json',
         'idempotency-key' => idempotency_key
       }
@@ -522,6 +435,289 @@ module PagarmeCoreApi
       GetSubscriptionResponse.from_hash(decoded)
     end
 
+    # GetIncrements
+    # @param [String] subscription_id Required parameter: The subscription id
+    # @param [Integer] page Optional parameter: Page number
+    # @param [Integer] size Optional parameter: Page size
+    # @return ListIncrementsResponse response from the API call
+    def get_increments(subscription_id,
+                       page = nil,
+                       size = nil)
+      # Prepare query url.
+      _path_url = '/subscriptions/{subscription_id}/increments/'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'subscription_id' => subscription_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_builder = APIHelper.append_url_with_query_parameters(
+        _query_builder,
+        {
+          'page' => page,
+          'size' => size
+        },
+        array_serialization: Configuration.array_serialization
+      )
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.get(
+        _query_url,
+        headers: _headers
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      # Validate response against endpoint and global error codes.
+      if _context.response.status_code == 400
+        raise ErrorException.new(
+          'Invalid request',
+          _context
+        )
+      elsif _context.response.status_code == 401
+        raise ErrorException.new(
+          'Invalid API key',
+          _context
+        )
+      elsif _context.response.status_code == 404
+        raise ErrorException.new(
+          'An informed resource was not found',
+          _context
+        )
+      elsif _context.response.status_code == 412
+        raise ErrorException.new(
+          'Business validation error',
+          _context
+        )
+      elsif _context.response.status_code == 422
+        raise ErrorException.new(
+          'Contract validation error',
+          _context
+        )
+      elsif _context.response.status_code == 500
+        raise ErrorException.new(
+          'Internal server error',
+          _context
+        )
+      end
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      ListIncrementsResponse.from_hash(decoded)
+    end
+
+    # Updates the boleto due days from a subscription
+    # @param [String] subscription_id Required parameter: Subscription Id
+    # @param [UpdateSubscriptionDueDaysRequest] body Required parameter:
+    # Example:
+    # @param [String] idempotency_key Optional parameter: Example:
+    # @return GetSubscriptionResponse response from the API call
+    def update_subscription_due_days(subscription_id,
+                                     body,
+                                     idempotency_key = nil)
+      # Prepare query url.
+      _path_url = '/subscriptions/{subscription_id}/boleto-due-days'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'subscription_id' => subscription_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
+        'Content-Type' => 'application/json',
+        'idempotency-key' => idempotency_key
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.patch(
+        _query_url,
+        headers: _headers,
+        parameters: body.to_json
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      # Validate response against endpoint and global error codes.
+      if _context.response.status_code == 400
+        raise ErrorException.new(
+          'Invalid request',
+          _context
+        )
+      elsif _context.response.status_code == 401
+        raise ErrorException.new(
+          'Invalid API key',
+          _context
+        )
+      elsif _context.response.status_code == 404
+        raise ErrorException.new(
+          'An informed resource was not found',
+          _context
+        )
+      elsif _context.response.status_code == 412
+        raise ErrorException.new(
+          'Business validation error',
+          _context
+        )
+      elsif _context.response.status_code == 422
+        raise ErrorException.new(
+          'Contract validation error',
+          _context
+        )
+      elsif _context.response.status_code == 500
+        raise ErrorException.new(
+          'Internal server error',
+          _context
+        )
+      end
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetSubscriptionResponse.from_hash(decoded)
+    end
+
+    # Updates the start at date from a subscription
+    # @param [String] subscription_id Required parameter: The subscription id
+    # @param [UpdateSubscriptionStartAtRequest] body Required parameter: Request
+    # for updating the subscription start date
+    # @param [String] idempotency_key Optional parameter: Example:
+    # @return GetSubscriptionResponse response from the API call
+    def update_subscription_start_at(subscription_id,
+                                     body,
+                                     idempotency_key = nil)
+      # Prepare query url.
+      _path_url = '/subscriptions/{subscription_id}/start-at'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'subscription_id' => subscription_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
+        'Content-Type' => 'application/json',
+        'idempotency-key' => idempotency_key
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.patch(
+        _query_url,
+        headers: _headers,
+        parameters: body.to_json
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      # Validate response against endpoint and global error codes.
+      if _context.response.status_code == 400
+        raise ErrorException.new(
+          'Invalid request',
+          _context
+        )
+      elsif _context.response.status_code == 401
+        raise ErrorException.new(
+          'Invalid API key',
+          _context
+        )
+      elsif _context.response.status_code == 404
+        raise ErrorException.new(
+          'An informed resource was not found',
+          _context
+        )
+      elsif _context.response.status_code == 412
+        raise ErrorException.new(
+          'Business validation error',
+          _context
+        )
+      elsif _context.response.status_code == 422
+        raise ErrorException.new(
+          'Contract validation error',
+          _context
+        )
+      elsif _context.response.status_code == 500
+        raise ErrorException.new(
+          'Internal server error',
+          _context
+        )
+      end
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetSubscriptionResponse.from_hash(decoded)
+    end
+
+    # GetSubscriptionCycleById
+    # @param [String] subscription_id Required parameter: The subscription id
+    # @param [String] cycle_id Required parameter: Example:
+    # @return GetPeriodResponse response from the API call
+    def get_subscription_cycle_by_id(subscription_id,
+                                     cycle_id)
+      # Prepare query url.
+      _path_url = '/subscriptions/{subscription_id}/cycles/{cycleId}'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'subscription_id' => subscription_id,
+        'cycleId' => cycle_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.get(
+        _query_url,
+        headers: _headers
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      # Validate response against endpoint and global error codes.
+      if _context.response.status_code == 400
+        raise ErrorException.new(
+          'Invalid request',
+          _context
+        )
+      elsif _context.response.status_code == 401
+        raise ErrorException.new(
+          'Invalid API key',
+          _context
+        )
+      elsif _context.response.status_code == 404
+        raise ErrorException.new(
+          'An informed resource was not found',
+          _context
+        )
+      elsif _context.response.status_code == 412
+        raise ErrorException.new(
+          'Business validation error',
+          _context
+        )
+      elsif _context.response.status_code == 422
+        raise ErrorException.new(
+          'Contract validation error',
+          _context
+        )
+      elsif _context.response.status_code == 500
+        raise ErrorException.new(
+          'Internal server error',
+          _context
+        )
+      end
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetPeriodResponse.from_hash(decoded)
+    end
+
     # Deletes a discount
     # @param [String] subscription_id Required parameter: Subscription id
     # @param [String] discount_id Required parameter: Discount Id
@@ -543,6 +739,7 @@ module PagarmeCoreApi
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
         'idempotency-key' => idempotency_key
       }
       # Prepare and execute HttpRequest.
@@ -638,7 +835,8 @@ module PagarmeCoreApi
       _query_url = APIHelper.clean_url _query_builder
       # Prepare headers.
       _headers = {
-        'accept' => 'application/json'
+        'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name
       }
       # Prepare and execute HttpRequest.
       _request = @http_client.get(
@@ -685,141 +883,6 @@ module PagarmeCoreApi
       ListSubscriptionItemsResponse.from_hash(decoded)
     end
 
-    # Creates a new Subscription item
-    # @param [String] subscription_id Required parameter: Subscription id
-    # @param [CreateSubscriptionItemRequest] body Required parameter: Request
-    # for creating a subscription item
-    # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetSubscriptionItemResponse response from the API call
-    def create_subscription_item(subscription_id,
-                                 body,
-                                 idempotency_key = nil)
-      # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/items'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json',
-        'Content-Type' => 'application/json',
-        'idempotency-key' => idempotency_key
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.post(
-        _query_url,
-        headers: _headers,
-        parameters: body.to_json
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      # Validate response against endpoint and global error codes.
-      if _context.response.status_code == 400
-        raise ErrorException.new(
-          'Invalid request',
-          _context
-        )
-      elsif _context.response.status_code == 401
-        raise ErrorException.new(
-          'Invalid API key',
-          _context
-        )
-      elsif _context.response.status_code == 404
-        raise ErrorException.new(
-          'An informed resource was not found',
-          _context
-        )
-      elsif _context.response.status_code == 412
-        raise ErrorException.new(
-          'Business validation error',
-          _context
-        )
-      elsif _context.response.status_code == 422
-        raise ErrorException.new(
-          'Contract validation error',
-          _context
-        )
-      elsif _context.response.status_code == 500
-        raise ErrorException.new(
-          'Internal server error',
-          _context
-        )
-      end
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetSubscriptionItemResponse.from_hash(decoded)
-    end
-
-    # Get Subscription Item
-    # @param [String] subscription_id Required parameter: Subscription Id
-    # @param [String] item_id Required parameter: Item id
-    # @return GetSubscriptionItemResponse response from the API call
-    def get_subscription_item(subscription_id,
-                              item_id)
-      # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/items/{item_id}'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id,
-        'item_id' => item_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json'
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.get(
-        _query_url,
-        headers: _headers
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      # Validate response against endpoint and global error codes.
-      if _context.response.status_code == 400
-        raise ErrorException.new(
-          'Invalid request',
-          _context
-        )
-      elsif _context.response.status_code == 401
-        raise ErrorException.new(
-          'Invalid API key',
-          _context
-        )
-      elsif _context.response.status_code == 404
-        raise ErrorException.new(
-          'An informed resource was not found',
-          _context
-        )
-      elsif _context.response.status_code == 412
-        raise ErrorException.new(
-          'Business validation error',
-          _context
-        )
-      elsif _context.response.status_code == 422
-        raise ErrorException.new(
-          'Contract validation error',
-          _context
-        )
-      elsif _context.response.status_code == 500
-        raise ErrorException.new(
-          'Internal server error',
-          _context
-        )
-      end
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetSubscriptionItemResponse.from_hash(decoded)
-    end
-
     # Updates a subscription item
     # @param [String] subscription_id Required parameter: Subscription Id
     # @param [String] item_id Required parameter: Item id
@@ -844,6 +907,7 @@ module PagarmeCoreApi
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
         'Content-Type' => 'application/json',
         'idempotency-key' => idempotency_key
       }
@@ -893,113 +957,6 @@ module PagarmeCoreApi
       GetSubscriptionItemResponse.from_hash(decoded)
     end
 
-    # Gets all subscriptions
-    # @param [Integer] page Optional parameter: Page number
-    # @param [Integer] size Optional parameter: Page size
-    # @param [String] code Optional parameter: Filter for subscription's code
-    # @param [String] billing_type Optional parameter: Filter for subscription's
-    # billing type
-    # @param [String] customer_id Optional parameter: Filter for subscription's
-    # customer id
-    # @param [String] plan_id Optional parameter: Filter for subscription's plan
-    # id
-    # @param [String] card_id Optional parameter: Filter for subscription's card
-    # id
-    # @param [String] status Optional parameter: Filter for subscription's
-    # status
-    # @param [DateTime] next_billing_since Optional parameter: Filter for
-    # subscription's next billing date start range
-    # @param [DateTime] next_billing_until Optional parameter: Filter for
-    # subscription's next billing date end range
-    # @param [DateTime] created_since Optional parameter: Filter for
-    # subscription's creation date start range
-    # @param [DateTime] created_until Optional parameter: Filter for
-    # subscriptions creation date end range
-    # @return ListSubscriptionsResponse response from the API call
-    def get_subscriptions(page = nil,
-                          size = nil,
-                          code = nil,
-                          billing_type = nil,
-                          customer_id = nil,
-                          plan_id = nil,
-                          card_id = nil,
-                          status = nil,
-                          next_billing_since = nil,
-                          next_billing_until = nil,
-                          created_since = nil,
-                          created_until = nil)
-      # Prepare query url.
-      _path_url = '/subscriptions'
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_builder = APIHelper.append_url_with_query_parameters(
-        _query_builder,
-        {
-          'page' => page,
-          'size' => size,
-          'code' => code,
-          'billing_type' => billing_type,
-          'customer_id' => customer_id,
-          'plan_id' => plan_id,
-          'card_id' => card_id,
-          'status' => status,
-          'next_billing_since' => next_billing_since,
-          'next_billing_until' => next_billing_until,
-          'created_since' => created_since,
-          'created_until' => created_until
-        },
-        array_serialization: Configuration.array_serialization
-      )
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json'
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.get(
-        _query_url,
-        headers: _headers
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      # Validate response against endpoint and global error codes.
-      if _context.response.status_code == 400
-        raise ErrorException.new(
-          'Invalid request',
-          _context
-        )
-      elsif _context.response.status_code == 401
-        raise ErrorException.new(
-          'Invalid API key',
-          _context
-        )
-      elsif _context.response.status_code == 404
-        raise ErrorException.new(
-          'An informed resource was not found',
-          _context
-        )
-      elsif _context.response.status_code == 412
-        raise ErrorException.new(
-          'Business validation error',
-          _context
-        )
-      elsif _context.response.status_code == 422
-        raise ErrorException.new(
-          'Contract validation error',
-          _context
-        )
-      elsif _context.response.status_code == 500
-        raise ErrorException.new(
-          'Internal server error',
-          _context
-        )
-      end
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      ListSubscriptionsResponse.from_hash(decoded)
-    end
-
     # Creates a new subscription
     # @param [CreateSubscriptionRequest] body Required parameter: Request for
     # creating a subscription
@@ -1015,6 +972,7 @@ module PagarmeCoreApi
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
         'Content-Type' => 'application/json',
         'idempotency-key' => idempotency_key
       }
@@ -1064,17 +1022,83 @@ module PagarmeCoreApi
       GetSubscriptionResponse.from_hash(decoded)
     end
 
-    # Cancels a subscription
-    # @param [String] subscription_id Required parameter: Subscription id
-    # @param [String] idempotency_key Optional parameter: Example:
-    # @param [CreateCancelSubscriptionRequest] body Optional parameter: Request
-    # for cancelling a subscription
-    # @return GetSubscriptionResponse response from the API call
-    def cancel_subscription(subscription_id,
-                            idempotency_key = nil,
-                            body = nil)
+    # GetDiscountById
+    # @param [String] subscription_id Required parameter: The subscription id
+    # @param [String] discount_id Required parameter: Example:
+    # @return GetDiscountResponse response from the API call
+    def get_discount_by_id(subscription_id,
+                           discount_id)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}'
+      _path_url = '/subscriptions/{subscription_id}/discounts/{discountId}'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'subscription_id' => subscription_id,
+        'discountId' => discount_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.get(
+        _query_url,
+        headers: _headers
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      # Validate response against endpoint and global error codes.
+      if _context.response.status_code == 400
+        raise ErrorException.new(
+          'Invalid request',
+          _context
+        )
+      elsif _context.response.status_code == 401
+        raise ErrorException.new(
+          'Invalid API key',
+          _context
+        )
+      elsif _context.response.status_code == 404
+        raise ErrorException.new(
+          'An informed resource was not found',
+          _context
+        )
+      elsif _context.response.status_code == 412
+        raise ErrorException.new(
+          'Business validation error',
+          _context
+        )
+      elsif _context.response.status_code == 422
+        raise ErrorException.new(
+          'Contract validation error',
+          _context
+        )
+      elsif _context.response.status_code == 500
+        raise ErrorException.new(
+          'Internal server error',
+          _context
+        )
+      end
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetDiscountResponse.from_hash(decoded)
+    end
+
+    # Updates the billing date from a subscription
+    # @param [String] subscription_id Required parameter: The subscription id
+    # @param [UpdateSubscriptionBillingDateRequest] body Required parameter:
+    # Request for updating the subscription billing date
+    # @param [String] idempotency_key Optional parameter: Example:
+    # @return GetSubscriptionResponse response from the API call
+    def update_subscription_billing_date(subscription_id,
+                                         body,
+                                         idempotency_key = nil)
+      # Prepare query url.
+      _path_url = '/subscriptions/{subscription_id}/billing-date'
       _path_url = APIHelper.append_url_with_template_parameters(
         _path_url,
         'subscription_id' => subscription_id
@@ -1085,11 +1109,12 @@ module PagarmeCoreApi
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
         'Content-Type' => 'application/json',
         'idempotency-key' => idempotency_key
       }
       # Prepare and execute HttpRequest.
-      _request = @http_client.delete(
+      _request = @http_client.patch(
         _query_url,
         headers: _headers,
         parameters: body.to_json
@@ -1134,10 +1159,388 @@ module PagarmeCoreApi
       GetSubscriptionResponse.from_hash(decoded)
     end
 
-    # Gets a subscription
-    # @param [String] subscription_id Required parameter: Subscription id
+    # UpdateLatestPeriodEndAt
+    # @param [String] subscription_id Required parameter: Example:
+    # @param [UpdateCurrentCycleEndDateRequest] body Required parameter: Request
+    # for updating the end date of the current signature cycle
+    # @param [String] idempotency_key Optional parameter: Example:
     # @return GetSubscriptionResponse response from the API call
-    def get_subscription(subscription_id)
+    def update_latest_period_end_at(subscription_id,
+                                    body,
+                                    idempotency_key = nil)
+      # Prepare query url.
+      _path_url = '/subscriptions/{subscription_id}/periods/latest/end-at'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'subscription_id' => subscription_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
+        'Content-Type' => 'application/json',
+        'idempotency-key' => idempotency_key
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.patch(
+        _query_url,
+        headers: _headers,
+        parameters: body.to_json
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      # Validate response against endpoint and global error codes.
+      if _context.response.status_code == 400
+        raise ErrorException.new(
+          'Invalid request',
+          _context
+        )
+      elsif _context.response.status_code == 401
+        raise ErrorException.new(
+          'Invalid API key',
+          _context
+        )
+      elsif _context.response.status_code == 404
+        raise ErrorException.new(
+          'An informed resource was not found',
+          _context
+        )
+      elsif _context.response.status_code == 412
+        raise ErrorException.new(
+          'Business validation error',
+          _context
+        )
+      elsif _context.response.status_code == 422
+        raise ErrorException.new(
+          'Contract validation error',
+          _context
+        )
+      elsif _context.response.status_code == 500
+        raise ErrorException.new(
+          'Internal server error',
+          _context
+        )
+      end
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetSubscriptionResponse.from_hash(decoded)
+    end
+
+    # Creates a discount
+    # @param [String] subscription_id Required parameter: Subscription id
+    # @param [CreateDiscountRequest] body Required parameter: Request for
+    # creating a discount
+    # @param [String] idempotency_key Optional parameter: Example:
+    # @return GetDiscountResponse response from the API call
+    def create_discount(subscription_id,
+                        body,
+                        idempotency_key = nil)
+      # Prepare query url.
+      _path_url = '/subscriptions/{subscription_id}/discounts'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'subscription_id' => subscription_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
+        'Content-Type' => 'application/json',
+        'idempotency-key' => idempotency_key
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.post(
+        _query_url,
+        headers: _headers,
+        parameters: body.to_json
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      # Validate response against endpoint and global error codes.
+      if _context.response.status_code == 400
+        raise ErrorException.new(
+          'Invalid request',
+          _context
+        )
+      elsif _context.response.status_code == 401
+        raise ErrorException.new(
+          'Invalid API key',
+          _context
+        )
+      elsif _context.response.status_code == 404
+        raise ErrorException.new(
+          'An informed resource was not found',
+          _context
+        )
+      elsif _context.response.status_code == 412
+        raise ErrorException.new(
+          'Business validation error',
+          _context
+        )
+      elsif _context.response.status_code == 422
+        raise ErrorException.new(
+          'Contract validation error',
+          _context
+        )
+      elsif _context.response.status_code == 500
+        raise ErrorException.new(
+          'Internal server error',
+          _context
+        )
+      end
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetDiscountResponse.from_hash(decoded)
+    end
+
+    # Deletes a usage
+    # @param [String] subscription_id Required parameter: The subscription id
+    # @param [String] item_id Required parameter: The subscription item id
+    # @param [String] usage_id Required parameter: The usage id
+    # @param [String] idempotency_key Optional parameter: Example:
+    # @return GetUsageResponse response from the API call
+    def delete_usage(subscription_id,
+                     item_id,
+                     usage_id,
+                     idempotency_key = nil)
+      # Prepare query url.
+      _path_url = '/subscriptions/{subscription_id}/items/{item_id}/usages/{usage_id}'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'subscription_id' => subscription_id,
+        'item_id' => item_id,
+        'usage_id' => usage_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
+        'idempotency-key' => idempotency_key
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.delete(
+        _query_url,
+        headers: _headers
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      # Validate response against endpoint and global error codes.
+      if _context.response.status_code == 400
+        raise ErrorException.new(
+          'Invalid request',
+          _context
+        )
+      elsif _context.response.status_code == 401
+        raise ErrorException.new(
+          'Invalid API key',
+          _context
+        )
+      elsif _context.response.status_code == 404
+        raise ErrorException.new(
+          'An informed resource was not found',
+          _context
+        )
+      elsif _context.response.status_code == 412
+        raise ErrorException.new(
+          'Business validation error',
+          _context
+        )
+      elsif _context.response.status_code == 422
+        raise ErrorException.new(
+          'Contract validation error',
+          _context
+        )
+      elsif _context.response.status_code == 500
+        raise ErrorException.new(
+          'Internal server error',
+          _context
+        )
+      end
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetUsageResponse.from_hash(decoded)
+    end
+
+    # Lists all usages from a subscription item
+    # @param [String] subscription_id Required parameter: The subscription id
+    # @param [String] item_id Required parameter: The subscription item id
+    # @param [Integer] page Optional parameter: Page number
+    # @param [Integer] size Optional parameter: Page size
+    # @param [String] code Optional parameter: Identification code in the client
+    # system
+    # @param [String] group Optional parameter: Identification group in the
+    # client system
+    # @param [DateTime] used_since Optional parameter: Example:
+    # @param [DateTime] used_until Optional parameter: Example:
+    # @return ListUsagesResponse response from the API call
+    def get_usages(subscription_id,
+                   item_id,
+                   page = nil,
+                   size = nil,
+                   code = nil,
+                   group = nil,
+                   used_since = nil,
+                   used_until = nil)
+      # Prepare query url.
+      _path_url = '/subscriptions/{subscription_id}/items/{item_id}/usages'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'subscription_id' => subscription_id,
+        'item_id' => item_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_builder = APIHelper.append_url_with_query_parameters(
+        _query_builder,
+        {
+          'page' => page,
+          'size' => size,
+          'code' => code,
+          'group' => group,
+          'used_since' => used_since,
+          'used_until' => used_until
+        },
+        array_serialization: Configuration.array_serialization
+      )
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.get(
+        _query_url,
+        headers: _headers
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      # Validate response against endpoint and global error codes.
+      if _context.response.status_code == 400
+        raise ErrorException.new(
+          'Invalid request',
+          _context
+        )
+      elsif _context.response.status_code == 401
+        raise ErrorException.new(
+          'Invalid API key',
+          _context
+        )
+      elsif _context.response.status_code == 404
+        raise ErrorException.new(
+          'An informed resource was not found',
+          _context
+        )
+      elsif _context.response.status_code == 412
+        raise ErrorException.new(
+          'Business validation error',
+          _context
+        )
+      elsif _context.response.status_code == 422
+        raise ErrorException.new(
+          'Contract validation error',
+          _context
+        )
+      elsif _context.response.status_code == 500
+        raise ErrorException.new(
+          'Internal server error',
+          _context
+        )
+      end
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      ListUsagesResponse.from_hash(decoded)
+    end
+
+    # UpdateCurrentCycleStatus
+    # @param [String] subscription_id Required parameter: Subscription Id
+    # @param [UpdateCurrentCycleStatusRequest] body Required parameter: Request
+    # for updating the end date of the subscription current status
+    # @param [String] idempotency_key Optional parameter: Example:
+    # @return void response from the API call
+    def update_current_cycle_status(subscription_id,
+                                    body,
+                                    idempotency_key = nil)
+      # Prepare query url.
+      _path_url = '/subscriptions/{subscription_id}/cycle-status'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'subscription_id' => subscription_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'ServiceRefererName' => Configuration.service_referer_name,
+        'Content-Type' => 'application/json',
+        'idempotency-key' => idempotency_key
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.patch(
+        _query_url,
+        headers: _headers,
+        parameters: body.to_json
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      # Validate response against endpoint and global error codes.
+      if _context.response.status_code == 400
+        raise ErrorException.new(
+          'Invalid request',
+          _context
+        )
+      elsif _context.response.status_code == 401
+        raise ErrorException.new(
+          'Invalid API key',
+          _context
+        )
+      elsif _context.response.status_code == 404
+        raise ErrorException.new(
+          'An informed resource was not found',
+          _context
+        )
+      elsif _context.response.status_code == 412
+        raise ErrorException.new(
+          'Business validation error',
+          _context
+        )
+      elsif _context.response.status_code == 422
+        raise ErrorException.new(
+          'Contract validation error',
+          _context
+        )
+      elsif _context.response.status_code == 500
+        raise ErrorException.new(
+          'Internal server error',
+          _context
+        )
+      end
+      validate_response(_context)
+    end
+
+    # Cancels a subscription
+    # @param [String] subscription_id Required parameter: Subscription id
+    # @param [String] idempotency_key Optional parameter: Example:
+    # @param [CreateCancelSubscriptionRequest] body Optional parameter: Request
+    # for cancelling a subscription
+    # @return GetSubscriptionResponse response from the API call
+    def cancel_subscription(subscription_id,
+                            idempotency_key = nil,
+                            body = nil)
       # Prepare query url.
       _path_url = '/subscriptions/{subscription_id}'
       _path_url = APIHelper.append_url_with_template_parameters(
@@ -1149,12 +1552,16 @@ module PagarmeCoreApi
       _query_url = APIHelper.clean_url _query_builder
       # Prepare headers.
       _headers = {
-        'accept' => 'application/json'
+        'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
+        'Content-Type' => 'application/json',
+        'idempotency-key' => idempotency_key
       }
       # Prepare and execute HttpRequest.
-      _request = @http_client.get(
+      _request = @http_client.delete(
         _query_url,
-        headers: _headers
+        headers: _headers,
+        parameters: body.to_json
       )
       BasicAuth.apply(_request)
       _context = execute_request(_request)
@@ -1217,6 +1624,7 @@ module PagarmeCoreApi
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
         'Content-Type' => 'application/json',
         'idempotency-key' => idempotency_key
       }
@@ -1266,82 +1674,17 @@ module PagarmeCoreApi
       GetIncrementResponse.from_hash(decoded)
     end
 
-    # GetDiscountById
+    # Updates the metadata from a subscription
     # @param [String] subscription_id Required parameter: The subscription id
-    # @param [String] discount_id Required parameter: Example:
-    # @return GetDiscountResponse response from the API call
-    def get_discount_by_id(subscription_id,
-                           discount_id)
-      # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/discounts/{discountId}'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id,
-        'discountId' => discount_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json'
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.get(
-        _query_url,
-        headers: _headers
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      # Validate response against endpoint and global error codes.
-      if _context.response.status_code == 400
-        raise ErrorException.new(
-          'Invalid request',
-          _context
-        )
-      elsif _context.response.status_code == 401
-        raise ErrorException.new(
-          'Invalid API key',
-          _context
-        )
-      elsif _context.response.status_code == 404
-        raise ErrorException.new(
-          'An informed resource was not found',
-          _context
-        )
-      elsif _context.response.status_code == 412
-        raise ErrorException.new(
-          'Business validation error',
-          _context
-        )
-      elsif _context.response.status_code == 422
-        raise ErrorException.new(
-          'Contract validation error',
-          _context
-        )
-      elsif _context.response.status_code == 500
-        raise ErrorException.new(
-          'Internal server error',
-          _context
-        )
-      end
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetDiscountResponse.from_hash(decoded)
-    end
-
-    # UpdateSubscriptionAffiliationId
-    # @param [String] subscription_id Required parameter: Example:
-    # @param [UpdateSubscriptionAffiliationIdRequest] body Required parameter:
-    # Request for updating a subscription affiliation id
+    # @param [UpdateMetadataRequest] body Required parameter: Request for
+    # updating the subscrption metadata
     # @param [String] idempotency_key Optional parameter: Example:
     # @return GetSubscriptionResponse response from the API call
-    def update_subscription_affiliation_id(subscription_id,
-                                           body,
-                                           idempotency_key = nil)
+    def update_subscription_metadata(subscription_id,
+                                     body,
+                                     idempotency_key = nil)
       # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/gateway-affiliation-id'
+      _path_url = '/Subscriptions/{subscription_id}/metadata'
       _path_url = APIHelper.append_url_with_template_parameters(
         _path_url,
         'subscription_id' => subscription_id
@@ -1352,6 +1695,7 @@ module PagarmeCoreApi
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
         'Content-Type' => 'application/json',
         'idempotency-key' => idempotency_key
       }
@@ -1401,17 +1745,92 @@ module PagarmeCoreApi
       GetSubscriptionResponse.from_hash(decoded)
     end
 
-    # Updates the metadata from a subscription
+    # GetDiscounts
     # @param [String] subscription_id Required parameter: The subscription id
-    # @param [UpdateMetadataRequest] body Required parameter: Request for
-    # updating the subscrption metadata
+    # @param [Integer] page Required parameter: Page number
+    # @param [Integer] size Required parameter: Page size
+    # @return ListDiscountsResponse response from the API call
+    def get_discounts(subscription_id,
+                      page,
+                      size)
+      # Prepare query url.
+      _path_url = '/subscriptions/{subscription_id}/discounts/'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'subscription_id' => subscription_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_builder = APIHelper.append_url_with_query_parameters(
+        _query_builder,
+        {
+          'page' => page,
+          'size' => size
+        },
+        array_serialization: Configuration.array_serialization
+      )
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.get(
+        _query_url,
+        headers: _headers
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      # Validate response against endpoint and global error codes.
+      if _context.response.status_code == 400
+        raise ErrorException.new(
+          'Invalid request',
+          _context
+        )
+      elsif _context.response.status_code == 401
+        raise ErrorException.new(
+          'Invalid API key',
+          _context
+        )
+      elsif _context.response.status_code == 404
+        raise ErrorException.new(
+          'An informed resource was not found',
+          _context
+        )
+      elsif _context.response.status_code == 412
+        raise ErrorException.new(
+          'Business validation error',
+          _context
+        )
+      elsif _context.response.status_code == 422
+        raise ErrorException.new(
+          'Contract validation error',
+          _context
+        )
+      elsif _context.response.status_code == 500
+        raise ErrorException.new(
+          'Internal server error',
+          _context
+        )
+      end
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      ListDiscountsResponse.from_hash(decoded)
+    end
+
+    # Atualização do valor mínimo da assinatura
+    # @param [String] subscription_id Required parameter: Subscription Id
+    # @param [UpdateSubscriptionMinimumPriceRequest] body Required parameter:
+    # Request da requisição com o valor mínimo que será configurado
     # @param [String] idempotency_key Optional parameter: Example:
     # @return GetSubscriptionResponse response from the API call
-    def update_subscription_metadata(subscription_id,
-                                     body,
-                                     idempotency_key = nil)
+    def update_subscription_minium_price(subscription_id,
+                                         body,
+                                         idempotency_key = nil)
       # Prepare query url.
-      _path_url = '/Subscriptions/{subscription_id}/metadata'
+      _path_url = '/subscriptions/{subscription_id}/minimum_price'
       _path_url = APIHelper.append_url_with_template_parameters(
         _path_url,
         'subscription_id' => subscription_id
@@ -1422,6 +1841,7 @@ module PagarmeCoreApi
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
         'Content-Type' => 'application/json',
         'idempotency-key' => idempotency_key
       }
@@ -1430,6 +1850,245 @@ module PagarmeCoreApi
         _query_url,
         headers: _headers,
         parameters: body.to_json
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      # Validate response against endpoint and global error codes.
+      if _context.response.status_code == 400
+        raise ErrorException.new(
+          'Invalid request',
+          _context
+        )
+      elsif _context.response.status_code == 401
+        raise ErrorException.new(
+          'Invalid API key',
+          _context
+        )
+      elsif _context.response.status_code == 404
+        raise ErrorException.new(
+          'An informed resource was not found',
+          _context
+        )
+      elsif _context.response.status_code == 412
+        raise ErrorException.new(
+          'Business validation error',
+          _context
+        )
+      elsif _context.response.status_code == 422
+        raise ErrorException.new(
+          'Contract validation error',
+          _context
+        )
+      elsif _context.response.status_code == 500
+        raise ErrorException.new(
+          'Internal server error',
+          _context
+        )
+      end
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetSubscriptionResponse.from_hash(decoded)
+    end
+
+    # UpdateSplitSubscription
+    # @param [String] id Required parameter: Subscription's id
+    # @param [UpdateSubscriptionSplitRequest] body Required parameter:
+    # Example:
+    # @return GetSubscriptionResponse response from the API call
+    def update_split_subscription(id,
+                                  body)
+      # Prepare query url.
+      _path_url = '/subscriptions/{id}/split'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'id' => id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
+        'Content-Type' => 'application/json'
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.patch(
+        _query_url,
+        headers: _headers,
+        parameters: body.to_json
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      # Validate response against endpoint and global error codes.
+      if _context.response.status_code == 400
+        raise ErrorException.new(
+          'Invalid request',
+          _context
+        )
+      elsif _context.response.status_code == 401
+        raise ErrorException.new(
+          'Invalid API key',
+          _context
+        )
+      elsif _context.response.status_code == 404
+        raise ErrorException.new(
+          'An informed resource was not found',
+          _context
+        )
+      elsif _context.response.status_code == 412
+        raise ErrorException.new(
+          'Business validation error',
+          _context
+        )
+      elsif _context.response.status_code == 422
+        raise ErrorException.new(
+          'Contract validation error',
+          _context
+        )
+      elsif _context.response.status_code == 500
+        raise ErrorException.new(
+          'Internal server error',
+          _context
+        )
+      end
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetSubscriptionResponse.from_hash(decoded)
+    end
+
+    # Gets all subscriptions
+    # @param [Integer] page Optional parameter: Page number
+    # @param [Integer] size Optional parameter: Page size
+    # @param [String] code Optional parameter: Filter for subscription's code
+    # @param [String] billing_type Optional parameter: Filter for subscription's
+    # billing type
+    # @param [String] customer_id Optional parameter: Filter for subscription's
+    # customer id
+    # @param [String] plan_id Optional parameter: Filter for subscription's plan
+    # id
+    # @param [String] card_id Optional parameter: Filter for subscription's card
+    # id
+    # @param [String] status Optional parameter: Filter for subscription's
+    # status
+    # @param [DateTime] next_billing_since Optional parameter: Filter for
+    # subscription's next billing date start range
+    # @param [DateTime] next_billing_until Optional parameter: Filter for
+    # subscription's next billing date end range
+    # @param [DateTime] created_since Optional parameter: Filter for
+    # subscription's creation date start range
+    # @param [DateTime] created_until Optional parameter: Filter for
+    # subscriptions creation date end range
+    # @return ListSubscriptionsResponse response from the API call
+    def get_subscriptions(page = nil,
+                          size = nil,
+                          code = nil,
+                          billing_type = nil,
+                          customer_id = nil,
+                          plan_id = nil,
+                          card_id = nil,
+                          status = nil,
+                          next_billing_since = nil,
+                          next_billing_until = nil,
+                          created_since = nil,
+                          created_until = nil)
+      # Prepare query url.
+      _path_url = '/subscriptions'
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_builder = APIHelper.append_url_with_query_parameters(
+        _query_builder,
+        {
+          'page' => page,
+          'size' => size,
+          'code' => code,
+          'billing_type' => billing_type,
+          'customer_id' => customer_id,
+          'plan_id' => plan_id,
+          'card_id' => card_id,
+          'status' => status,
+          'next_billing_since' => next_billing_since,
+          'next_billing_until' => next_billing_until,
+          'created_since' => created_since,
+          'created_until' => created_until
+        },
+        array_serialization: Configuration.array_serialization
+      )
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.get(
+        _query_url,
+        headers: _headers
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      # Validate response against endpoint and global error codes.
+      if _context.response.status_code == 400
+        raise ErrorException.new(
+          'Invalid request',
+          _context
+        )
+      elsif _context.response.status_code == 401
+        raise ErrorException.new(
+          'Invalid API key',
+          _context
+        )
+      elsif _context.response.status_code == 404
+        raise ErrorException.new(
+          'An informed resource was not found',
+          _context
+        )
+      elsif _context.response.status_code == 412
+        raise ErrorException.new(
+          'Business validation error',
+          _context
+        )
+      elsif _context.response.status_code == 422
+        raise ErrorException.new(
+          'Contract validation error',
+          _context
+        )
+      elsif _context.response.status_code == 500
+        raise ErrorException.new(
+          'Internal server error',
+          _context
+        )
+      end
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      ListSubscriptionsResponse.from_hash(decoded)
+    end
+
+    # Gets a subscription
+    # @param [String] subscription_id Required parameter: Subscription id
+    # @return GetSubscriptionResponse response from the API call
+    def get_subscription(subscription_id)
+      # Prepare query url.
+      _path_url = '/subscriptions/{subscription_id}'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'subscription_id' => subscription_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.get(
+        _query_url,
+        headers: _headers
       )
       BasicAuth.apply(_request)
       _context = execute_request(_request)
@@ -1492,6 +2151,7 @@ module PagarmeCoreApi
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
         'idempotency-key' => idempotency_key
       }
       # Prepare and execute HttpRequest.
@@ -1557,7 +2217,8 @@ module PagarmeCoreApi
       _query_url = APIHelper.clean_url _query_builder
       # Prepare headers.
       _headers = {
-        'accept' => 'application/json'
+        'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name
       }
       # Prepare and execute HttpRequest.
       _request = @http_client.get(
@@ -1631,7 +2292,8 @@ module PagarmeCoreApi
       _query_url = APIHelper.clean_url _query_builder
       # Prepare headers.
       _headers = {
-        'accept' => 'application/json'
+        'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name
       }
       # Prepare and execute HttpRequest.
       _request = @http_client.get(
@@ -1696,6 +2358,7 @@ module PagarmeCoreApi
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
         'idempotency-key' => idempotency_key
       }
       # Prepare and execute HttpRequest.
@@ -1743,150 +2406,6 @@ module PagarmeCoreApi
       GetPeriodResponse.from_hash(decoded)
     end
 
-    # GetDiscounts
-    # @param [String] subscription_id Required parameter: The subscription id
-    # @param [Integer] page Required parameter: Page number
-    # @param [Integer] size Required parameter: Page size
-    # @return ListDiscountsResponse response from the API call
-    def get_discounts(subscription_id,
-                      page,
-                      size)
-      # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/discounts/'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_builder = APIHelper.append_url_with_query_parameters(
-        _query_builder,
-        {
-          'page' => page,
-          'size' => size
-        },
-        array_serialization: Configuration.array_serialization
-      )
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json'
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.get(
-        _query_url,
-        headers: _headers
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      # Validate response against endpoint and global error codes.
-      if _context.response.status_code == 400
-        raise ErrorException.new(
-          'Invalid request',
-          _context
-        )
-      elsif _context.response.status_code == 401
-        raise ErrorException.new(
-          'Invalid API key',
-          _context
-        )
-      elsif _context.response.status_code == 404
-        raise ErrorException.new(
-          'An informed resource was not found',
-          _context
-        )
-      elsif _context.response.status_code == 412
-        raise ErrorException.new(
-          'Business validation error',
-          _context
-        )
-      elsif _context.response.status_code == 422
-        raise ErrorException.new(
-          'Contract validation error',
-          _context
-        )
-      elsif _context.response.status_code == 500
-        raise ErrorException.new(
-          'Internal server error',
-          _context
-        )
-      end
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      ListDiscountsResponse.from_hash(decoded)
-    end
-
-    # Updates the billing date from a subscription
-    # @param [String] subscription_id Required parameter: The subscription id
-    # @param [UpdateSubscriptionBillingDateRequest] body Required parameter:
-    # Request for updating the subscription billing date
-    # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetSubscriptionResponse response from the API call
-    def update_subscription_billing_date(subscription_id,
-                                         body,
-                                         idempotency_key = nil)
-      # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/billing-date'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json',
-        'Content-Type' => 'application/json',
-        'idempotency-key' => idempotency_key
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.patch(
-        _query_url,
-        headers: _headers,
-        parameters: body.to_json
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      # Validate response against endpoint and global error codes.
-      if _context.response.status_code == 400
-        raise ErrorException.new(
-          'Invalid request',
-          _context
-        )
-      elsif _context.response.status_code == 401
-        raise ErrorException.new(
-          'Invalid API key',
-          _context
-        )
-      elsif _context.response.status_code == 404
-        raise ErrorException.new(
-          'An informed resource was not found',
-          _context
-        )
-      elsif _context.response.status_code == 412
-        raise ErrorException.new(
-          'Business validation error',
-          _context
-        )
-      elsif _context.response.status_code == 422
-        raise ErrorException.new(
-          'Contract validation error',
-          _context
-        )
-      elsif _context.response.status_code == 500
-        raise ErrorException.new(
-          'Internal server error',
-          _context
-        )
-      end
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetSubscriptionResponse.from_hash(decoded)
-    end
-
     # Deletes a subscription item
     # @param [String] subscription_id Required parameter: Subscription id
     # @param [String] subscription_item_id Required parameter: Subscription item
@@ -1909,6 +2428,7 @@ module PagarmeCoreApi
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
         'idempotency-key' => idempotency_key
       }
       # Prepare and execute HttpRequest.
@@ -1956,425 +2476,6 @@ module PagarmeCoreApi
       GetSubscriptionItemResponse.from_hash(decoded)
     end
 
-    # GetIncrements
-    # @param [String] subscription_id Required parameter: The subscription id
-    # @param [Integer] page Optional parameter: Page number
-    # @param [Integer] size Optional parameter: Page size
-    # @return ListIncrementsResponse response from the API call
-    def get_increments(subscription_id,
-                       page = nil,
-                       size = nil)
-      # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/increments/'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_builder = APIHelper.append_url_with_query_parameters(
-        _query_builder,
-        {
-          'page' => page,
-          'size' => size
-        },
-        array_serialization: Configuration.array_serialization
-      )
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json'
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.get(
-        _query_url,
-        headers: _headers
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      # Validate response against endpoint and global error codes.
-      if _context.response.status_code == 400
-        raise ErrorException.new(
-          'Invalid request',
-          _context
-        )
-      elsif _context.response.status_code == 401
-        raise ErrorException.new(
-          'Invalid API key',
-          _context
-        )
-      elsif _context.response.status_code == 404
-        raise ErrorException.new(
-          'An informed resource was not found',
-          _context
-        )
-      elsif _context.response.status_code == 412
-        raise ErrorException.new(
-          'Business validation error',
-          _context
-        )
-      elsif _context.response.status_code == 422
-        raise ErrorException.new(
-          'Contract validation error',
-          _context
-        )
-      elsif _context.response.status_code == 500
-        raise ErrorException.new(
-          'Internal server error',
-          _context
-        )
-      end
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      ListIncrementsResponse.from_hash(decoded)
-    end
-
-    # Updates the boleto due days from a subscription
-    # @param [String] subscription_id Required parameter: Subscription Id
-    # @param [UpdateSubscriptionDueDaysRequest] body Required parameter:
-    # Example:
-    # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetSubscriptionResponse response from the API call
-    def update_subscription_due_days(subscription_id,
-                                     body,
-                                     idempotency_key = nil)
-      # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/boleto-due-days'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json',
-        'Content-Type' => 'application/json',
-        'idempotency-key' => idempotency_key
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.patch(
-        _query_url,
-        headers: _headers,
-        parameters: body.to_json
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      # Validate response against endpoint and global error codes.
-      if _context.response.status_code == 400
-        raise ErrorException.new(
-          'Invalid request',
-          _context
-        )
-      elsif _context.response.status_code == 401
-        raise ErrorException.new(
-          'Invalid API key',
-          _context
-        )
-      elsif _context.response.status_code == 404
-        raise ErrorException.new(
-          'An informed resource was not found',
-          _context
-        )
-      elsif _context.response.status_code == 412
-        raise ErrorException.new(
-          'Business validation error',
-          _context
-        )
-      elsif _context.response.status_code == 422
-        raise ErrorException.new(
-          'Contract validation error',
-          _context
-        )
-      elsif _context.response.status_code == 500
-        raise ErrorException.new(
-          'Internal server error',
-          _context
-        )
-      end
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetSubscriptionResponse.from_hash(decoded)
-    end
-
-    # Updates the start at date from a subscription
-    # @param [String] subscription_id Required parameter: The subscription id
-    # @param [UpdateSubscriptionStartAtRequest] body Required parameter: Request
-    # for updating the subscription start date
-    # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetSubscriptionResponse response from the API call
-    def update_subscription_start_at(subscription_id,
-                                     body,
-                                     idempotency_key = nil)
-      # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/start-at'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json',
-        'Content-Type' => 'application/json',
-        'idempotency-key' => idempotency_key
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.patch(
-        _query_url,
-        headers: _headers,
-        parameters: body.to_json
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      # Validate response against endpoint and global error codes.
-      if _context.response.status_code == 400
-        raise ErrorException.new(
-          'Invalid request',
-          _context
-        )
-      elsif _context.response.status_code == 401
-        raise ErrorException.new(
-          'Invalid API key',
-          _context
-        )
-      elsif _context.response.status_code == 404
-        raise ErrorException.new(
-          'An informed resource was not found',
-          _context
-        )
-      elsif _context.response.status_code == 412
-        raise ErrorException.new(
-          'Business validation error',
-          _context
-        )
-      elsif _context.response.status_code == 422
-        raise ErrorException.new(
-          'Contract validation error',
-          _context
-        )
-      elsif _context.response.status_code == 500
-        raise ErrorException.new(
-          'Internal server error',
-          _context
-        )
-      end
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetSubscriptionResponse.from_hash(decoded)
-    end
-
-    # UpdateLatestPeriodEndAt
-    # @param [String] subscription_id Required parameter: Example:
-    # @param [UpdateCurrentCycleEndDateRequest] body Required parameter: Request
-    # for updating the end date of the current signature cycle
-    # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetSubscriptionResponse response from the API call
-    def update_latest_period_end_at(subscription_id,
-                                    body,
-                                    idempotency_key = nil)
-      # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/periods/latest/end-at'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json',
-        'Content-Type' => 'application/json',
-        'idempotency-key' => idempotency_key
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.patch(
-        _query_url,
-        headers: _headers,
-        parameters: body.to_json
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      # Validate response against endpoint and global error codes.
-      if _context.response.status_code == 400
-        raise ErrorException.new(
-          'Invalid request',
-          _context
-        )
-      elsif _context.response.status_code == 401
-        raise ErrorException.new(
-          'Invalid API key',
-          _context
-        )
-      elsif _context.response.status_code == 404
-        raise ErrorException.new(
-          'An informed resource was not found',
-          _context
-        )
-      elsif _context.response.status_code == 412
-        raise ErrorException.new(
-          'Business validation error',
-          _context
-        )
-      elsif _context.response.status_code == 422
-        raise ErrorException.new(
-          'Contract validation error',
-          _context
-        )
-      elsif _context.response.status_code == 500
-        raise ErrorException.new(
-          'Internal server error',
-          _context
-        )
-      end
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetSubscriptionResponse.from_hash(decoded)
-    end
-
-    # Atualização do valor mínimo da assinatura
-    # @param [String] subscription_id Required parameter: Subscription Id
-    # @param [UpdateSubscriptionMinimumPriceRequest] body Required parameter:
-    # Request da requisição com o valor mínimo que será configurado
-    # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetSubscriptionResponse response from the API call
-    def update_subscription_minium_price(subscription_id,
-                                         body,
-                                         idempotency_key = nil)
-      # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/minimum_price'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json',
-        'Content-Type' => 'application/json',
-        'idempotency-key' => idempotency_key
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.patch(
-        _query_url,
-        headers: _headers,
-        parameters: body.to_json
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      # Validate response against endpoint and global error codes.
-      if _context.response.status_code == 400
-        raise ErrorException.new(
-          'Invalid request',
-          _context
-        )
-      elsif _context.response.status_code == 401
-        raise ErrorException.new(
-          'Invalid API key',
-          _context
-        )
-      elsif _context.response.status_code == 404
-        raise ErrorException.new(
-          'An informed resource was not found',
-          _context
-        )
-      elsif _context.response.status_code == 412
-        raise ErrorException.new(
-          'Business validation error',
-          _context
-        )
-      elsif _context.response.status_code == 422
-        raise ErrorException.new(
-          'Contract validation error',
-          _context
-        )
-      elsif _context.response.status_code == 500
-        raise ErrorException.new(
-          'Internal server error',
-          _context
-        )
-      end
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetSubscriptionResponse.from_hash(decoded)
-    end
-
-    # GetSubscriptionCycleById
-    # @param [String] subscription_id Required parameter: The subscription id
-    # @param [String] cycle_id Required parameter: Example:
-    # @return GetPeriodResponse response from the API call
-    def get_subscription_cycle_by_id(subscription_id,
-                                     cycle_id)
-      # Prepare query url.
-      _path_url = '/subscriptions/{subscription_id}/cycles/{cycleId}'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'subscription_id' => subscription_id,
-        'cycleId' => cycle_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json'
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.get(
-        _query_url,
-        headers: _headers
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      # Validate response against endpoint and global error codes.
-      if _context.response.status_code == 400
-        raise ErrorException.new(
-          'Invalid request',
-          _context
-        )
-      elsif _context.response.status_code == 401
-        raise ErrorException.new(
-          'Invalid API key',
-          _context
-        )
-      elsif _context.response.status_code == 404
-        raise ErrorException.new(
-          'An informed resource was not found',
-          _context
-        )
-      elsif _context.response.status_code == 412
-        raise ErrorException.new(
-          'Business validation error',
-          _context
-        )
-      elsif _context.response.status_code == 422
-        raise ErrorException.new(
-          'Contract validation error',
-          _context
-        )
-      elsif _context.response.status_code == 500
-        raise ErrorException.new(
-          'Internal server error',
-          _context
-        )
-      end
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetPeriodResponse.from_hash(decoded)
-    end
-
     # GetUsageReport
     # @param [String] subscription_id Required parameter: The subscription Id
     # @param [String] period_id Required parameter: The period Id
@@ -2393,7 +2494,8 @@ module PagarmeCoreApi
       _query_url = APIHelper.clean_url _query_builder
       # Prepare headers.
       _headers = {
-        'accept' => 'application/json'
+        'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name
       }
       # Prepare and execute HttpRequest.
       _request = @http_client.get(
@@ -2438,73 +2540,6 @@ module PagarmeCoreApi
       # Return appropriate response type.
       decoded = APIHelper.json_deserialize(_context.response.raw_body)
       GetUsageReportResponse.from_hash(decoded)
-    end
-
-    # UpdateSplitSubscription
-    # @param [String] id Required parameter: Subscription's id
-    # @param [UpdateSubscriptionSplitRequest] body Required parameter:
-    # Example:
-    # @return GetSubscriptionResponse response from the API call
-    def update_split_subscription(id,
-                                  body)
-      # Prepare query url.
-      _path_url = '/subscriptions/{id}/split'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'id' => id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json',
-        'Content-Type' => 'application/json'
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.patch(
-        _query_url,
-        headers: _headers,
-        parameters: body.to_json
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      # Validate response against endpoint and global error codes.
-      if _context.response.status_code == 400
-        raise ErrorException.new(
-          'Invalid request',
-          _context
-        )
-      elsif _context.response.status_code == 401
-        raise ErrorException.new(
-          'Invalid API key',
-          _context
-        )
-      elsif _context.response.status_code == 404
-        raise ErrorException.new(
-          'An informed resource was not found',
-          _context
-        )
-      elsif _context.response.status_code == 412
-        raise ErrorException.new(
-          'Business validation error',
-          _context
-        )
-      elsif _context.response.status_code == 422
-        raise ErrorException.new(
-          'Contract validation error',
-          _context
-        )
-      elsif _context.response.status_code == 500
-        raise ErrorException.new(
-          'Internal server error',
-          _context
-        )
-      end
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetSubscriptionResponse.from_hash(decoded)
     end
   end
 end

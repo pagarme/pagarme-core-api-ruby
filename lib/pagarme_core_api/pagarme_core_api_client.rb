@@ -54,16 +54,16 @@ module PagarmeCoreApi
       TokensController.instance
     end
 
-    # Singleton access to transactions controller.
-    # @return [TransactionsController] Returns the controller instance.
-    def transactions
-      TransactionsController.instance
-    end
-
     # Singleton access to transfers controller.
     # @return [TransfersController] Returns the controller instance.
     def transfers
       TransfersController.instance
+    end
+
+    # Singleton access to transactions controller.
+    # @return [TransactionsController] Returns the controller instance.
+    def transactions
+      TransactionsController.instance
     end
 
     # Returns the configuration class for easy access.
@@ -73,7 +73,10 @@ module PagarmeCoreApi
     end
 
     # Initializer with authentication and configuration parameters.
-    def initialize(basic_auth_user_name: nil, basic_auth_password: nil)
+    def initialize(service_referer_name: nil, basic_auth_user_name: nil,
+                   basic_auth_password: nil)
+      Configuration.service_referer_name = service_referer_name if
+        service_referer_name
       Configuration.basic_auth_user_name = basic_auth_user_name if
         basic_auth_user_name
       Configuration.basic_auth_password = basic_auth_password if

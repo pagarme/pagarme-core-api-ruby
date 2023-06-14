@@ -55,7 +55,8 @@ module PagarmeCoreApi
       _query_url = APIHelper.clean_url _query_builder
       # Prepare headers.
       _headers = {
-        'accept' => 'application/json'
+        'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name
       }
       # Prepare and execute HttpRequest.
       _request = @http_client.get(
@@ -117,6 +118,7 @@ module PagarmeCoreApi
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
         'Content-Type' => 'application/json',
         'idempotency-key' => idempotency_key
       }
@@ -125,71 +127,6 @@ module PagarmeCoreApi
         _query_url,
         headers: _headers,
         parameters: body.to_json
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      # Validate response against endpoint and global error codes.
-      if _context.response.status_code == 400
-        raise ErrorException.new(
-          'Invalid request',
-          _context
-        )
-      elsif _context.response.status_code == 401
-        raise ErrorException.new(
-          'Invalid API key',
-          _context
-        )
-      elsif _context.response.status_code == 404
-        raise ErrorException.new(
-          'An informed resource was not found',
-          _context
-        )
-      elsif _context.response.status_code == 412
-        raise ErrorException.new(
-          'Business validation error',
-          _context
-        )
-      elsif _context.response.status_code == 422
-        raise ErrorException.new(
-          'Contract validation error',
-          _context
-        )
-      elsif _context.response.status_code == 500
-        raise ErrorException.new(
-          'Internal server error',
-          _context
-        )
-      end
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetOrderResponse.from_hash(decoded)
-    end
-
-    # DeleteAllOrderItems
-    # @param [String] order_id Required parameter: Order Id
-    # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetOrderResponse response from the API call
-    def delete_all_order_items(order_id,
-                               idempotency_key = nil)
-      # Prepare query url.
-      _path_url = '/orders/{orderId}/items'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'orderId' => order_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json',
-        'idempotency-key' => idempotency_key
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.delete(
-        _query_url,
-        headers: _headers
       )
       BasicAuth.apply(_request)
       _context = execute_request(_request)
@@ -252,6 +189,7 @@ module PagarmeCoreApi
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
         'Content-Type' => 'application/json',
         'idempotency-key' => idempotency_key
       }
@@ -301,16 +239,12 @@ module PagarmeCoreApi
       GetOrderItemResponse.from_hash(decoded)
     end
 
-    # UpdateOrderItem
+    # GetOrderItem
     # @param [String] order_id Required parameter: Order Id
     # @param [String] item_id Required parameter: Item Id
-    # @param [UpdateOrderItemRequest] body Required parameter: Item Model
-    # @param [String] idempotency_key Optional parameter: Example:
     # @return GetOrderItemResponse response from the API call
-    def update_order_item(order_id,
-                          item_id,
-                          body,
-                          idempotency_key = nil)
+    def get_order_item(order_id,
+                       item_id)
       # Prepare query url.
       _path_url = '/orders/{orderId}/items/{itemId}'
       _path_url = APIHelper.append_url_with_template_parameters(
@@ -324,14 +258,12 @@ module PagarmeCoreApi
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
-        'Content-Type' => 'application/json',
-        'idempotency-key' => idempotency_key
+        'ServiceRefererName' => Configuration.service_referer_name
       }
       # Prepare and execute HttpRequest.
-      _request = @http_client.put(
+      _request = @http_client.get(
         _query_url,
-        headers: _headers,
-        parameters: body.to_json
+        headers: _headers
       )
       BasicAuth.apply(_request)
       _context = execute_request(_request)
@@ -394,6 +326,7 @@ module PagarmeCoreApi
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
         'idempotency-key' => idempotency_key
       }
       # Prepare and execute HttpRequest.
@@ -441,12 +374,153 @@ module PagarmeCoreApi
       GetOrderItemResponse.from_hash(decoded)
     end
 
-    # GetOrderItem
+    # Updates the metadata from an order
+    # @param [String] order_id Required parameter: The order id
+    # @param [UpdateMetadataRequest] body Required parameter: Request for
+    # updating the order metadata
+    # @param [String] idempotency_key Optional parameter: Example:
+    # @return GetOrderResponse response from the API call
+    def update_order_metadata(order_id,
+                              body,
+                              idempotency_key = nil)
+      # Prepare query url.
+      _path_url = '/Orders/{order_id}/metadata'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'order_id' => order_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
+        'Content-Type' => 'application/json',
+        'idempotency-key' => idempotency_key
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.patch(
+        _query_url,
+        headers: _headers,
+        parameters: body.to_json
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      # Validate response against endpoint and global error codes.
+      if _context.response.status_code == 400
+        raise ErrorException.new(
+          'Invalid request',
+          _context
+        )
+      elsif _context.response.status_code == 401
+        raise ErrorException.new(
+          'Invalid API key',
+          _context
+        )
+      elsif _context.response.status_code == 404
+        raise ErrorException.new(
+          'An informed resource was not found',
+          _context
+        )
+      elsif _context.response.status_code == 412
+        raise ErrorException.new(
+          'Business validation error',
+          _context
+        )
+      elsif _context.response.status_code == 422
+        raise ErrorException.new(
+          'Contract validation error',
+          _context
+        )
+      elsif _context.response.status_code == 500
+        raise ErrorException.new(
+          'Internal server error',
+          _context
+        )
+      end
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetOrderResponse.from_hash(decoded)
+    end
+
+    # DeleteAllOrderItems
+    # @param [String] order_id Required parameter: Order Id
+    # @param [String] idempotency_key Optional parameter: Example:
+    # @return GetOrderResponse response from the API call
+    def delete_all_order_items(order_id,
+                               idempotency_key = nil)
+      # Prepare query url.
+      _path_url = '/orders/{orderId}/items'
+      _path_url = APIHelper.append_url_with_template_parameters(
+        _path_url,
+        'orderId' => order_id
+      )
+      _query_builder = Configuration.base_uri.dup
+      _query_builder << _path_url
+      _query_url = APIHelper.clean_url _query_builder
+      # Prepare headers.
+      _headers = {
+        'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
+        'idempotency-key' => idempotency_key
+      }
+      # Prepare and execute HttpRequest.
+      _request = @http_client.delete(
+        _query_url,
+        headers: _headers
+      )
+      BasicAuth.apply(_request)
+      _context = execute_request(_request)
+      # Validate response against endpoint and global error codes.
+      if _context.response.status_code == 400
+        raise ErrorException.new(
+          'Invalid request',
+          _context
+        )
+      elsif _context.response.status_code == 401
+        raise ErrorException.new(
+          'Invalid API key',
+          _context
+        )
+      elsif _context.response.status_code == 404
+        raise ErrorException.new(
+          'An informed resource was not found',
+          _context
+        )
+      elsif _context.response.status_code == 412
+        raise ErrorException.new(
+          'Business validation error',
+          _context
+        )
+      elsif _context.response.status_code == 422
+        raise ErrorException.new(
+          'Contract validation error',
+          _context
+        )
+      elsif _context.response.status_code == 500
+        raise ErrorException.new(
+          'Internal server error',
+          _context
+        )
+      end
+      validate_response(_context)
+      # Return appropriate response type.
+      decoded = APIHelper.json_deserialize(_context.response.raw_body)
+      GetOrderResponse.from_hash(decoded)
+    end
+
+    # UpdateOrderItem
     # @param [String] order_id Required parameter: Order Id
     # @param [String] item_id Required parameter: Item Id
+    # @param [UpdateOrderItemRequest] body Required parameter: Item Model
+    # @param [String] idempotency_key Optional parameter: Example:
     # @return GetOrderItemResponse response from the API call
-    def get_order_item(order_id,
-                       item_id)
+    def update_order_item(order_id,
+                          item_id,
+                          body,
+                          idempotency_key = nil)
       # Prepare query url.
       _path_url = '/orders/{orderId}/items/{itemId}'
       _path_url = APIHelper.append_url_with_template_parameters(
@@ -459,12 +533,16 @@ module PagarmeCoreApi
       _query_url = APIHelper.clean_url _query_builder
       # Prepare headers.
       _headers = {
-        'accept' => 'application/json'
+        'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
+        'Content-Type' => 'application/json',
+        'idempotency-key' => idempotency_key
       }
       # Prepare and execute HttpRequest.
-      _request = @http_client.get(
+      _request = @http_client.put(
         _query_url,
-        headers: _headers
+        headers: _headers,
+        parameters: body.to_json
       )
       BasicAuth.apply(_request)
       _context = execute_request(_request)
@@ -527,76 +605,7 @@ module PagarmeCoreApi
       # Prepare headers.
       _headers = {
         'accept' => 'application/json',
-        'Content-Type' => 'application/json',
-        'idempotency-key' => idempotency_key
-      }
-      # Prepare and execute HttpRequest.
-      _request = @http_client.patch(
-        _query_url,
-        headers: _headers,
-        parameters: body.to_json
-      )
-      BasicAuth.apply(_request)
-      _context = execute_request(_request)
-      # Validate response against endpoint and global error codes.
-      if _context.response.status_code == 400
-        raise ErrorException.new(
-          'Invalid request',
-          _context
-        )
-      elsif _context.response.status_code == 401
-        raise ErrorException.new(
-          'Invalid API key',
-          _context
-        )
-      elsif _context.response.status_code == 404
-        raise ErrorException.new(
-          'An informed resource was not found',
-          _context
-        )
-      elsif _context.response.status_code == 412
-        raise ErrorException.new(
-          'Business validation error',
-          _context
-        )
-      elsif _context.response.status_code == 422
-        raise ErrorException.new(
-          'Contract validation error',
-          _context
-        )
-      elsif _context.response.status_code == 500
-        raise ErrorException.new(
-          'Internal server error',
-          _context
-        )
-      end
-      validate_response(_context)
-      # Return appropriate response type.
-      decoded = APIHelper.json_deserialize(_context.response.raw_body)
-      GetOrderResponse.from_hash(decoded)
-    end
-
-    # Updates the metadata from an order
-    # @param [String] order_id Required parameter: The order id
-    # @param [UpdateMetadataRequest] body Required parameter: Request for
-    # updating the order metadata
-    # @param [String] idempotency_key Optional parameter: Example:
-    # @return GetOrderResponse response from the API call
-    def update_order_metadata(order_id,
-                              body,
-                              idempotency_key = nil)
-      # Prepare query url.
-      _path_url = '/Orders/{order_id}/metadata'
-      _path_url = APIHelper.append_url_with_template_parameters(
-        _path_url,
-        'order_id' => order_id
-      )
-      _query_builder = Configuration.base_uri.dup
-      _query_builder << _path_url
-      _query_url = APIHelper.clean_url _query_builder
-      # Prepare headers.
-      _headers = {
-        'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name,
         'Content-Type' => 'application/json',
         'idempotency-key' => idempotency_key
       }
@@ -661,7 +670,8 @@ module PagarmeCoreApi
       _query_url = APIHelper.clean_url _query_builder
       # Prepare headers.
       _headers = {
-        'accept' => 'application/json'
+        'accept' => 'application/json',
+        'ServiceRefererName' => Configuration.service_referer_name
       }
       # Prepare and execute HttpRequest.
       _request = @http_client.get(
